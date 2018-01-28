@@ -49,9 +49,22 @@
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
   });
+  
+  (function ($) {
+    $(function () {
+
+        //initialize all modals           
+        $('.modal').modal();
+
+        //or by click on trigger
+        $('.modal-trigger').modal();
+
+    }); // end of document ready
+})(jQuery); // end of jQuery name space
   </script>
 </head>
 <body>
+<!--Header-->
 <header>
   <nav>
     <div class="nav-wrapper">
@@ -67,12 +80,15 @@
         <li id='searchbutton'><a id='searchbutton'><i id='searchbutton' class="material-icons">search</i></a></li>
         <li><a><i class="material-icons">poll</i></a></li>
         <li><a><i class="material-icons">settings</i></a></li>
-		<li><a class="waves-effect waves-light blue btn">Sign Up</a></li>
-		<li><a class="waves-effect waves-light blue btn">Sign In</a></li>
+		<li><a class="waves-effect waves-blue blue btn modal-trigger" href="#reg">Sign Up</a></li>
+		<li><a class="waves-effect waves-light blue btn modal-trigger"  href="#log">Sign In</a></li>
       </ul>
     </div>
   </nav>
   </header>
+
+  <!--Main-->
+  <!--Put stuff below-->
  <main>
 	<div style='width:300px'>
 <ul id="sortable">
@@ -85,7 +101,65 @@
   <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
 </ul>
 </div>
+<!--Register Modal-->
+   <div id="reg" class="modal">
+    <div class="modal-content">
+      <h4>Registration</h4>
+      <div class="row">
+    <form class="col s12">
+	<div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Kevin" id="fn" type="text" class="validate">
+          <label for="fn">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="Hockenjos" id="ln" type="text" class="validate">
+          <label for="ln">Last Name</label>
+        </div>
+		</div>
+    <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="kevin@surveyorange.com" id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="abc123" id="pass" type="password" class="validate">
+          <label for="pass">Password</label>
+        </div>
+		</div>
+		</div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Register</a>
+    </div>
+  </div>
+<!--Login Modal-->
+     <div id="log" class="modal">
+    <div class="modal-content">
+      <h4>Sign In</h4>
+      <div class="row">
+    <form class="col s12">
+    <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="kevin@surveyorange.com" id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+	<div class="row">
+        <div class="input-field col s6">
+          <input placeholder="abc123" id="pass" type="password" class="validate">
+          <label for="pass">Password</label>
+        </div>
+		
+		</div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Sign In</a>
+    </div>
+  </div>
+  
 </main>
+
+<!--Footer-->
  <footer class="page-footer">
           <div class="container">
             <div class="row">
