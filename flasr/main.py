@@ -19,9 +19,6 @@ sqlitedb = 'ssw322.db'
 def index():
 	logCheck = 0
 	sid = session.get('uid');	#session if logged in
-	favtemp = []				#all the lists of fav/rss/recents
-	rsstemp = []
-	rectemp = []
 	if sid:
 		logCheck = sid
 	else:
@@ -95,4 +92,13 @@ def logout():
 	final = ""
 	session.pop('uid', None)	#pop that session out of here
 	return final
+@app.route('/add')
+def add():
+	return render_template('index.html', name='add')
 	
+@app.route('/edit')
+def edit():
+	return 0
+@app.route('/take')
+def take():
+	return 0
