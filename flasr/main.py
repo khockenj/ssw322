@@ -33,8 +33,10 @@ def index():
 @app.route('/register', methods=['POST'])
 def register():
 	final = "Couldn't connect to the database. Please reload"
-	email = request.form.get('email')	#form getters from post email/pw
-	password1 = request.form.get('pw1')
+	email = request.form.get('email')	#form getters from post
+	password1 = request.form.get('pass')
+	fn = request.form.get('fn')
+	ln = request.form.get('ln')
 	try:
 		dbconn = sql.connect(sqlitedb)
 		dbconn.text_factory = str
