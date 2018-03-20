@@ -4,7 +4,7 @@ import json
 from math import pi
 from email_validator import validate_email, EmailNotValidError
 from passlib.hash import bcrypt
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
 app = Flask(__name__)
 app.secret_key = bcrypt.hash("7f58dcac5fedb47467d61bf0f21de582")
 sqlitedb = 'ssw322.db'
@@ -15,6 +15,7 @@ def index():
 	sid = session.get('uid');	#session if logged in
 	if sid:
 		logCheck = sid
+		return redirect(url_for('dashboard'))
 	else:
 		logCheck = 0
 	#try:
@@ -22,8 +23,8 @@ def index():
 		#login stuff here
 	#except:
 		#test = "DB Connection Failure"
-	return render_template('index.html', name='index', logcheck=logCheck)	
-	
+	return render_template('index.html', name='index', logcheck=logCheck)
+
 @app.route('/register', methods=['POST'])
 def register():
 	final = "Couldn't connect to the database. Please reload"
@@ -53,12 +54,12 @@ def register():
 		dbconn.close()
 	except:
 		final = "EXCEPTION: Couldn't connect to the database. Please reload."
-		
+
 	return final
 @app.route('/login', methods=['POST'])
 def login():
 	final = "Couldn't connect to the database. Please reload."
-	email = request.form.get('email')	#email/pw post 
+	email = request.form.get('email')	#email/pw post
 	password = request.form.get('pass')
 	try:
 		dbconn = sql.connect(sqlitedb)
@@ -80,15 +81,15 @@ def login():
 		dbconn.close()
 	except:
 		final = "ERROR: Couldn't connect to the database. Please reload."
-		
+
 	return final
-	
+
 @app.route('/logout')
 def logout():
 	final = ""
 	session.pop('uid', None)	#pop that session out of here
 	return final
-	
+
 @app.route('/dash')
 def dashboard():
 	logCheck = 0
@@ -97,16 +98,15 @@ def dashboard():
 		logCheck = sid
 	else:
 		logCheck = 0
-	return render_template('dashboard.html', name='dash', logcheck=logCheck)	
-	
+	return render_template('dashboard.html', name='dash', logcheck=logCheck)
+
 @app.route('/add')
 def add():
 	return render_template('index.html', name='add')
-	
+
 @app.route('/edit')
 def edit():
 	return 0
 @app.route('/take')
 def take():
 	return 0
-	
