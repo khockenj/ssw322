@@ -2,10 +2,6 @@ import datetime
 import sqlite3 as sql
 import json
 from math import pi
-from bokeh.plotting import figure
-from bokeh.charts import Horizon, output_file, show
-from bokeh.embed import file_html
-import bokeh.models
 from email_validator import validate_email, EmailNotValidError
 from passlib.hash import bcrypt
 from flask import Flask, render_template, request, session
