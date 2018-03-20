@@ -88,6 +88,17 @@ def logout():
 	final = ""
 	session.pop('uid', None)	#pop that session out of here
 	return final
+	
+@app.route('/dash')
+def dashboard():
+	logCheck = 0
+	sid = session.get('uid');	#session if logged in
+	if sid:
+		logCheck = sid
+	else:
+		logCheck = 0
+	return render_template('dashboard.html', name='dash', logcheck=logCheck)	
+	
 @app.route('/add')
 def add():
 	return render_template('index.html', name='add')
@@ -98,3 +109,4 @@ def edit():
 @app.route('/take')
 def take():
 	return 0
+	

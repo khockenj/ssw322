@@ -1,0 +1,254 @@
+<!HTML>
+<html>
+<head>
+<!--Header-->
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>SurveyOrange</title>
+<!--Jquery UI-->
+<link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.min.css') }}" />
+<link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.structure.min.css') }}" />
+<link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.theme.min.css') }}" />
+<!--Other-->
+<link rel='stylesheet' href="{{url_for('static', filename='themes/bokeh-0.12.0.min.css') }}" />
+<link rel='stylesheet' href="{{url_for('static', filename='passfield-1.1.13/css/passfield.css') }}" />
+<!--Google MDL-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel='stylesheet' href="{{url_for('static', filename='themes/materialize.min.css') }}" />
+
+<!--JS files-->
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='themes/jqueryui/jquery-ui.js') }}"></script>
+<script src="{{url_for('static', filename='bokeh-0.12.0.min.js') }}"></script>
+<script src="{{url_for('static', filename='passfield-1.1.13/js/passfield.js') }}"></script>
+<script src="{{url_for('static', filename='passfield-1.1.13/js/locales.js') }}"></script>
+<script src="{{url_for('static', filename='materialize.min.js') }}"></script>
+
+  
+<style>
+ nav, footer {
+  background-color: #FF9800 !important;
+}
+ #sortable {
+	cursor:pointer;
+	}
+ body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+ main {
+    flex: 1 0 auto;
+	background-color:#FFEBC9;
+  }
+ #git:hover {
+ color:white !important;
+ }
+.carousel { 
+max-height:58.87%;
+}
+.arrows {
+top:50%;
+position:absolute;
+}
+.arrows-text{
+   font-size: 4.2rem;
+  }
+  a.arrows-text{
+    color:white !important;
+  }
+  img.car {
+  <!--Caro img-->
+  }
+  .modal, .modal-footer {
+  background-color:#fff8ef !important;
+  }
+</style>
+</head>
+<body>
+<!--Header-->
+<header>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo"><i class="material-icons">terrain</i>SurveyOrange</a>
+      <ul class="right hide-on-med-and-down">
+	   <form id='searchbar' style='display:none;'>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+      </ul>
+    </div>
+  </nav>
+  </header>
+
+  <!--Main-->
+  <!--Put stuff below-->
+ <main>
+	<div>
+  <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Make</a>
+  <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
+  <a class="waves-effect waves-light btn-large"><i class="material-icons left">remove_red_eye</i>View</a>
+  <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
+	</div>
+	<!--<div style='width:300px'>
+<ul id="sortable">
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
+  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
+</ul>
+</div>-->
+
+<!--Register Modal-->
+   <div id="reg" class="modal">
+    <div class="modal-content">
+	<form class="col s12" id='regf'>
+      <h4>Registration</h4>
+      <div class="row">
+	<div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Kevin" name="fn" id="fn" type="text" class="validate" />
+          <label for="fn">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="Hockenjos" name="ln" id="ln" type="text" class="validate" />
+          <label for="ln">Last Name</label>
+        </div>
+		</div>
+    <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="kevin@surveyorange.com" name="email" id="email" type="email" class="validate" />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="abc123" id="pass" name="pass" type="password" class="validate" />
+          <label for="pass">Password</label>
+        </div>
+		</div>
+		</form>
+		</div>
+	<div id='regload'></div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" id='registerb' class="modal-action modal-close waves-effect waves-green btn-flat">Register</a>
+    </div>
+  </div>
+<!--Login Modal-->
+     <div id="log" class="modal">
+    <div class="modal-content">
+	  <form id='logf' class="col s12">
+      <h4>Sign In</h4>
+      <div class="row">
+    <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="kevin@surveyorange.com" name="email" id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+	<div class="row">
+        <div class="input-field col s6">
+          <input placeholder="abc123" id="pass" name="pass" type="password" class="validate">
+          <label for="pass">Password</label>
+        </div>
+		
+		</div>
+    </div>
+	<div id='logload'></div>
+    <div class="modal-footer">
+      <a href="#!" id='logb' class="modal-action modal-close waves-effect waves-green btn-flat">Sign In</a>
+    </div>
+	</form>
+  </div>
+        
+		
+</main>
+<!--This has to be outside a flexbox group-->
+<!--Bottom right button-->
+  <div class="fixed-action-btn">
+    <a id='menubutton' class="btn-floating waves-effect waves-light btn-large blue">
+      <i class="large material-icons">menu</i>
+    </a>
+    <ul>
+	  <li><a class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a></li>
+	  <li><a class="btn-floating waves-effect waves-light yellow darken-1"><i class="material-icons">mode_edit</i></a></li>
+      <li><a class="btn-floating waves-effect waves-light green"><i class="material-icons">poll</i></a></li>
+      <li><a class="btn-floating waves-effect waves-light purple"><i class="material-icons">publish</i></a></li>
+	  <li><a class="btn-floating waves-effect waves-light grey"><i class="material-icons">settings</i></a></li>
+	</ul>
+  </div>
+<!--Footer-->
+ <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">SSW322 Design VI Project</h5>
+                <p class="grey-text text-lighten-4">The task for this project was to create a survey/test making and taking site. Try it out if you'd like!</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Github</h5>
+                <ul>
+                  <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/khockenj">Kevin's Github</a></li>
+                  <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/robjweiss">Rob's Github</a></li>
+                  <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/yborai">Yoseph's Github</a></li>
+                  <li><a id='git' class="grey-text text-lighten-3" href="#!">Joe's Github</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            &copy; 2018 Gregg's Golden Boys
+            <a id='git' class="grey-text text-lighten-4 right" href="https://github.com/khockenj/ssw215">Other Projects</a>
+            </div>
+          </div>
+        </footer>
+        </body>    
+ <script>
+  $( function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+  });
+ 
+
+  (function ($) {
+    $(function () {         
+        $('.modal').modal();
+        $('.modal-trigger').modal();
+		$('.carousel.carousel-slider').carousel({fullWidth: true});
+	}); // end of document ready
+})(jQuery);
+   
+    $('#lm').click(function(){
+	$('.tap-target').tapTarget('open');
+   }); 
+   
+   if("{{ name }}" == "index") {
+   
+   } else if("{{ name }}" == "add") {
+   document.getElementById("index").style.display = 'none';
+   }
+  
+  $('#registerb').click(function() {
+  $.post("/register", $("#regf").serialize(), function(data) {
+        $("#regload").html(data).trigger('create');
+  });
+  });
+  
+   $('#logb').click(function() {
+   alert($("#logf").serialize());
+  $.post("/login", $("#logf").serialize(), function(data) {
+        $("#logload").html(data).trigger('create');
+		if(data == "logged") {
+			window.location.reload(true);
+		}
+  });
+  });
+  
+  logCheck = {{ logcheck }};
+</script>
+</html>
