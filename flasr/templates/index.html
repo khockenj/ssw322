@@ -134,30 +134,32 @@ position:absolute;
 <!--Register Modal-->
    <div id="reg" class="modal">
     <div class="modal-content">
+	<form class="col s12" id='regf'>
       <h4>Registration</h4>
       <div class="row">
-    <form class="col s12">
 	<div class="row">
         <div class="input-field col s6">
-          <input placeholder="Kevin" id="fn" type="text" class="validate">
+          <input placeholder="Kevin" name="fn" id="fn" type="text" class="validate" />
           <label for="fn">First Name</label>
         </div>
         <div class="input-field col s6">
-          <input placeholder="Hockenjos" id="ln" type="text" class="validate">
+          <input placeholder="Hockenjos" name="ln" id="ln" type="text" class="validate" />
           <label for="ln">Last Name</label>
         </div>
 		</div>
     <div class="row">
         <div class="input-field col s6">
-          <input placeholder="kevin@surveyorange.com" id="email" type="email" class="validate">
+          <input placeholder="kevin@surveyorange.com" name="email" id="email" type="email" class="validate" />
           <label for="email">Email</label>
         </div>
         <div class="input-field col s6">
-          <input placeholder="abc123" id="pass" type="password" class="validate">
+          <input placeholder="abc123" id="pass" name="pass" type="password" class="validate" />
           <label for="pass">Password</label>
         </div>
 		</div>
+		</form>
 		</div>
+	<div id='regload'></div>
     </div>
     <div class="modal-footer">
       <a href="#!" id='registerb' class="modal-action modal-close waves-effect waves-green btn-flat">Register</a>
@@ -166,25 +168,27 @@ position:absolute;
 <!--Login Modal-->
      <div id="log" class="modal">
     <div class="modal-content">
+	  <form id='logf' class="col s12">
       <h4>Sign In</h4>
       <div class="row">
-    <form class="col s12">
     <div class="row">
         <div class="input-field col s6">
-          <input placeholder="kevin@surveyorange.com" id="email" type="email" class="validate">
+          <input placeholder="kevin@surveyorange.com" name="email" id="email" type="email" class="validate">
           <label for="email">Email</label>
         </div>
 	<div class="row">
         <div class="input-field col s6">
-          <input placeholder="abc123" id="pass" type="password" class="validate">
+          <input placeholder="abc123" id="pass" name="pass" type="password" class="validate">
           <label for="pass">Password</label>
         </div>
 		
 		</div>
     </div>
+	<div id='logload'></div>
     <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Sign In</a>
+      <a href="#!" id='logb' class="modal-action modal-close waves-effect waves-green btn-flat">Sign In</a>
     </div>
+	</form>
   </div>
         
 		
@@ -249,7 +253,6 @@ position:absolute;
         $('.modal').modal();
         $('.modal-trigger').modal();
 		$('.carousel.carousel-slider').carousel({fullWidth: true});
-		
 	}); // end of document ready
 })(jQuery);
 
@@ -265,13 +268,32 @@ position:absolute;
       $('.carousel').carousel('prev');
    }); 
    
-    $('#lm').click(function(e){
+    $('#lm').click(function(){
 	$('.tap-target').tapTarget('open');
    }); 
+   
    if("{{ name }}" == "index") {
    
    } else if("{{ name }}" == "add") {
    document.getElementById("index").style.display = 'none';
    }
+  
+  $('#registerb').click(function() {
+  $.post("/register", $("#regf").serialize(), function(data) {
+        $("#regload").html(data).trigger('create');
+  });
+  });
+  
+   $('#logb').click(function() {
+   alert($("#logf").serialize());
+  $.post("/login", $("#logf").serialize(), function(data) {
+        $("#logload").html(data).trigger('create');
+		if(data == "logged") {
+			window.location.reload(true);
+		}
+  });
+  });
+  
+  logCheck = {{ logcheck }};
 </script>
 </html>

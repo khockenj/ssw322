@@ -2,17 +2,15 @@ import datetime
 import sqlite3 as sql
 import json
 from math import pi
-import pandas as pd
-import feedparser as fp
 from bokeh.plotting import figure
 from bokeh.charts import Horizon, output_file, show
 from bokeh.embed import file_html
 import bokeh.models
-from validate_email import validate_email
+from email_validator import validate_email, EmailNotValidError
 from passlib.hash import bcrypt
 from flask import Flask, render_template, request, session
 app = Flask(__name__)
-app.secret_key = bcrypt.hash("2pacisalive")
+app.secret_key = bcrypt.hash("7f58dcac5fedb47467d61bf0f21de582")
 sqlitedb = 'ssw322.db'
 
 @app.route('/')
@@ -40,52 +38,52 @@ def register():
 	try:
 		dbconn = sql.connect(sqlitedb)
 		dbconn.text_factory = str
-		cur = dbconn.cursor()
-		sel = cur.execute("SELECT * FROM `users` WHERE `email` = ? ", (email,))
-		finder = sel.fetchone()
+		c = dbconn.cursor()
+		sel = c.execute("SELECT * FROM `users` WHERE `email` = ? ", (email,))
+		finder = c.fetchone()
 		eCheck = validate_email(email)	#validates email, could do it myself but originally this library was supposed to send a message to the email server to check if the email is real
+		email = eCheck['email']
 		if session.get('uid'):	#session already set
 			final = "You are already logged in."
 		elif finder:	#email already in db
 			final = "An account with that email already exists."
-		elif not eCheck:	#email form isn't an email
-			final = "Invalid email."
+		elif eCheck == EmailNotValidError:	#email form isn't an email
+			final = EmailNotValidError
 		else:	#good to go
 			hashedPass = bcrypt.hash(password1)	#hash bcrypt using secret key on top
 			final = "registered"
-			insertU = cur.execute("INSERT INTO `users` (email, pass) VALUES (?, ?)", (email, hashedPass))	#insert into DB
+			insertU = c.execute("INSERT INTO `users` (email, fn, ln, pass) VALUES (?, ?, ?, ?)", (email, fn, ln, hashedPass))	#insert into DB
 			dbconn.commit()
-
 		dbconn.close()
 	except:
-			final = "Couldn't connect to the database. Please reload."
+		final = "EXCEPTION: Couldn't connect to the database. Please reload."
 		
 	return final
 @app.route('/login', methods=['POST'])
 def login():
 	final = "Couldn't connect to the database. Please reload."
 	email = request.form.get('email')	#email/pw post 
-	password = request.form.get('pw')
+	password = request.form.get('pass')
 	try:
 		dbconn = sql.connect(sqlitedb)
 		dbconn.text_factory = str
-		cur = dbconn.cursor()
-		sel = cur.execute("SELECT * FROM `users` WHERE `email` = (?) ", (email,))
+		c = dbconn.cursor()
+		sel = c.execute("SELECT * FROM `users` WHERE `email` = (?) ", (email,))
 		finder = sel.fetchone()
 		if session.get('uid'):	#session already set
 			final = "You are already logged in."
 		elif not finder:	#email not found
 			final = "Sorry, that E-mail doesn't exist."
-		elif not bcrypt.verify(password, finder[2]):	#not correct password
+		elif not bcrypt.verify(password, finder[4]):	#not correct password
 			final = "Sorry, that is the wrong password."
-		elif bcrypt.verify(password, finder[2]) and finder:	#probably doublelogic somewhere here but just in case, logged in
+		elif bcrypt.verify(password, finder[4]) and finder:	#probably doublelogic somewhere here but just in case, logged in
 			final = "logged"
 			session['uid'] = finder[0]	#set session
 		else:
-			final = "An unexpected error occured. Please try again."
+			final = "An unexpected error occurred. Please try again."
 		dbconn.close()
 	except:
-		final = "Couldn't connect to the database. Please reload."
+		final = "ERROR: Couldn't connect to the database. Please reload."
 		
 	return final
 	
