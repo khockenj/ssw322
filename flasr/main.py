@@ -22,8 +22,8 @@ def index():
 		#login stuff here
 	#except:
 		#test = "DB Connection Failure"
-	return render_template('index.html', name='index', logcheck=logCheck)	
-	
+	return render_template('index.html', name='index', logcheck=logCheck)
+
 @app.route('/register', methods=['POST'])
 def register():
 	final = "Couldn't connect to the database. Please reload"
@@ -53,12 +53,12 @@ def register():
 		dbconn.close()
 	except:
 		final = "EXCEPTION: Couldn't connect to the database. Please reload."
-		
+
 	return final
 @app.route('/login', methods=['POST'])
 def login():
 	final = "Couldn't connect to the database. Please reload."
-	email = request.form.get('email')	#email/pw post 
+	email = request.form.get('email')	#email/pw post
 	password = request.form.get('pass')
 	try:
 		dbconn = sql.connect(sqlitedb)
@@ -80,9 +80,9 @@ def login():
 		dbconn.close()
 	except:
 		final = "ERROR: Couldn't connect to the database. Please reload."
-		
+
 	return final
-	
+
 @app.route('/logout')
 def logout():
 	final = ""
@@ -102,11 +102,10 @@ def dashboard():
 @app.route('/add')
 def add():
 	return render_template('index.html', name='add')
-	
+
 @app.route('/edit')
 def edit():
 	return 0
 @app.route('/take')
 def take():
 	return 0
-	
