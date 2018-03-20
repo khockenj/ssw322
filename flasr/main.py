@@ -100,9 +100,10 @@ def dashboard():
 		logCheck = 0
 	return render_template('dashboard.html', name='dash', logcheck=logCheck)
 
-@app.route('/add')
+@app.route('/add', methods=['POST'])
 def add():
-	return render_template('index.html', name='add')
+	t = request.form.get('t')
+	return render_template('question.html', testOrSurvey = t, qType='MultipleChoice')
 
 @app.route('/edit')
 def edit():

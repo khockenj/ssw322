@@ -24,7 +24,7 @@
 <script src="{{url_for('static', filename='passfield-1.1.13/js/locales.js') }}"></script>
 <script src="{{url_for('static', filename='materialize.min.js') }}"></script>
 
-  
+
 <style>
  nav, footer {
   background-color: #FF9800 !important;
@@ -44,7 +44,7 @@
  #git:hover {
  color:white !important;
  }
-.carousel { 
+.carousel {
 max-height:58.87%;
 }
 .arrows {
@@ -97,12 +97,13 @@ position:absolute;
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">remove_red_eye</i>View</a>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
+  <div id='testLoader'></div>
 	</div>
 
 
 
-        
-		
+
+
 </main>
 <!--This has to be outside a flexbox group-->
 <!--Bottom right button-->
@@ -144,47 +145,39 @@ position:absolute;
             </div>
           </div>
         </footer>
-        </body>    
+        </body>
  <script>
   $( function() {
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
   });
- 
+
 
   (function ($) {
-    $(function () {         
+    $(function () {
         $('.modal').modal();
         $('.modal-trigger').modal();
 		$('.carousel.carousel-slider').carousel({fullWidth: true});
 	}); // end of document ready
 })(jQuery);
-   
+
     $('#lm').click(function(){
 	$('.tap-target').tapTarget('open');
-   }); 
-   
+   });
+
    if("{{ name }}" == "index") {
-   
+
    } else if("{{ name }}" == "add") {
    document.getElementById("index").style.display = 'none';
    }
-  
-  $('#registerb').click(function() {
-  $.post("/register", $("#regf").serialize(), function(data) {
-        $("#regload").html(data).trigger('create');
-  });
-  });
-  
-   $('#logb').click(function() {
-  $.post("/login", $("#logf").serialize(), function(data) {
-        $("#logload").html(data).trigger('create');
-		if(data == "logged") {
-			window.location.reload(true);
-		}
-  });
-  });
-  
+
+//Take Test
+   $('#test').click(function() {
+   $.post("/add", "?t=" + $("test").attr("id"), function(data) {
+         $("#testLoader").html(data).trigger('create');
+   });
+   });
+
   logCheck = {{ logcheck }};
 </script>
 </html>
