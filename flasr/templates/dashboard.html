@@ -87,83 +87,20 @@ position:absolute;
   <!--Main-->
   <!--Put stuff below-->
  <main>
-	<div>
-  <a class="waves-effect waves-light btn-large"><i class="material-icons left">add</i>Make</a>
+	<div class='container center-align' style='padding:5px'>
+  <a class='dropdown-button btn-large' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
+	<ul id='dropdown1' class='dropdown-content'>
+    <li><a id='test' href="#!">Test</a></li>
+	<li class="divider"></li>
+    <li><a id='surv' href="#!">Survey</a></li>
+	</ul>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">remove_red_eye</i>View</a>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
 	</div>
-	<!--<div style='width:300px'>
-<ul id="sortable">
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
-  <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
-</ul>
-</div>-->
 
-<!--Register Modal-->
-   <div id="reg" class="modal">
-    <div class="modal-content">
-	<form class="col s12" id='regf'>
-      <h4>Registration</h4>
-      <div class="row">
-	<div class="row">
-        <div class="input-field col s6">
-          <input placeholder="Kevin" name="fn" id="fn" type="text" class="validate" />
-          <label for="fn">First Name</label>
-        </div>
-        <div class="input-field col s6">
-          <input placeholder="Hockenjos" name="ln" id="ln" type="text" class="validate" />
-          <label for="ln">Last Name</label>
-        </div>
-		</div>
-    <div class="row">
-        <div class="input-field col s6">
-          <input placeholder="kevin@surveyorange.com" name="email" id="email" type="email" class="validate" />
-          <label for="email">Email</label>
-        </div>
-        <div class="input-field col s6">
-          <input placeholder="abc123" id="pass" name="pass" type="password" class="validate" />
-          <label for="pass">Password</label>
-        </div>
-		</div>
-		</form>
-		</div>
-	<div id='regload'></div>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" id='registerb' class="modal-action modal-close waves-effect waves-green btn-flat">Register</a>
-    </div>
-  </div>
-<!--Login Modal-->
-     <div id="log" class="modal">
-    <div class="modal-content">
-	  <form id='logf' class="col s12">
-      <h4>Sign In</h4>
-      <div class="row">
-    <div class="row">
-        <div class="input-field col s6">
-          <input placeholder="kevin@surveyorange.com" name="email" id="email" type="email" class="validate">
-          <label for="email">Email</label>
-        </div>
-	<div class="row">
-        <div class="input-field col s6">
-          <input placeholder="abc123" id="pass" name="pass" type="password" class="validate">
-          <label for="pass">Password</label>
-        </div>
-		
-		</div>
-    </div>
-	<div id='logload'></div>
-    <div class="modal-footer">
-      <a href="#!" id='logb' class="modal-action modal-close waves-effect waves-green btn-flat">Sign In</a>
-    </div>
-	</form>
-  </div>
+
+
         
 		
 </main>
@@ -240,7 +177,6 @@ position:absolute;
   });
   
    $('#logb').click(function() {
-   alert($("#logf").serialize());
   $.post("/login", $("#logf").serialize(), function(data) {
         $("#logload").html(data).trigger('create');
 		if(data == "logged") {
