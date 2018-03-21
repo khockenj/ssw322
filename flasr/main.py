@@ -103,7 +103,8 @@ def dashboard():
 @app.route('/add', methods=['POST'])
 def add():
 	t = request.form.get('t')
-	return render_template('question.html', testOrSurvey = t, qType='MultipleChoice')
+	q = request.form.get('qType')
+	return render_template('question.html', testOrSurvey=t, qType=q)
 
 @app.route('/edit')
 def edit():

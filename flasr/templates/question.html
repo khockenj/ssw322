@@ -1,39 +1,40 @@
 <!--CSS for Hidden-->
 <style>
-  .Hidden{
+  .hidden{
     display: none;
   }
 </style>
 
-<!--Multiple Choice Question-->
-<form action="#" id='MultipleChoice' class='Hidden'>
-  <p>
-    <input name="group1" type="radio" id="test1" />
-    <label for="test1">Red</label>
-  </p>
-  <p>
-    <input name="group1" type="radio" id="test2" />
-    <label for="test2">Yellow</label>
-  </p>
-  <p>
-    <input class="with-gap" name="group1" type="radio" id="test3"  />
-    <label for="test3">Green</label>
-  </p>
-  <p>
-    <input name="group1" type="radio" id="test4" disabled="disabled" />
-    <label for="test4">Brown</label>
-  </p>
+<!--Multiple Choice-->
+<form action="#" id='mc' class='hidden'>
+multiple choice
 </form>
 
+<!--True False-->
+<form action="#" id='tf' class='hidden'>
+true false
+</form>
+
+<!--Short Answer-->
+<form action="#" id='sa' class='hidden'>
+short answer
+</form>
+
+<!--Ranking-->
+<form action="#" id='r' class='hidden'>
+ranking
+</form>
+
+<!--Matching-->
+<form action="#" id='m' class='hidden'>
+matching
+</form>
 
 <!--JavaScript-->
 <script type="text/javascript">
   testOrSurvey = '{{ testOrSurvey }}';
   qType = '{{ qType }}';
-
-  if (qType == 'MultipleChoice') {
-    currentQuestion = document.getElementById('MultipleChoice');
+  
+    currentQuestion = document.getElementById(qType);
     currentQuestion.style.display = 'inline';
-  }
-
 </script>

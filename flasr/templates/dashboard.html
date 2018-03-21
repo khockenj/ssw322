@@ -87,18 +87,45 @@ position:absolute;
   <!--Main-->
   <!--Put stuff below-->
  <main>
+
 	<div class='container center-align' style='padding:5px'>
   <a class='dropdown-button btn-large' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
 	<ul id='dropdown1' class='dropdown-content'>
-    <li><a id='test' href="#!">Test</a></li>
+    <li><a class="ts" id='t' href="#!">Test</a></li>
 	<li class="divider"></li>
-    <li><a id='surv' href="#!">Survey</a></li>
+    <li><a class="ts" id='s' href="#!">Survey</a></li>
 	</ul>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">remove_red_eye</i>View</a>
   <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
-  <div id='testLoader'></div>
-	</div>
+  </div>
+  <div class='container center-align'>
+   <div class="row">
+   		  <div id='testsurv' style='display:none;' class="input-field col s12">
+        <div class="card-panel white">
+          <span class="black-text">
+			<form id='q'>
+			<select id='list' name="qType">
+		<option value="" disabled selected>Choose a Question</option>
+		<option value="mc">Multiple Choice</option>
+		<option value="sa">Short Answer</option>
+		<option value="tf">True/False</option>
+		<!--<option value="4">Multiple</option>-->
+		<option value="m">Matching</option>
+		<option value="r">Ranking</option>
+			</select>
+			</form>
+		</div>
+		
+		  <div id='testLoader'></div>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
 
 
 
@@ -157,6 +184,7 @@ position:absolute;
     $(function () {
         $('.modal').modal();
         $('.modal-trigger').modal();
+		$('select').material_select();
 		$('.carousel.carousel-slider').carousel({fullWidth: true});
 	}); // end of document ready
 })(jQuery);
@@ -172,12 +200,17 @@ position:absolute;
    }
 
 //Take Test
-   $('#test').click(function() {
-   $.post("/add", "?t=" + $("test").attr("id"), function(data) {
+   var type = "";
+   $('.ts').click(function() {
+		type = $(this).attr("id");
+		document.getElementById("testsurv").style.display = 'inline';
+   });
+   
+   $('#list').change(function() {
+   $.post("/add", $("#q").serialize() + "&t=" + type, function(data) {
          $("#testLoader").html(data).trigger('create');
    });
-   });
-
+});
   logCheck = {{ logcheck }};
 </script>
 </html>
