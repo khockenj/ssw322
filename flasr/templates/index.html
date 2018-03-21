@@ -278,7 +278,6 @@ position:absolute;
   });
   
    $('#logb').click(function() {
-   alert($("#logf").serialize());
   $.post("/login", $("#logf").serialize(), function(data) {
         $("#logload").html(data).trigger('create');
 		if(data == "logged") {
