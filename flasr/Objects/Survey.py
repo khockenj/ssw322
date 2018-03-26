@@ -2,16 +2,18 @@
 
 class Survey:
 	isTest = False
-	answers = None
+	answers = []
     questions = []
 
     def Survey(isTest):
         self.isTest = isTest
 
-    def addQuestion(question):
+    def addQuestion(question, answer=None):
     	questions.append(question)
+
+        if isTest and answer:
+            answers.append(answer)
 
     def getQuestionList:
     	return questions
-
 	
