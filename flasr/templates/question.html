@@ -5,20 +5,73 @@
   }
 </style>
 
+<!--Question Input Field-->
+<div class="row">
+  <form class="col s12">
+    <div class="row">
+      <div class="input-field col s8">
+        <i class="material-icons prefix">mode_edit</i>
+        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+        <label for="icon_prefix2">Question</label>
+      </div>
+    </div>
+  </form>
+</div>
+
 <!--Multiple Choice-->
 <form action="#" id='mc' class='hidden'>
-multiple choice
+
+  <!--Choice Field-->
+    <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">mode_edit</i>
+          <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+          <label for="icon_prefix2">True Option</label>
+        </div>
+      </div>
+    </form>
+  </div>
 </form>
+
+
+
+
+
 
 <!--True False-->
 <form action="#" id='tf' class='hidden'>
-true false
+
+  <!--True and False Choices-->
+  <form action="#">
+    <p>
+      <input name="group1" type="radio" id="test1" />
+      <label for="test1">True</label>
+    </p>
+
+    <p>
+      <input name="group1" type="radio" id="test1" />
+      <label for="test1">False</label>
+    </p>
 </form>
+
+</form>
+
+
+
+
+
 
 <!--Short Answer-->
 <form action="#" id='sa' class='hidden'>
-short answer
 </form>
+
+
+
+
+
+
 
 <!--Ranking-->
 <form action="#" id='r' class='hidden'>
@@ -30,11 +83,18 @@ ranking
 matching
 </form>
 
+<!-- Submit Button -->
+<div class='container right-align' style='padding:5px'>
+  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+</div>
+
 <!--JavaScript-->
 <script type="text/javascript">
   testOrSurvey = '{{ testOrSurvey }}';
   qType = '{{ qType }}';
-  
+
     currentQuestion = document.getElementById(qType);
     currentQuestion.style.display = 'inline';
 </script>
