@@ -117,12 +117,16 @@
                   <option value="r">Ranking</option>
                 </select>
               </form>
-            </div>
-
-            <div id='testLoader'></div>
           </span>
-        </div>
-      </div>
+		  </div>
+		  </div>
+		  </div>
+		  <div class='row'>
+          <div id='qLoad' style='display:none' class="card-panel white">
+            <span class="black-text">
+		       <div id='testLoader'></div>
+			   </span>
+			   </div>
     </div>
 
   </div>
@@ -204,6 +208,7 @@ var type = "";
 $('.ts').click(function() {
   type = $(this).attr("id");
   document.getElementById("testsurv").style.display = 'inline';
+  document.getElementById("qLoad").style.display = 'block';
 });
 
 $('#list').change(function() {

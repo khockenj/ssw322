@@ -6,67 +6,70 @@
 </style>
 
 <!--Question Input Field-->
-<div class="row">
-  <form class="col s12">
-    <div class="row">
-      <div class="input-field col s8">
-        <i class="material-icons prefix">mode_edit</i>
-        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-        <label for="icon_prefix2">Question</label>
-      </div>
-    </div>
-  </form>
-</div>
 
 <!--Multiple Choice-->
 <form action="#" id='mc' class='hidden'>
-
-  <!--Choice Field-->
-    <div class="row">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s6">
-          <i class="material-icons prefix">mode_edit</i>
-          <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-          <label for="icon_prefix2">True Option</label>
-        </div>
+<div class="row" style="padding:5px">
+		<div class="input-field col s12">
+        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+        <label for="icon_prefix2">Question</label>
       </div>
-    </form>
-  </div>
+		</div>
+		
+		<div id='questions'>
+		<div class='row'>
+		<div class="input-field col s12">
+        <input type='text' id='a1' name='a1' />
+        <label for="a1">Answer 1</label>
+		</div>
+		</div>
+		</div>
+		
+		<div class='row'><a id='addQ' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
+		
+		<div class='row'>
+		<div class='container right-align' style='padding:5px'>
+		<button class="btn waves-effect waves-light orange" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+		</div>
+		</div>
 </form>
-
-
-
-
-
-
-<!--True False-->
-<form action="#" id='tf' class='hidden'>
-
-  <!--True and False Choices-->
-  <form action="#">
-    <p>
-      <input name="group1" type="radio" id="test1" />
-      <label for="test1">True</label>
-    </p>
-
-    <p>
-      <input name="group1" type="radio" id="test1" />
-      <label for="test1">False</label>
-    </p>
-</form>
-
-</form>
-
-
-
-
 
 
 <!--Short Answer-->
 <form action="#" id='sa' class='hidden'>
+<div class="row" style="padding:5px">
+		<div class="input-field col s6">
+        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+        <label for="icon_prefix2">Question</label>
+      </div>
+	  
+        <div class="input-field col s6">
+          <input id="climit" type="number" />
+          <label for="climit">Character Limit</label>
+        </div>
+		</div>
+		<div class='row'>
+		<div class='container right-align' style='padding:5px'>
+		<button class="btn waves-effect waves-light orange" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+</div>
+</div>
 </form>
 
+<!--True False-->
+<form action="#" id='tf' class='hidden'>
+    <p>
+	  <input name="t" type="radio"/>
+      <label>
+        <span>True</span>
+      </label>
+    </p>
+ <p>
+	  <input name="false" type="radio"/>
+      <label>
+        <span>False</span>
+      </label>
+    </p>
+</form>
 
 
 
@@ -75,7 +78,36 @@
 
 <!--Ranking-->
 <form action="#" id='r' class='hidden'>
-ranking
+<div class="row" style="padding:5px">
+		<div class="input-field col s12">
+        <textarea id="question" class="materialize-textarea"></textarea>
+        <label for="question">Question</label>
+      </div>
+		</div>
+		
+		<div id='rQuestions'>
+		<div class='row'>
+		
+		<div class="input-field col s6">
+        <input type='text' id='a1' name='a1' />
+        <label for="a1">Answer 1</label>
+		</div>
+		
+		<div class="input-field col s6">
+        <input type='text' id='rank' name='rank' />
+        <label for="a1">Rank</label>
+		</div>
+		
+		</div>
+		</div>
+		
+		<div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
+		
+		<div class='row'>
+		<div class='container right-align' style='padding:5px'>
+		<button class="btn waves-effect waves-light orange" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+		</div>
+		</div>
 </form>
 
 <!--Matching-->
@@ -84,11 +116,6 @@ matching
 </form>
 
 <!-- Submit Button -->
-<div class='container right-align' style='padding:5px'>
-  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <i class="material-icons right">send</i>
-  </button>
-</div>
 
 <!--JavaScript-->
 <script type="text/javascript">
@@ -97,4 +124,12 @@ matching
 
     currentQuestion = document.getElementById(qType);
     currentQuestion.style.display = 'inline';
+	
+  $('#addQ').click(function() {
+    $("#questions").append("<div class='row'><div class='input-field col s12'><input type='text' id='a1' name='a1' /><label for='a1'>Answer 1</label></div></div>");
+  });
+  
+   $('#addRank').click(function() {
+    $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a1' name='a1' /><label for='a1'>Answer 1</label></div><div class='input-field col s6'><input type='text' id='rank' name='rank' /><label for='a1'>Rank</label></div></div>");
+  });
 </script>
