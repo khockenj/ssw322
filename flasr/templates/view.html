@@ -63,6 +63,12 @@
     background-color:#fff8ef !important;
   }
 </style>
+
+<style>
+  .hidden{
+    display: none;
+  }
+</style>
 </head>
 <body>
   <!--Header-->
@@ -86,6 +92,18 @@
   <!--Main-->
   <!--Put stuff below-->
   <main>
+  <div class='container center-align' style='padding:5px'>
+      <a class='dropdown-button btn-large' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a class="ts" id='t' href="#!">Test</a></li>
+        <li class="divider"></li>
+        <li><a class="ts" id='s' href="#!">Survey</a></li>
+      </ul>
+      <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
+      <a class="waves-effect waves-light btn-large"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
+      <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
+    </div>
+	
     <div class='container center-align'>
       <div class="row">
         <div id='testsurv' class="input-field col s12">
@@ -93,7 +111,7 @@
             <span class="black-text">
 
               <!--Matching-->
-              <form id='m'>
+              <form id='m' class='hidden'>
 			  <table id='m' class="centered">
 			  <thead>
 			  <tr>
@@ -108,8 +126,7 @@
               </form>
 
 			  <!--Multiple Choice-->
-			  <div class='row'>
-			  <form id='mc'>
+			  <form id='mc' class='hidden'>
 			  <div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium;">Which of the below isn't a fruit?</p></div>
 			   <div class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
 			   <p>
@@ -130,10 +147,9 @@
 				</p>
 				</div>
 				</form>
-				</div>
 				<!--TrueFalse-->
-				<div class='row'>
-			<form id='tf'>
+
+			<form id='tf' class='hidden'>
 			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium;">Oranges are orange.</p></div>
 			<div class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
 			   <p>
@@ -146,16 +162,14 @@
 				</p>
 				</div>
 				</form>
-				</div>
 
 				<!--ShortAnswer-->
-			<div class='row'>
-			<form id='sa'>
+			<form id='sa' class='hidden'>
 			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium; padding-bottom:2%;">Write a short essay on fruit [500 characters]</p></div>
 			<div class='col s12 center-align'>Fruit are my favorite. I love fruit. I love fruit so much I want to marry fruit. Haha. I love fruit. I think that Oranges are my favorite fruit of all time. I want to marry you, Orange. Will you marry me?</div></form></div>
 
       <!--Ranking-->
-      <form id='r'>
+      <form id='r' class='hidden'>
         <table id='r' class="centered">
           <thead>
             <th colspan='2'> {{ passedQ }} </th>
@@ -232,16 +246,16 @@ var qType = "{{ passedQType }}";
 var ans = "{{ passedAns }}";
 
 if(qType == "mc") {
-
+  document.getElementById("mc").style.display = 'block';
 } else if(qType == "sa") {
-
+  document.getElementById("sa").style.display = 'block';
 } else if(qType == "m") {
-
+   document.getElementById("m").style.display = 'block';
 } else if(qType == "r") {
-
+  document.getElementById("r").style.display = 'block';
 } else if(qType == "tf") {
-
-}
+  document.getElementById("tf").style.display = 'block';
+}  
 
 choices.forEach(function(x, i) {
 	$("table#m").append("<tr><td style='text-align:center;'>" + x + "</td><td style='text-align:center;'>" + matches[i] + "</td></tr>");
@@ -251,5 +265,57 @@ choices.forEach(function(x, i) {
 	$("table#r").append("<tr><td style='text-align:center;'>"+(i+1)+"</td><td style='text-align:center;'>" + x + "</td></tr>");
 });
 
+</script>
+
+<script>
+$( function() {
+  $( "#sortable" ).sortable();
+  $( "#sortable" ).disableSelection();
+});
+
+
+(function ($) {
+  $(function () {
+    $('select').material_select();
+  }); // end of document ready
+})(jQuery);
+
+//View
+$('#view').click(function(){
+  $.post("/templates/view.html", "t=" + type, function(data) {
+    $("#testLoader").html(data).trigger('create');
+  });
+});
+
+if("{{ name }}" == "index") {
+
+} else if("{{ name }}" == "add") {
+  document.getElementById("index").style.display = 'none';
+}
+
+//Take Test
+var type = "";
+$('.ts').click(function() {
+  if(type != $(this).attr("id")) {
+  		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
+		$("#testLoader").html("");
+		$('#list').val("");
+		$('select').material_select();
+  }
+type = $(this).attr("id");
+
+  document.getElementById("testsurv").style.display = 'inline';
+  document.getElementById("qLoad").style.display = 'block';
+  $.post("/createSurveyObject", "t=" + type, function(data) {
+    alert(data);
+  });
+});
+
+$('#list').change(function() {
+  $.post("/add", $("#q").serialize() + "&t=" + type, function(data) {
+    $("#testLoader").html(data).trigger('create');
+  });
+});
+logCheck = {{ logcheck }};
 </script>
 </html>
