@@ -207,8 +207,9 @@ if("{{ name }}" == "index") {
 //Take Test
 var type = "";
 $('.ts').click(function() {
-  type = $(this).attr("id");
-  
+	type = $(this).attr("id");
+  if(type != $(this).attr("id")) { }
+	
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
   $.post("/createSurveyObject", "t=" + type, function(data) {
