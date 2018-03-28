@@ -39,13 +39,13 @@
 <form action="#" id='sa' class='hidden'>
 <div class="row" style="padding:5px">
 		<div class="input-field col s6">
-        <textarea id="q" class="materialize-textarea"></textarea>
-        <label for="q">Question</label>
+        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+        <label for="icon_prefix2">Question</label>
       </div>
 
         <div class="input-field col s6">
-          <input id="limit" type="number" />
-          <label for="limit">Character Limit</label>
+          <input id="climit" type="number" />
+          <label for="climit">Character Limit</label>
         </div>
 		</div>
 		<div class='row'>
@@ -54,6 +54,9 @@
 </div>
 </div>
 </form>
+
+
+
 
 <!--True False-->
 <form action="#" id='tf' class='hidden'>
@@ -65,13 +68,13 @@
 	  <div class="row">
 	  <div class="col s6 center-align">
     <p>
-	  <input name="true" id='true' type="radio" />
+	  <input name="tfgroup" id='true' type="radio" />
       <label for="true">
         True
       </label>
     </p>
  <p>
-	  <input name="false" id='false' type="radio" />
+	  <input name="tfgroup" id='false' type="radio" />
       <label for="false">
         False
       </label>
@@ -185,9 +188,7 @@
 
   $("[id='saveQ']").click(function() {
 	if(qType == "sa") {
-	 $.post("/addToDB", $("#sa").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
-		alert(data);
-	});
+	//post question + char counter
 	} else if(qType == "mc") {
 	//post question + all choices
 	} else if(qType == "r") {
