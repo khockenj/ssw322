@@ -1,4 +1,4 @@
-from Question import Question
+from .Question import Question
 
 class Ranking(Question):
     options = []
@@ -14,10 +14,11 @@ class Ranking(Question):
     def getOptions:
         return options
 
-    def serialize(self):
+    """def serialize(self):
 	    response = {
     	    'uniquID': uniqueID,
             'Question': question,
             'choices': choices
   	    }
   	    return response
+"""

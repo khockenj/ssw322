@@ -1,4 +1,4 @@
-from Question import Question
+from .Question import Question
 
 class Matching(Question):
     choices = []
@@ -14,10 +14,11 @@ class Matching(Question):
     def getChoices:
         return choices
 
-    def serialize():
+   """ def serialize():
     	response = {
     	    'uniqueID': self.uniqueID,
             'Question': self.question,
             'Choices': self.choices
     	}
     	return response
+   """

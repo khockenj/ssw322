@@ -5,6 +5,17 @@ from math import pi
 from email_validator import validate_email, EmailNotValidError
 from passlib.hash import bcrypt
 from flask import Flask, render_template, request, session, redirect, url_for
+from pymongo import MongoClient
+
+#Project Imports
+from .Objects.ShortAnswer import ShortAnswer
+
+#Database Setup
+client = MongoClient('localhost', 40000)
+db = client['objects-database']
+surveys = db.test_collection
+
+#Flask Setup
 app = Flask(__name__)
 app.secret_key = bcrypt.hash("7f58dcac5fedb47467d61bf0f21de582")
 sqlitedb = 'ssw322.db'
@@ -116,6 +127,7 @@ def addToDB():
 		aChoices = request.form.get('ac')
 	elif qType == "sa":
 		climit = request.form.get('limit')
+		newShortAnswer = ShortAnswer('SA', q, climit)
 	elif qType == "r":
 		placeholder = 0
 		a = request.form.get('a')
@@ -127,14 +139,12 @@ def addToDB():
 		a = request.form.get('a')
 	else:
 		q = "ERROR"
-	
+
 	return "q:" + q
-	
+
 @app.route('/edit')
 def edit():
 	return 0
 @app.route('/take')
 def take():
 	return 0
-
-	
