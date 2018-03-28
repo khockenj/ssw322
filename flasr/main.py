@@ -142,27 +142,36 @@ def createSurveyObject():
 
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
-    global current_question
+    global current_survey
+    current_question
     q = request.form.get('q')
     t = request.form.get('t')
     qType = request.form.get('qType')
 
-    if t == True:
+    if t == 't':
         if qType == "m" or qType == "r":
             answer = []
             try:
                 count = 1
                 while(True):
-                    answer.append(requesst.form.get('a' + str(count)))
+                    answer.append(request.form.get('c' + str(count)))
                     count += 1
             finally:
-                survey.addAnswer(answer)
+                current_survey.addAnswer(answer)
 
         else:
-            answer = request.form.get('a')
-            survey.addAnswer(answer)
+            answer = request.form.get('c')
+            current_survey.addAnswer(answer)
 
     if qType == "mc":
+        answer = []
+        try:
+            count = 1
+            while(True):
+                current_question.append(request.form.get('a' + str(count)))
+                count += 1
+        finally:
+            current_survey.addAnswer(answer)
         aChoices = request.form.get('ac')
     elif qType == "sa":
         climit = request.form.get('limit')

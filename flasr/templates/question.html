@@ -217,7 +217,7 @@
 	matchNum = "m" + num;
     $("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Match " + num + ": A</label></div><div class='input-field col s6'><input type='text' id='" + matchNum + "' name='" + matchNum + "' /><label for='" + matchNum + "'>Match " + num + ": B</label></div></div>");
   });
-  
+
   $("[id='saveQ']").click(function() {
 	if(qType == "sa") {
 	 $.post("/addToDB", $("#sa").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
