@@ -148,31 +148,15 @@ def addToDB():
     t = request.form.get('t')
     qType = request.form.get('qType')
 
-    if t == 't':
-        if qType == "m" or qType == "r":
-            answer = []
-            try:
-                count = 1
-                while(True):
-                    answer.append(request.form.get('c' + str(count)))
-                    count += 1
-            finally:
-                current_survey.addAnswer(answer)
-
-        else:
-            answer = request.form.get('c')
-            current_survey.addAnswer(answer)
-
     if qType == "mc":
-        answer = []
+        current_question = MultipleChoice("MC", q)
         try:
             count = 1
             while(True):
-                current_question.append(request.form.get('a' + str(count)))
+                current_question.addChoice(request.form.get('a' + str(count)))
                 count += 1
         finally:
-            current_survey.addAnswer(answer)
-        aChoices = request.form.get('ac')
+            current_survey.addAnswer(request.form.get('c'))
     elif qType == "sa":
         climit = request.form.get('limit')
         current_question = ShortAnswer('SA', q, climit)
@@ -180,7 +164,8 @@ def addToDB():
         placeholder = 0
         a = request.form.get('a')
     elif qType == "tf":
-        placeholder = 0
+        current_question = TrueFalse("TF", q)
+        current_survey.addAnswer(request.form.get('opt'))
     elif qType == "m":
         placeholder = 0
     else:
