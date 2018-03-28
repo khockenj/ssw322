@@ -181,7 +181,7 @@
         </form>
 
               <!--Next Button-->
-              <div class='row'>
+
 			  <span class='container left-align' style="padding-right:25%;">
                   <button type="button" class="btn waves-effect waves-light orange" name="prev" id="prev">Prev <i class="material-icons left">navigate_before</i></button>
                 </span>
@@ -190,10 +190,9 @@
                   <button type="button" class="btn waves-effect waves-light orange" name="next" id="next">Next <i class="material-icons right">navigate_next</i></button>
                 </span>
 
-              </div>
+
 
             </span>
-          </div>
         </div>
       </div>
     </div>
@@ -245,15 +244,15 @@ var matches = {{ passedMatches|tojson }};
 var qType = "{{ passedQType }}";
 var ans = "{{ passedAns }}";
 
-if(qType == "mc") {
+if(qType == "MC") {
   document.getElementById("mc").style.display = 'block';
-} else if(qType == "sa") {
+} else if(qType == "SA") {
   document.getElementById("sa").style.display = 'block';
-} else if(qType == "m") {
+} else if(qType == "M") {
    document.getElementById("m").style.display = 'block';
-} else if(qType == "r") {
+} else if(qType == "R") {
   document.getElementById("r").style.display = 'block';
-} else if(qType == "tf") {
+} else if(qType == "TF") {
   document.getElementById("tf").style.display = 'block';
 }  
 
@@ -316,6 +315,5 @@ $('#list').change(function() {
     $("#testLoader").html(data).trigger('create');
   });
 });
-logCheck = {{ logcheck }};
 </script>
 </html>

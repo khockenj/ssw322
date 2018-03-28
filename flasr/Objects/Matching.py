@@ -10,8 +10,8 @@ class Matching(Question):
         self.choices = choices
         self.matches = matches
 
-    def addChoiceAndMatch(self, choice, Match):
+    def addChoiceAndMatch(self, choice, match):
         self.choices.append(choice)
-
+        self.matches.append(match)
     def getChoices(self):
         return self.choices

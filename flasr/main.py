@@ -240,7 +240,7 @@ def view():
 			answer = aList[counterForaList]
 			choices = i.choices
 		else:
-			answer = aList[counterForaList]
+			answer = ""
 			choices = i.choices
 			matches = i.matches
 
