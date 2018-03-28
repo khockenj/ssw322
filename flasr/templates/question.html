@@ -226,28 +226,29 @@
 
   $("[id='saveQ'], #save").click(function() {
 	if(qType == "sa") {
-	 $.post("/addToDB", $("#sa").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
+	 $.post("/addToDB", $("#sa").serialize() + "&t=" + testOrSurvey + "&qType=" + qType, function(data) {
 		alert(data);
 		reset();
 		});
 	} else if(qType == "mc") {
-		$.post("/addToDB", $("#mc").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
-			alert($("#mc").serialize());
+		$.post("/addToDB", $("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num, function(data) {
+		alert($("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num);
+		alert(data);
 			num = 1;
 			ansNum = "a1";
 			correctNum = "c1";
 			reset();
 		});
 	} else if(qType == "r") {
-		$.post("/addToDB", $("#r").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
-		alert($("#r").serialize());
+		$.post("/addToDB", $("#r").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num, function(data) {
+		alert($("#r").serialize() + "&t=" + type + "&qType=" + qType + "&n=" + num);
 		ansNum = "a1";
 		num = 1;
 		rankNum = "r1";
 		reset();
 		});
 	} else if(qType == "m") {
-		$.post("/addToDB", $("#m").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
+		$.post("/addToDB", $("#m").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num, function(data) {
 		alert($("#m").serialize());
 		ansNum = "a1";
 		num = 1;
@@ -255,7 +256,7 @@
 		reset();
 		});
 	} else if(qType == "tf") {
-		$.post("/addToDB", $("#tf").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
+		$.post("/addToDB", $("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&opt=" + opt, function(data) {
 		alert($("#tf").serialize());
 		});
 		reset();

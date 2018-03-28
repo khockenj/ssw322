@@ -132,10 +132,8 @@ def createSurveyObject():
     global current_survey
     if t == 't':
         current_survey = Survey(True)
-        return('Test')
     else:
         current_survey = Survey(False)
-        return(str(current_survey.isTest))
     return t
 
 
@@ -150,27 +148,26 @@ def addToDB():
 
     if qType == "mc":
         current_question = MultipleChoice("MC", q)
-        try:
-            count = 1
-            while(True):
-                current_question.addChoice(request.form.get('a' + str(count)))
-                count += 1
-        finally:
-            current_survey.addAnswer(request.form.get('c'))
+
+        for c in range(1, request.form.get('n') + 1):
+            current_question.addChoice(request.form.get('a' + str(c)))
+
+        #if t == 't':
+        current_survey.addAnswer(request.form.get('c'))
     elif qType == "sa":
         climit = request.form.get('limit')
         current_question = ShortAnswer('SA', q, climit)
+        current_survey.addAnswer(" ")
     elif qType == "r":
         current_question = Ranking("R", q)
         answer = []
-        try:
-            count = 1
-            while(True):
-                current_question.addOption(request.form.get('r' + str(count)))
+
+        for c in range(request.form.get('n')):
+            current_question.addOption(request.form.get('r' + str(count)))
+            if t == "t":
                 answer.append(request.form.get('a' + str(count)))
-                count += 1
-        finally:
-            current_survey.addAnswer(answer)
+
+        current_survey.addAnswer(answer)
     elif qType == "tf":
         current_question = TrueFalse("TF", q)
         current_survey.addAnswer(request.form.get('opt'))
