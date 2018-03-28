@@ -156,36 +156,41 @@ def addToDB():
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
 
-        #if t == 't':
-        current_survey.addAnswer(request.form.get('c'))
+        if t == 't':
+            current_survey.addAnswer(request.form.get('c'))
     elif qType == "sa":
         climit = request.form.get('limit')
         current_question = ShortAnswer('SA', q, climit)
-        current_survey.addAnswer(" ")
+        if t == 't':
+            current_survey.addAnswer(" ")
     elif qType == "r":
         current_question = Ranking("R", q)
         answer = []
 
         for c in range(1, int(request.form.get('n'))):
             current_question.addChoice(request.form.get('r' + str(c)))
-            answer.append(request.form.get('a' + str(c)))
-
-        current_survey.addAnswer(answer)
+            if t == 't':
+                answer.append(request.form.get('a' + str(c)))
+        if t == 't':
+            current_survey.addAnswer(answer)
     elif qType == "tf":
         current_question = TrueFalse("TF", q)
-        current_survey.addAnswer(request.form.get('opt'))
+
+        if t == 't':
+            current_survey.addAnswer(request.form.get('opt'))
     elif qType == "m":
         current_question = Matching("M", q)
         for c in range(1, int(request.form.get('n'))):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
 
-        current_survey.addAnswer(" ")
+        if t == 't':
+            current_survey.addAnswer(" ")
     else:
         q = "ERROR"
 
     current_survey.addQuestion(current_question)
 
-    return "q:" + request.form.get('opt')
+    return "q:" + q
 
 @app.route('/edit')
 def edit():
