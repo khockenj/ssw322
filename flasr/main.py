@@ -220,9 +220,11 @@ def view():
 	choices = None
 	matches = None
 	options = None
+	qType = None
 
 	for i in qList:
 		question = i.question
+		qType = i.q_type
 		if i.q_type == "TF":
 			answer = aList[counterForaList]
 		elif i.q_type == "SA":
@@ -238,4 +240,4 @@ def view():
 			choices = i.choices
 			matches = i.matches
 
-	return render_template('view.html', passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches)
+	return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches)
