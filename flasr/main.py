@@ -106,9 +106,32 @@ def add():
 	q = request.form.get('qType')
 	return render_template('question.html', testOrSurvey=t, qType=q)
 
+@app.route('/addToDB', methods=['POST'])
+def addToDB():
+	q = request.form.get('q')
+	a = request.form.get('a')
+	t = request.form.get('t')
+	qType = request.form.get('qType')
+	if qType == "mc":
+		aChoices = request.form.get('ac')
+	elif qType == "sa":
+		climit = request.form.get('limit')
+	elif qType == "r":
+		placeholder = 0
+	elif qType == "tf":
+		placeholder = 0
+	elif qType == "m":
+		placeholder = 0
+	else:
+		q == "ERROR"
+	
+	return q
+	
 @app.route('/edit')
 def edit():
 	return 0
 @app.route('/take')
 def take():
 	return 0
+
+	
