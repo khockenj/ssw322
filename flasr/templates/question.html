@@ -201,14 +201,16 @@
 	num++;
 	ansNum = "a" + num;
 	correctNum = "c" + num;
-    $("#questions").append("<div class='row'><div class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
-  });
+    $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
+	$("[id='testOnly']").html("");
+ });
 
    $('#addRank').click(function() {
 	num++;
 	ansNum = "a" + num;
 	rankNum = "r" + num;
-    $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer" + num + "</label></div><div class='input-field col s6'><input type='text' id='rank' name='" + rankNum + "' /><label for='" + rankNum + "'>Rank</label></div></div>");
+    $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer" + num + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='" + rankNum + "' /><label for='" + rankNum + "'>Rank</label></div></div>");
+	$("[id='testOnly']").html("");
   });
 
    $('#addMatch').click(function() {
@@ -217,13 +219,8 @@
 	matchNum = "m" + num;
     $("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Match " + num + ": A</label></div><div class='input-field col s6'><input type='text' id='" + matchNum + "' name='" + matchNum + "' /><label for='" + matchNum + "'>Match " + num + ": B</label></div></div>");
   });
-<<<<<<< HEAD
-  
-  $("[id='saveQ'], #save").click(function() {
-=======
 
-  $("[id='saveQ']").click(function() {
->>>>>>> 2fdbeb7638cdd6c4ec153ca7a49e5ca5232ee12e
+  $("[id='saveQ'], #save").click(function() {
 	if(qType == "sa") {
 	 $.post("/addToDB", $("#sa").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
 		alert(data);
