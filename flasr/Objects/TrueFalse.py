@@ -2,7 +2,7 @@ import Question from Question
 
 class TrueFalse(Question):
 
-    def TrueFalse(uniqueID, question):
+    def __init__(self, uniqueID, question):
         self.uniqueID = uniqueID
         self.question = question
 

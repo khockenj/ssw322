@@ -2,7 +2,7 @@
 class AnswerSheet:
 	user_response
 
-    def AnswerSheet():
+    def __init__(self):
         self.user_response = []
 
     def addResponse(response):

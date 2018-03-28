@@ -1,9 +1,9 @@
-import Question from Question
+from Question import Question
 
 class Ranking(Question):
     options = []
 
-    def Ranking(uniqueID, question, options):
+    def __init__(self, uniqueID, question, options):
         self.uniqueID = uniqueID
         self.question = question
         self.options = options

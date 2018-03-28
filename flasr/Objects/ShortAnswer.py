@@ -1,7 +1,7 @@
-import Question from Question
+from Question import Question
 
 class ShortAnswer(Question):
 
-    def ShortAnswer(uniqueID, question, response):
+    def __init__(self, uniqueID, question, response):
         self.uniqueID = uniqueID
         self.question = question
