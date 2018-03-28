@@ -98,6 +98,7 @@
 			  <thead>
 			  <tr>
 			  <th colspan='2'> {{ passedQ }} </th>
+			  </tr>
 			  <tr>
 			  <th>Match A</th>
 			  <th>Match B</th>
@@ -107,27 +108,51 @@
               </form>
 			  
 			  <!--Multiple Choice-->
+			  <div class='row'>
 			  <form id='mc'>
-			  <div id='qLocation'><h1>Dumb fuckign question here bitch</h1></div>
-			   <div class='container col s12 center-align'>
+			  <div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium;">Which of the below isn't a fruit?</p></div>
+			   <div class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
 			   <p>
 				<input name="opt" value="1" id='val1' type="radio" disabled />
-				<label for="val1">Option 1</label>
+				<label for="val1">Apple</label>
 				</p>
 				<p>
 				<input name="opt" value="2" id='val2' type="radio" disabled />
-				<label for="val2">Option 2</label>
+				<label for="val2">Banana</label>
 				</p>
 				 <p>
 				<input name="opt" value="3" id='val3' type="radio" checked='checked' />
-				<label for="val3">Correct Answer</label>
+				<label for="val3">Vodka</label>
 				</p>
 				<p>
 				<input name="opt" value="4" id='val4' type="radio" disabled />
-				<label for="val4">Option 4</label>
+				<label for="val4">Orange</label>
 				</p>
 				</div>
 				</form>
+				</div>
+				<!--TrueFalse-->
+				<div class='row'>
+			<form id='tf'>
+			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium;">Oranges are orange.</p></div>
+			<div class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
+			   <p>
+				<input name="opt" value="1" id='true' type="radio" checked='checked' />
+				<label for="true">True</label>
+				</p>
+				<p>
+				<input name="opt" value="0" id='false' type="radio" disabled />
+				<label for="false">False</label>
+				</p>
+				</div>
+				</form>
+				</div>
+				
+				<!--ShortAnswer-->
+			<div class='row'>
+			<form id='sa'>
+			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium; padding-bottom:2%;">Write a short essay on fruit [500 characters]</p></div>
+			<div class='col s12 center-align'>Fruit are my favorite. I love fruit. I love fruit so much I want to marry fruit. Haha. I love fruit. I think that Oranges are my favorite fruit of all time. I want to marry you, Orange. Will you marry me?</div></form></div>
               <!--Next Button-->
               <div class='row'>
 			  <span class='container left-align' style="padding-right:25%;">
