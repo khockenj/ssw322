@@ -1,4 +1,4 @@
-from Survey.py import Survey
+from .Survey import Survey
 
 def saveTest():
 

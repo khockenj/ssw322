@@ -1,4 +1,4 @@
-from Question import Question
+from .Question import Question
 
 class MultipleChoice(Question):
 
@@ -15,10 +15,11 @@ class MultipleChoice(Question):
     def getChoices:
         return choices
 
-    def serialize():
+ """   def serialize():
     	response = {
     	    'uniquID': uniqueID,
             'Question': question,
             'choices': choices
     	}
     	return response
+"""

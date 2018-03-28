@@ -18,7 +18,7 @@ class Survey:
     def getQuestionList:
     	return self.questions
 
-    def serialize(self):
+   """ def serialize(self):
         response = {
             'isTest': self.isTest,
             'Answers': self.Answers,
@@ -28,3 +28,4 @@ class Survey:
             response['Questions'].append(c.serialize())
 
         return response
+"""

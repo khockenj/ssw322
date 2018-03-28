@@ -1,4 +1,4 @@
-from Question import Question
+from .Question import Question
 
 class ShortAnswer(Question):
 
@@ -6,8 +6,11 @@ class ShortAnswer(Question):
         self.uniqueID = uniqueID
         self.question = question
 
-    def serialize(self):
+    """def serialize(self):
     	response = {
     	    'uniqueID': self.uniqueID,
     	    'Question': self.question
     	}
+
+    	return response
+"""
