@@ -74,13 +74,13 @@
 	  <div id='testOnly' class="row">
 	  <div class="col s6 center-align">
     <p>
-	  <input name="opt" value="true" id='true' type="radio" />
+	  <input name="opt" value="1" id='true' type="radio" />
       <label for="true">
         True
       </label>
     </p>
  <p>
-	  <input name="opt" value="false" id='false' type="radio" />
+	  <input name="opt" value="0" id='false' type="radio" />
       <label for="false">
         False
       </label>
@@ -170,7 +170,7 @@
 <!-- Submit Button -->
 <div class='container right-align'>
 <form id='save'>
- <button class="btn waves-effect waves-light orange" name='saveButton'>Finish
+ <button type="button" class="btn waves-effect waves-light orange" id="save" name='saveButton'>Finish
     <i class="material-icons right">save</i>
   </button>
 </form>
@@ -201,14 +201,20 @@
 	num++;
 	ansNum = "a" + num;
 	correctNum = "c" + num;
-    $("#questions").append("<div class='row'><div class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
-  });
+    $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
+	if(testOrSurvey == "s") {
+	$("[id='testOnly']").html("");
+	}
+ });
 
    $('#addRank').click(function() {
 	num++;
 	ansNum = "a" + num;
 	rankNum = "r" + num;
-    $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer" + num + "</label></div><div class='input-field col s6'><input type='text' id='rank' name='" + rankNum + "' /><label for='" + rankNum + "'>Rank</label></div></div>");
+    $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer" + num + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='" + rankNum + "' /><label for='" + rankNum + "'>Rank</label></div></div>");
+	if(testOrSurvey == "s") {
+	$("[id='testOnly']").html("");
+	}
   });
 
    $('#addMatch').click(function() {
@@ -218,7 +224,7 @@
     $("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Match " + num + ": A</label></div><div class='input-field col s6'><input type='text' id='" + matchNum + "' name='" + matchNum + "' /><label for='" + matchNum + "'>Match " + num + ": B</label></div></div>");
   });
 
-  $("[id='saveQ']").click(function() {
+  $("[id='saveQ'], #save").click(function() {
 	if(qType == "sa") {
 	 $.post("/addToDB", $("#sa").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
 		alert(data);
@@ -243,17 +249,20 @@
 	} else if(qType == "m") {
 		$.post("/addToDB", $("#m").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
 		alert($("#m").serialize());
+		ansNum = "a1";
+		num = 1;
+		matchNum = "m1";
 		reset();
 		});
 	} else if(qType == "tf") {
 		$.post("/addToDB", $("#tf").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
 		alert($("#tf").serialize());
-		ansNum = "a1";
-		num = 1;
-		matchNum = "m1";
 		});
 		reset();
 	}
-	
+	type = $(this).attr("id");
+	if(type == "save") {
+		window.location.replace("/view");
+	}
   });
 </script>

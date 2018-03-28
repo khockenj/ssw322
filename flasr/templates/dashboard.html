@@ -216,8 +216,13 @@ if("{{ name }}" == "index") {
 //Take Test
 var type = "";
 $('.ts').click(function() {
-	type = $(this).attr("id");
-  if(type != $(this).attr("id")) { }
+  if(type != $(this).attr("id")) {
+  		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
+		$("#testLoader").html("");
+		$('#list').val("");
+		$('select').material_select();
+  }
+type = $(this).attr("id");
 
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
