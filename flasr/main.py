@@ -168,7 +168,7 @@ def addToDB():
         current_question = Ranking("R", q)
         answer = []
 
-        for c in range(1, int(request.form.get('n'))):
+        for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('r' + str(c)))
             if t == 't':
                 answer.append(request.form.get('a' + str(c)))
@@ -181,7 +181,7 @@ def addToDB():
             current_survey.addAnswer(request.form.get('opt'))
     elif qType == "m":
         current_question = Matching("M", q)
-        for c in range(1, int(request.form.get('n'))):
+        for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
 
         if t == 't':
@@ -229,14 +229,14 @@ def view():
 	for i in qList:
 		question = i.question
 		qType = i.q_type
-		if i.q_type == "tf":
+		if i.q_type == "TF":
 			answer = aList[counterForaList]
-		elif i.q_type == "sa":
+		elif i.q_type == "SA":
 			answer = None
-		elif i.q_type == "r":
+		elif i.q_type == "R":
 			answer = aList[counterForaList]
 			options = i.choices
-		elif i.q_type == "mc":
+		elif i.q_type == "MC":
 			answer = aList[counterForaList]
 			choices = i.choices
 		else:
