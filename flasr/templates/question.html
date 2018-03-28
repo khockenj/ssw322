@@ -202,7 +202,9 @@
 	ansNum = "a" + num;
 	correctNum = "c" + num;
     $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
+	if(testOrSurvey == "s") {
 	$("[id='testOnly']").html("");
+	}
  });
 
    $('#addRank').click(function() {
@@ -210,7 +212,9 @@
 	ansNum = "a" + num;
 	rankNum = "r" + num;
     $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Answer" + num + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='" + rankNum + "' /><label for='" + rankNum + "'>Rank</label></div></div>");
+	if(testOrSurvey == "s") {
 	$("[id='testOnly']").html("");
+	}
   });
 
    $('#addMatch').click(function() {
