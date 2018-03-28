@@ -243,6 +243,7 @@ var choices = {{ passedChoices|tojson }};
 var matches = {{ passedMatches|tojson }};
 var qType = "{{ passedQType }}";
 var ans = "{{ passedAns }}";
+var qIndex = "{{ qIndex }}";
 
 if(qType == "MC") {
   document.getElementById("mc").style.display = 'block';
@@ -264,6 +265,10 @@ choices.forEach(function(x, i) {
 	$("table#r").append("<tr><td style='text-align:center;'>"+(i+1)+"</td><td style='text-align:center;'>" + x + "</td></tr>");
 });
 
+ $('#next').click(function() {
+ alert("xxx");
+ 		window.location.replace("/view?qIndex=" + qIndex);
+});
 </script>
 
 <script>

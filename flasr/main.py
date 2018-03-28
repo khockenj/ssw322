@@ -200,7 +200,7 @@ def edit():
 def take():
     return 0
 
-@app.route('/view')
+@app.route('/view', methods=['POST', 'GET'])
 def view():
 	"""survey = Survey(True)
 	survey.addQuestion(Matching("M", "This is the Question.", ["option1", "option2", "option3"], ["option1", "option2", "option3"]))
@@ -214,6 +214,12 @@ def view():
 	survey.addQuestion(TrueFalse("TF", "This is the question",))
 	survey.addAnswer(0)"""
 
+	global cached_surveys
+	if request.form.get('qIndex') == None:
+		someIndex = 0
+	else:
+		someIndex = request.form.get('qIndex')
+
 	survey = cached_surveys[0]
 	qList = survey.getQuestionList()
 	aList = survey.answers
@@ -226,22 +232,22 @@ def view():
 	options = None
 	qType = None
 
-	for i in qList:
-		question = i.question
-		qType = i.q_type
-		if i.q_type == "TF":
-			answer = aList[counterForaList]
-		elif i.q_type == "SA":
-			answer = None
-		elif i.q_type == "R":
-			answer = aList[counterForaList]
-			options = i.choices
-		elif i.q_type == "MC":
-			answer = aList[counterForaList]
-			choices = i.choices
-		else:
-			answer = ""
-			choices = i.choices
-			matches = i.matches
+	i = qList[someIndex]
+	question = i.question
+	qType = i.q_type
+	if i.q_type == "TF":
+		answer = aList[counterForaList]
+	elif i.q_type == "SA":
+		answer = None
+	elif i.q_type == "R":
+		answer = aList[counterForaList]
+		options = i.choices
+	elif i.q_type == "MC":
+		answer = aList[counterForaList]
+		choices = i.choices
+	else:
+		answer = ""
+		choices = i.choices
+		matches = i.matches
 
-	return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches)
+	return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex)
