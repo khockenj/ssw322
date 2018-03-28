@@ -18,7 +18,7 @@
 
 		<div id='questions'>
 		<div class='row'>
-		<div class="col s1 center-align">
+		<div id='testOnly' class="col s1 center-align">
 		<p>
 		<input name="c" value="1" id='c1' type="radio" checked='checked' />
 		<label for="c1"></label>
@@ -71,7 +71,7 @@
         <textarea id="q" name="q" class="materialize-textarea"></textarea>
         <label for="q">Question</label>
       </div></div>
-	  <div class="row">
+	  <div id='testOnly' class="row">
 	  <div class="col s6 center-align">
     <p>
 	  <input name="opt" value="true" id='true' type="radio" />
@@ -116,7 +116,7 @@
         <label for="a1">Answer 1</label>
 		</div>
 
-		<div class="input-field col s6">
+		<div id='testOnly' class="input-field col s6">
         <input type='text' id='rank' name='r1' />
         <label for="r1">Rank</label>
 		</div>
@@ -188,7 +188,9 @@
   var ansArray = {};
     currentQuestion = document.getElementById(qType);
     currentQuestion.style.display = 'inline';
-
+	if(testOrSurvey == "s") {
+		$("[id='testOnly']").html("");
+	}
 	function reset() {
 		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
 		$(".hidden").html("");
