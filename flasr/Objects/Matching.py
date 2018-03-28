@@ -15,3 +15,5 @@ class Matching(Question):
         self.matches.append(match)
     def getChoices(self):
         return self.choices
+
+    def getMatches(self)
