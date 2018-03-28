@@ -20,7 +20,7 @@
 		<div class='row'>
 		<div class="col s1 center-align">
 		<p>
-		<input name="c" value="1" id='c1' type="radio" />
+		<input name="c" value="1" id='c1' type="radio" checked='checked' />
 		<label for="c1"></label>
 		</p>
 		</div>
@@ -192,6 +192,8 @@
 	function reset() {
 		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
 		$(".hidden").html("");
+		$('#list').val("");
+		$('select').material_select();
 	  }
   $('#addQ').click(function() {
 	num++;
