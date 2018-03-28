@@ -16,11 +16,6 @@ from Objects.TrueFalse import TrueFalse
 from Objects.MultipleChoice import MultipleChoice
 from Objects.ShortAnswer import ShortAnswer
 
-
-#HardCoded Survey Object for View implmentation
-sample_test = Survey(True)
-sample_test.addQuestion(TrueFalse(""))
-
 #Database Setup
 client = MongoClient('localhost', 40000)
 db = client['objects-database']
@@ -28,6 +23,20 @@ surveys = db.test_collection
 current_survey = None
 cached_surveys = []
 survey_num = 0
+
+#HardCoded Survey Object for View implmentation
+sample_test = Survey(True)
+sample_test.addQuestion(TrueFalse("TF", "This is the question"))
+sample_test.addAnswer(1)
+sample_test.addQuestion(Ranking('R', "This is the question", ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 6", "Option 7"]))
+sample_test.addAnswer([1, 2, 3, 4, 5, 6, 7])
+sample_test.addQuestion(ShortAnswer('SA', "This is the question"))
+sample_test.addAnswer(None)
+sample_test.addQuestion(MultipleChoice('MC', "This is the question", ["Option 1", "Option 2", "Option 3", "Option 4"]))
+sample_test.addAnswer(2)
+sample_test.addQuestion(Matching('M', "This is the question", ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5", "Option 6", "Option 7"]))
+sample_test.addAnswer([1, 2, 3, 4, 5, 6, 7])
+cached_surveys.append(sample_test)
 
 #Flask Setup
 app = Flask(__name__)

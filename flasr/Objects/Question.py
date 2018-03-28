@@ -1,9 +1,9 @@
 class Question:
-    uniqueID = 0
+    q_type = ''
     question = ''
 
-    def getUniqueID():
-        return uniqueID
+    def getQTpe():
+        return q_type
 
     def getQuestion():
         return question
