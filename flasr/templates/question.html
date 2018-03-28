@@ -15,7 +15,7 @@
         <label for="icon_prefix2">Question</label>
       </div>
 		</div>
-		
+
 		<div id='questions'>
 		<div class='row'>
 		<div class="input-field col s12">
@@ -24,9 +24,9 @@
 		</div>
 		</div>
 		</div>
-		
+
 		<div class='row'><a id='addQ' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
-		
+
 		<div class='row'>
 		<div class='container right-align' style='padding:5px'>
 		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" qtype="mc" id="saveQ">Save Question<i class="material-icons right">add</i></button>
@@ -42,7 +42,7 @@
         <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
         <label for="icon_prefix2">Question</label>
       </div>
-	  
+
         <div class="input-field col s6">
           <input id="climit" type="number" />
           <label for="climit">Character Limit</label>
@@ -98,25 +98,25 @@
         <label for="question">Question</label>
       </div>
 		</div>
-		
+
 		<div id='rQuestions'>
 		<div class='row'>
-		
+
 		<div class="input-field col s6">
         <input type='text' id='a1' name='a1' />
         <label for="a1">Answer 1</label>
 		</div>
-		
+
 		<div class="input-field col s6">
         <input type='text' id='rank' name='rank' />
         <label for="a1">Rank</label>
 		</div>
-		
+
 		</div>
 		</div>
-		
+
 		<div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
-		
+
 		<div class='row'>
 		<div class='container right-align' style='padding:5px'>
 		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" qtype='r' id="saveQ">Save Question<i class="material-icons right">add</i></button>
@@ -126,7 +126,36 @@
 
 <!--Matching-->
 <form action="#" id='m' class='hidden'>
-matching
+  <div class="row" style="padding:5px">
+  	<div class="input-field col s12">
+  		<textarea id="question" class="materialize-textarea"></textarea>
+  		<label for="question">Question</label>
+  	</div>
+  </div>
+
+  <div id='rQuestions'>
+  	<div class='row'>
+
+  		<div class="input-field col s6">
+  			<input type='text' id='matchA1' name='matchA1' />
+  			<label for="matchA1">Match A: 1</label>
+  		</div>
+
+  		<div class="input-field col s6">
+  			<input type='text' id='matchA2' name='matchA2' />
+  			<label for="matchA2">Match A: 2</label>
+  		</div>
+
+  	</div>
+  </div>
+
+  <div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
+
+  <div class='row'>
+  	<div class='container right-align' style='padding:5px'>
+  		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" qtype='r' id="saveQ">Save Question<i class="material-icons right">add</i></button>
+  	</div>
+  </div>
 </form>
 
 <!-- Submit Button -->
@@ -145,15 +174,15 @@ matching
 
     currentQuestion = document.getElementById(qType);
     currentQuestion.style.display = 'inline';
-	
+
   $('#addQ').click(function() {
     $("#questions").append("<div class='row'><div class='input-field col s12'><input type='text' id='a1' name='a1' /><label for='a1'>Answer 1</label></div></div>");
   });
-  
+
    $('#addRank').click(function() {
     $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a1' name='a1' /><label for='a1'>Answer 1</label></div><div class='input-field col s6'><input type='text' id='rank' name='rank' /><label for='a1'>Rank</label></div></div>");
   });
-  
+
   $("[id='saveQ']").click(function() {
 	if(qType == "sa") {
 	//post question + char counter
