@@ -136,7 +136,11 @@ def createSurveyObject():
         current_survey = Survey(False)
     return t
 
-
+@app.route('/saveSurvey', methods=['POST'])
+def saveSurvey():
+    global cached_surveys
+    global current_survey
+    cached_surveys.append(current_survey)
 
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
@@ -149,7 +153,7 @@ def addToDB():
     if qType == "mc":
         current_question = MultipleChoice("MC", q)
 
-        for c in range(1, request.form.get('n') + 1):
+        for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
 
         #if t == 't':
@@ -162,10 +166,9 @@ def addToDB():
         current_question = Ranking("R", q)
         answer = []
 
-        for c in range(request.form.get('n')):
-            current_question.addOption(request.form.get('r' + str(count)))
-            if t == "t":
-                answer.append(request.form.get('a' + str(count)))
+        for c in range(1, int(request.form.get('n'))):
+            current_question.addChoice(request.form.get('r' + str(c)))
+            answer.append(request.form.get('a' + str(c)))
 
         current_survey.addAnswer(answer)
     elif qType == "tf":
@@ -173,19 +176,16 @@ def addToDB():
         current_survey.addAnswer(request.form.get('opt'))
     elif qType == "m":
         current_question = Matching("M", q)
-        try:
-            count = 1
-            while(True):
-                current_question.addChoiceAndMatch(request.form.get('a' + str(count)), request.form.get('m' + str(count)))
-                count += 1
-        finally:
-            print("get right wit ya")
+        for c in range(1, int(request.form.get('n'))):
+            current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
+
+        current_survey.addAnswer(" ")
     else:
         q = "ERROR"
 
     current_survey.addQuestion(current_question)
 
-    return "q:" + q
+    return "q:" + request.form.get('opt')
 
 @app.route('/edit')
 def edit():
