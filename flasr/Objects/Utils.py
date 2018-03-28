@@ -1,5 +1,5 @@
 from Survey.py import Survey
 
-def saveTest(Survey):
-	
+def saveTest():
+
 

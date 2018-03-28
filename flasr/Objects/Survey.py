@@ -1,4 +1,5 @@
 """Main Survey Object"""
+from .
 
 class Survey:
 	isTest = False
@@ -15,5 +16,15 @@ class Survey:
             answers.append(answer)
 
     def getQuestionList:
-    	return questions
-	
+    	return self.questions
+
+    def serialize(self):
+        response = {
+            'isTest': self.isTest,
+            'Answers': self.Answers,
+            'Questions': []
+        }
+        for c in self.questions:
+            response['Questions'].append(c.serialize())
+
+        return response

@@ -1,4 +1,4 @@
-import Question from Question
+from .Question import Question
 
 class TrueFalse(Question):
 
@@ -8,3 +8,9 @@ class TrueFalse(Question):
 
     def getQuesstion:
         return Question
+
+    def serialize(self):
+    	response = {
+    	     'uniqueID': self.uniqueID,
+    	     'Question': self.question
+    	}

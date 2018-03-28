@@ -8,5 +8,16 @@ class Ranking(Question):
         self.question = question
         self.options = options
 
+    def addOption(option):
+    	self.options.append(option)
+
     def getOptions:
         return options
+
+    def serialize(self):
+	    response = {
+    	    'uniquID': uniqueID,
+            'Question': question,
+            'choices': choices
+  	    }
+  	    return response
