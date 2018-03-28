@@ -228,7 +228,7 @@ def view():
 			answer = None
 		elif i.q_type == "R":
 			answer = aList[counterForaList]
-			options = i.options
+			options = i.choices
 		elif i.q_type == "MC":
 			answer = aList[counterForaList]
 			choices = i.choices
