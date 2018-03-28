@@ -181,6 +181,7 @@
   var testOrSurvey = '{{ testOrSurvey }}';
   var qType = '{{ qType }}';
   var num = 1;
+  var type = "";
   var ansNum = "a1";
   var rankNum = "r1";
   var matchNum = "m1";
@@ -224,7 +225,7 @@
     $("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Match " + num + ": A</label></div><div class='input-field col s6'><input type='text' id='" + matchNum + "' name='" + matchNum + "' /><label for='" + matchNum + "'>Match " + num + ": B</label></div></div>");
   });
 
-  $("[id='saveQ'], #save").click(function() {
+  $("[id='saveQ']").click(function() {
 	if(qType == "sa") {
 	 $.post("/addToDB", $("#sa").serialize() + "&t=" + testOrSurvey + "&qType=" + qType, function(data) {
 		alert(data);
@@ -263,8 +264,11 @@
 		reset();
 	}
 	type = $(this).attr("id");
-	if(type == "save") {
-		window.location.replace("/view");
-	}
   });
+ 
+ $('#save').click(function() {
+	$.post("/saveSurvey", "", function(data) {
+		window.location.replace("/view");
+		});
+})
 </script>

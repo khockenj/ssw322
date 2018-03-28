@@ -126,7 +126,7 @@ def add():
     q = request.form.get('qType')
     return render_template('question.html', testOrSurvey=t, qType=q)
 
-@app.route('/createSurveyObject', methods=['POST'])
+@app.route('/createSurveyObject', methods=['GET', 'POST'])
 def createSurveyObject():
     t = request.form.get('t')
     global current_survey
@@ -141,6 +141,7 @@ def saveSurvey():
     global cached_surveys
     global current_survey
     cached_surveys.append(current_survey)
+    return "plswork"
 
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
@@ -201,7 +202,7 @@ def take():
 
 @app.route('/view')
 def view():
-	survey = Survey(True)
+	"""survey = Survey(True)
 	survey.addQuestion(Matching("M", "This is the Question.", ["option1", "option2", "option3"], ["option1", "option2", "option3"]))
 	survey.addAnswer("Matching got no answer.")
 	survey.addQuestion(MultipleChoice("MC", "This is the question", ["option1", "option2", "option3"]))
@@ -211,8 +212,9 @@ def view():
 	survey.addQuestion(ShortAnswer("SA", "This is the question", 52))
 	survey.addAnswer(" ")
 	survey.addQuestion(TrueFalse("TF", "This is the question",))
-	survey.addAnswer(0)
+	survey.addAnswer(0)"""
 
+	survey = cached_surveys[0]
 	qList = survey.getQuestionList()
 	aList = survey.answers
 	counterForaList = 0
@@ -227,14 +229,14 @@ def view():
 	for i in qList:
 		question = i.question
 		qType = i.q_type
-		if i.q_type == "TF":
+		if i.q_type == "tf":
 			answer = aList[counterForaList]
-		elif i.q_type == "SA":
+		elif i.q_type == "sa":
 			answer = None
-		elif i.q_type == "R":
+		elif i.q_type == "r":
 			answer = aList[counterForaList]
 			options = i.choices
-		elif i.q_type == "MC":
+		elif i.q_type == "mc":
 			answer = aList[counterForaList]
 			choices = i.choices
 		else:
