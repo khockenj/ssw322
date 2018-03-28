@@ -8,12 +8,12 @@ class Survey:
     def __init__(self, isTest):
         self.isTest = isTest
 
-    def addQuestion(questionID):
-        questions.append(questionID)
+    def addQuestion(self, questionID):
+        self.questions.append(questionID)
 
-    def addAnswer(answer):
-        if isTest:
-            answers.append(answer)
+    def addAnswer(self, answer):
+        if self.isTest:
+            self.answers.append(answer)
 
-    def getQuestionList():
+    def getQuestionList(self):
         return self.questions

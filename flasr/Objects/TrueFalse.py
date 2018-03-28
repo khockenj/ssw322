@@ -6,6 +6,6 @@ class TrueFalse(Question):
         self.q_type = q_type
         self.question = question
 
-    def getQuestion():
-        return Question
+    def getQuestion(self):
+        return self.question
 

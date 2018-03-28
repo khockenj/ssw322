@@ -7,9 +7,9 @@ class Ranking(Question):
         self.question = question
         self.options = options
 
-    def addOption(option):
+    def addOption(self, option):
         self.options.append(option)
 
-    def getOptions():
+    def getOptions(self):
         return options
 

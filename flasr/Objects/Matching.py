@@ -11,5 +11,5 @@ class Matching(Question):
     def addChoice(self, choice):
         self.choices.append(choice)
 
-    def getChoices():
-        return choices
+    def getChoices(self):
+        return self.choices

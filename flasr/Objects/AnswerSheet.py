@@ -5,7 +5,7 @@ class AnswerSheet:
     def __init__(self):
         self.user_response = []
 
-    def addResponse(response):
+    def addResponse(self, response):
         self.user_response.append(response)
 
     def getAnswers():
