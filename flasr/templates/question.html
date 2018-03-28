@@ -155,6 +155,16 @@ matching
   });
   
   $("[id='saveQ']").click(function() {
-	alert(qType);
+	if(qType == "sa") {
+	//post question + char counter
+	} else if(qType == "mc") {
+	//post question + all choices
+	} else if(qType == "r") {
+	//post question + all ans + ranks
+	} else if(qType == "m") {
+	//post question  + matching info
+	} else if(qType == "tf") {
+	//post question, correct ans
+	}
   });
 </script>
