@@ -39,13 +39,13 @@
 <form action="#" id='sa' class='hidden'>
 <div class="row" style="padding:5px">
 		<div class="input-field col s6">
-        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-        <label for="icon_prefix2">Question</label>
+        <textarea id="q" class="materialize-textarea"></textarea>
+        <label for="q">Question</label>
       </div>
 
         <div class="input-field col s6">
-          <input id="climit" type="number" />
-          <label for="climit">Character Limit</label>
+          <input id="limit" type="number" />
+          <label for="limit">Character Limit</label>
         </div>
 		</div>
 		<div class='row'>
@@ -185,7 +185,9 @@
 
   $("[id='saveQ']").click(function() {
 	if(qType == "sa") {
-	//post question + char counter
+	 $.post("/addToDB", $("#sa").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
+		alert(data);
+	});
 	} else if(qType == "mc") {
 	//post question + all choices
 	} else if(qType == "r") {
