@@ -109,23 +109,26 @@ def add():
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
 	q = request.form.get('q')
-	a = request.form.get('a')
 	t = request.form.get('t')
 	qType = request.form.get('qType')
 	if qType == "mc":
+		a = request.form.get('a')
 		aChoices = request.form.get('ac')
 	elif qType == "sa":
 		climit = request.form.get('limit')
 	elif qType == "r":
 		placeholder = 0
+		a = request.form.get('a')
 	elif qType == "tf":
 		placeholder = 0
+		a = request.form.get('a')
 	elif qType == "m":
 		placeholder = 0
+		a = request.form.get('a')
 	else:
-		q == "ERROR"
+		q = "ERROR"
 	
-	return q
+	return "q:" + q
 	
 @app.route('/edit')
 def edit():
