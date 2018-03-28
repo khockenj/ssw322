@@ -184,4 +184,29 @@ def take():
 
 @app.route('/view')
 def view():
-	return render_template('view.html')
+	survey = Survey(True)
+	survey.addQuestion(Matching("M", "This is the Question.", ["option1", "option2", "option3"], ["option1", "option2", "option3"]))
+	survey.addAnswer("Matching got no answer.")
+	survey.addQuestion(MultipleChoice("MC", "This is the question", ["option1", "option2", "option3"]))
+	survey.addAnswer(1)
+	survey.addQuestion(Ranking("R", "This is the question", ["option1", "option2", "option3"]))
+	survey.addAnswer([1,2,3])
+	survey.addQuestion(ShortAnswer("SA", "This is the question", 52))
+	survey.addAnswer(" ")
+	survey.addQuestion(TrueFalse("TF", "This is the question",))
+	survey.addAnswer(0)
+
+	qList = survey.getQuestionList()
+	aList = survey.answers
+	counterForaList = 0
+
+	question = ""
+	for i in qList:
+		question = i.question
+		if i.q_type == "TF":
+			answer = aList[counterForaList].answers
+		elif i.q_type == "SA":
+			answer = none
+		elif i.q_type == ""
+
+	return render_template('view.html', surveyObj = survey)
