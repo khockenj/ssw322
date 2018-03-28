@@ -179,11 +179,10 @@ def addToDB():
         try:
             count = 1
             while(True):
-                current_question.addOption(request.form.get('r' + str(count)))
-                answer.append(request.form.get('a' + str(count)))
+                current_question.addChoiceAndMatch(request.form.get('a' + str(count)), request.form.get('m' + str(count)))
                 count += 1
         finally:
-            current_survey.addAnswer(answer)
+            print("get right wit ya")
     else:
         q = "ERROR"
 
