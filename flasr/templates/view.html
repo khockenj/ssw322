@@ -166,7 +166,8 @@
 				<!--ShortAnswer-->
 			<form id='sa' class='hidden'>
 			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium; padding-bottom:2%;">Write a short essay on fruit [500 characters]</p></div>
-			<div class='col s12 center-align'>Fruit are my favorite. I love fruit. I love fruit so much I want to marry fruit. Haha. I love fruit. I think that Oranges are my favorite fruit of all time. I want to marry you, Orange. Will you marry me?</div></form></div>
+			<div class='col s12 center-align'>Fruit are my favorite. I love fruit. I love fruit so much I want to marry fruit. Haha. I love fruit. I think that Oranges are my favorite fruit of all time. I want to marry you, Orange. Will you marry me?</div>
+			</form>
 
       <!--Ranking-->
       <form id='r' class='hidden'>
@@ -193,6 +194,7 @@
 
 
             </span>
+			</div>
         </div>
       </div>
     </div>
@@ -266,7 +268,7 @@ choices.forEach(function(x, i) {
 });
 
  $('#next').click(function() {
- alert("xxx");
+	alert("texst");
  		window.location.replace("/view?qIndex=" + qIndex);
 });
 </script>
@@ -291,11 +293,6 @@ $('#view').click(function(){
   });
 });
 
-if("{{ name }}" == "index") {
-
-} else if("{{ name }}" == "add") {
-  document.getElementById("index").style.display = 'none';
-}
 
 //Take Test
 var type = "";
