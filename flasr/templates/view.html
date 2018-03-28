@@ -1,12 +1,94 @@
-<!--CSS for Hidden-->
-<style>
-  .hidden{
-    display: none;
+<!HTML>
+<html>
+<head>
+  <!--Header-->
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>SurveyOrange</title>
+  <link rel="icon" href="{{url_for('static', filename='gregg.png') }}" type="image/png">
+
+  <!--Jquery UI-->
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.min.css') }}" />
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.structure.min.css') }}" />
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.theme.min.css') }}" />
+  <!--Other-->
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/bokeh-0.12.0.min.css') }}" />
+  <link rel='stylesheet' href="{{url_for('static', filename='passfield-1.1.13/css/passfield.css') }}" />
+  <!--Google MDL-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/materialize.min.css') }}" />
+
+  <!--JS files-->
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="{{url_for('static', filename='themes/jqueryui/jquery-ui.js') }}"></script>
+  <script src="{{url_for('static', filename='bokeh-0.12.0.min.js') }}"></script>
+  <script src="{{url_for('static', filename='passfield-1.1.13/js/passfield.js') }}"></script>
+  <script src="{{url_for('static', filename='passfield-1.1.13/js/locales.js') }}"></script>
+  <script src="{{url_for('static', filename='materialize.min.js') }}"></script>
+
+
+  <style>
+  nav, footer {
+    background-color: #FF9800 !important;
+  }
+  #sortable {
+    cursor:pointer;
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  main {
+    flex: 1 0 auto;
+    background-color:#FFEBC9;
+  }
+  #git:hover {
+    color:white !important;
+  }
+  .carousel {
+    max-height:58.87%;
+  }
+  .arrows {
+    top:50%;
+    position:absolute;
+  }
+  .arrows-text{
+    font-size: 4.2rem;
+  }
+  a.arrows-text{
+    color:white !important;
+  }
+  img.car {
+    <!--Caro img-->
+  }
+  .modal, .modal-footer {
+    background-color:#fff8ef !important;
   }
 </style>
+</head>
+<body>
+  <!--Header-->
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo"><i class="material-icons">terrain</i>SurveyOrange</a>
+        <ul class="right hide-on-med-and-down">
+          <form id='searchbar' style='display:none;'>
+            <div class="input-field">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-
-<!--JavaScript-->
-<script type="text/javascript">
-
-</script>
+  <!--Main-->
+  <!--Put stuff below-->
+  <main>
+    
+  </main>
+  </html>

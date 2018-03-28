@@ -99,7 +99,7 @@
         <li><a class="ts" id='s' href="#!">Survey</a></li>
       </ul>
       <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
-      <a class="waves-effect waves-light btn-large"><i class="material-icons left">remove_red_eye</i>View</a>
+      <a class="waves-effect waves-light btn-large"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
       <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
     </div>
 
@@ -179,6 +179,8 @@
   </div>
 </footer>
 </body>
+
+<!--JavaScript-->
 <script>
 $( function() {
   $( "#sortable" ).sortable();
@@ -198,6 +200,13 @@ $('#lm').click(function(){
   $('.tap-target').tapTarget('open');
 });
 
+//View
+$('#view').click(function(){
+  $.post("/templates/view.html", "t=" + type, function(data) {
+    $("#testLoader").html(data).trigger('create');
+  });
+});
+
 if("{{ name }}" == "index") {
 
 } else if("{{ name }}" == "add") {
@@ -209,7 +218,7 @@ var type = "";
 $('.ts').click(function() {
 	type = $(this).attr("id");
   if(type != $(this).attr("id")) { }
-	
+
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
   $.post("/createSurveyObject", "t=" + type, function(data) {

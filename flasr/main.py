@@ -199,3 +199,7 @@ def edit():
 @app.route('/take')
 def take():
     return 0
+
+@app.route('/view')
+def view():
+	return render_template('view.html')
