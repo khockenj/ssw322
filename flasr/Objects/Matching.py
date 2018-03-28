@@ -1,9 +1,9 @@
-import Question from Question
+from Question import Question
 
 class Matching(Question):
     choices = []
 
-    def Matching(uniqueID, question, choices):
+    def __init__(self, uniqueID, question, choices):
         self.uniqueID = uniqueID
         self.question = question
         self.choices = choices

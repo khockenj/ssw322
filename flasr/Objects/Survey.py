@@ -5,11 +5,11 @@ class Survey:
 	answers = []
     questions = []
 
-    def Survey(isTest):
+    def __init__(self, isTest):
         self.isTest = isTest
 
-    def addQuestion(question, answer=None):
-    	questions.append(question)
+    def addQuestion(questionID, answer=None):
+    	questions.append(questionID)
 
         if isTest and answer:
             answers.append(answer)
