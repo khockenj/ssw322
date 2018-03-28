@@ -1,0 +1,204 @@
+<!--CSS for Hidden-->
+<style>
+  .hidden{
+    display: none;
+  }
+</style>
+
+<!--Question Input Field-->
+
+<!--Multiple Choice-->
+<form action="#" id='mc' class='hidden'>
+<div class="row" style="padding:5px">
+		<div class="input-field col s12">
+        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+        <label for="icon_prefix2">Question</label>
+      </div>
+		</div>
+
+		<div id='questions'>
+		<div class='row'>
+		<div class="input-field col s12">
+        <input type='text' id='a1' name='a1' />
+        <label for="a1">Answer 1</label>
+		</div>
+		</div>
+		</div>
+
+		<div class='row'><a id='addQ' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
+
+		<div class='row'>
+		<div class='container right-align' style='padding:5px'>
+		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" id="saveQ">Save Question<i class="material-icons right">add</i></button>
+		</div>
+		</div>
+</form>
+
+
+<!--Short Answer-->
+<form id='sa' class='hidden'>
+<div class="row" style="padding:5px">
+		<div class="input-field col s6">
+        <textarea id="q" name="q" class="materialize-textarea"></textarea>
+        <label for="q">Question</label>
+      </div>
+
+        <div class="input-field col s2">
+          <input name="limit" id="limit" type="number" />
+          <label for="limit">Character Limit</label>
+        </div>
+		</div>
+		<div class='row'>
+		<div class='container right-align' style='padding:5px'>
+		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" id="saveQ">Save Question<i class="material-icons right">add</i></button>
+</div>
+</div>
+</form>
+
+
+
+
+<!--True False-->
+<form action="#" id='tf' class='hidden'>
+<div class="row" style="padding:5px">
+		<div class="input-field col s12">
+        <textarea id="q1" class="materialize-textarea"></textarea>
+        <label for="q1">Question</label>
+      </div></div>
+	  <div class="row">
+	  <div class="col s6 center-align">
+    <p>
+	  <input name="tfgroup" id='true' type="radio" />
+      <label for="true">
+        True
+      </label>
+    </p>
+ <p>
+	  <input name="tfgroup" id='false' type="radio" />
+      <label for="false">
+        False
+      </label>
+    </p>
+	</div>
+	</div>
+			<div class='row'>
+		<div class='container right-align' style='padding:5px'>
+		<button type="button" class="btn waves-effect waves-light orange" name='saveQ' id='saveQ'>Save Question<i class="material-icons right">add</i></button>
+</div>
+</div>
+</form>
+
+
+
+
+
+
+<!--Ranking-->
+<form action="#" id='r' class='hidden'>
+<div class="row" style="padding:5px">
+		<div class="input-field col s12">
+        <textarea id="question" class="materialize-textarea"></textarea>
+        <label for="question">Question</label>
+      </div>
+		</div>
+
+		<div id='rQuestions'>
+		<div class='row'>
+
+		<div class="input-field col s6">
+        <input type='text' id='a1' name='a1' />
+        <label for="a1">Answer 1</label>
+		</div>
+
+		<div class="input-field col s6">
+        <input type='text' id='rank' name='rank' />
+        <label for="a1">Rank</label>
+		</div>
+
+		</div>
+		</div>
+
+		<div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
+
+		<div class='row'>
+		<div class='container right-align' style='padding:5px'>
+		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" id="saveQ">Save Question<i class="material-icons right">add</i></button>
+		</div>
+		</div>
+</form>
+
+<!--Matching-->
+<form action="#" id='m' class='hidden'>
+  <div class="row" style="padding:5px">
+  	<div class="input-field col s12">
+  		<textarea id="question" class="materialize-textarea"></textarea>
+  		<label for="question">Question</label>
+  	</div>
+  </div>
+
+  <div id='rQuestions'>
+  	<div class='row'>
+
+  		<div class="input-field col s6">
+  			<input type='text' id='matchA1' name='matchA1' />
+  			<label for="matchA1">Match A: 1</label>
+  		</div>
+
+  		<div class="input-field col s6">
+  			<input type='text' id='matchA2' name='matchA2' />
+  			<label for="matchA2">Match A: 2</label>
+  		</div>
+
+  	</div>
+  </div>
+
+  <div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">add</i></a></div>
+
+  <div class='row'>
+  	<div class='container right-align' style='padding:5px'>
+  		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" id="saveQ">Save Question<i class="material-icons right">add</i></button>
+  	</div>
+  </div>
+</form>
+
+<!-- Submit Button -->
+<div class='container right-align'>
+<form id='save'>
+ <button class="btn waves-effect waves-light orange" name='saveButton'>Finish
+    <i class="material-icons right">save</i>
+  </button>
+</form>
+</div>
+
+<!--JavaScript-->
+<script type="text/javascript">
+  testOrSurvey = '{{ testOrSurvey }}';
+  qType = '{{ qType }}';
+
+    currentQuestion = document.getElementById(qType);
+    currentQuestion.style.display = 'inline';
+
+  $('#addQ').click(function() {
+    $("#questions").append("<div class='row'><div class='input-field col s12'><input type='text' id='a1' name='a1' /><label for='a1'>Answer 1</label></div></div>");
+  });
+
+   $('#addRank').click(function() {
+    $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a1' name='a1' /><label for='a1'>Answer 1</label></div><div class='input-field col s6'><input type='text' id='rank' name='rank' /><label for='a1'>Rank</label></div></div>");
+  });
+
+  $("[id='saveQ']").click(function() {
+	if(qType == "sa") {
+	 $.post("/addToDB", $("#sa").serialize() + "&t=" + type + "&qType=" + qType, function(data) {
+    alert(data);
+	});
+	} else if(qType == "mc") {
+	//post question + all choices
+	} else if(qType == "r") {
+	//post question + all ans + ranks
+	} else if(qType == "m") {
+	//post question  + matching info
+	} else if(qType == "tf") {
+	//post question, correct ans
+	}
+  });
+</script>
