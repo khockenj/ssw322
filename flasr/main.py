@@ -201,12 +201,18 @@ def view():
 	counterForaList = 0
 
 	question = ""
+	answer = ""
 	for i in qList:
 		question = i.question
 		if i.q_type == "TF":
-			answer = aList[counterForaList].answers
+			answer = aList[counterForaList]
 		elif i.q_type == "SA":
 			answer = none
-		elif i.q_type == ""
+		elif i.q_type == "R":
+			answer = aList[counterForaList]
+		elif i.q_type = "MC":
+			answer = aList[counterForaList]
+		else
+			answer = aList[counterForaList]
 
-	return render_template('view.html', surveyObj = survey)
+	return render_template('view.html', passedQ = question, passedAns = answer)
