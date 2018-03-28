@@ -29,7 +29,7 @@
 		
 		<div class='row'>
 		<div class='container right-align' style='padding:5px'>
-		<button class="btn waves-effect waves-light orange" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" qtype="mc" id="saveQ">Save Question<i class="material-icons right">add</i></button>
 		</div>
 		</div>
 </form>
@@ -50,7 +50,7 @@
 		</div>
 		<div class='row'>
 		<div class='container right-align' style='padding:5px'>
-		<button class="btn waves-effect waves-light orange" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" qtype='sa' id="saveQ">Save Question<i class="material-icons right">add</i></button>
 </div>
 </div>
 </form>
@@ -63,24 +63,24 @@
         <label for="q1">Question</label>
       </div></div>
 	  <div class="row">
-	  <div class="input-field col s6 center-align">
+	  <div class="col s6 center-align">
     <p>
-	  <input name="t" type="radio"/>
-      <label>
-        <span>True</span>
+	  <input name="true" id='true' type="radio" />
+      <label for="true">
+        True
       </label>
     </p>
  <p>
-	  <input name="false" type="radio"/>
-      <label>
-        <span>False</span>
+	  <input name="false" id='false' type="radio" />
+      <label for="false">
+        False
       </label>
     </p>
 	</div>
 	</div>
 			<div class='row'>
 		<div class='container right-align' style='padding:5px'>
-		<button class="btn waves-effect waves-light orange" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+		<button type="button" class="btn waves-effect waves-light orange" name='saveQ' qtype='tf' id='saveQ'>Save Question<i class="material-icons right">add</i></button>
 </div>
 </div>
 </form>
@@ -119,7 +119,7 @@
 		
 		<div class='row'>
 		<div class='container right-align' style='padding:5px'>
-		<button class="btn waves-effect waves-light orange" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+		<button type="button" class="btn waves-effect waves-light orange" name="saveQ" qtype='r' id="saveQ">Save Question<i class="material-icons right">add</i></button>
 		</div>
 		</div>
 </form>
@@ -130,6 +130,13 @@ matching
 </form>
 
 <!-- Submit Button -->
+<div class='container right-align'>
+<form id='save'>
+ <button class="btn waves-effect waves-light orange" name='saveButton'>Finish
+    <i class="material-icons right">save</i>
+  </button>
+</form>
+</div>
 
 <!--JavaScript-->
 <script type="text/javascript">
@@ -145,5 +152,9 @@ matching
   
    $('#addRank').click(function() {
     $("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a1' name='a1' /><label for='a1'>Answer 1</label></div><div class='input-field col s6'><input type='text' id='rank' name='rank' /><label for='a1'>Rank</label></div></div>");
+  });
+  
+  $("[id='saveQ']").click(function() {
+	alert(qType);
   });
 </script>
