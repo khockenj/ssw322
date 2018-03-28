@@ -1,6 +1,9 @@
 from .Question import Question
 
 class Matching(Question):
+    choices = None
+    matches = None
+
     def __init__(self, q_type, question, choices=[], matches=[]):
         self.q_type = q_type
         self.question = question

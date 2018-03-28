@@ -202,17 +202,25 @@ def view():
 
 	question = ""
 	answer = ""
+	choices = None
+	matches = None
+	options = None
+
 	for i in qList:
 		question = i.question
 		if i.q_type == "TF":
 			answer = aList[counterForaList]
 		elif i.q_type == "SA":
-			answer = none
+			answer = None
 		elif i.q_type == "R":
 			answer = aList[counterForaList]
-		elif i.q_type = "MC":
+			options = i.options
+		elif i.q_type == "MC":
 			answer = aList[counterForaList]
-		else
+			choices = i.choices
+		else:
 			answer = aList[counterForaList]
+			choices = i.choices
+			matches = i.matches
 
-	return render_template('view.html', passedQ = question, passedAns = answer)
+	return render_template('view.html', passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches)
