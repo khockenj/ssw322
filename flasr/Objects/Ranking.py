@@ -4,13 +4,13 @@ class Ranking(Question):
 
     options = None
 
-    def __init__(self, q_type, question, options=[]):
+    def __init__(self, q_type, question, choices=[]):
         self.q_type = q_type
         self.question = question
-        self.options = options
+        self.choices = choices
 
-    def addOption(self, option):
-        self.options.append(option)
+    def addChoice(self, option):
+        self.choices.append(option)
 
-    def getOptions(self):
-        return options
+    def getChoices(self):
+        return self.choices
