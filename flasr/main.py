@@ -16,6 +16,11 @@ from Objects.TrueFalse import TrueFalse
 from Objects.MultipleChoice import MultipleChoice
 from Objects.ShortAnswer import ShortAnswer
 
+
+#HardCoded Survey Object for View implmentation
+sample_test = Survey(True)
+sample_test.addQuestion(TrueFalse(""))
+
 #Database Setup
 client = MongoClient('localhost', 40000)
 db = client['objects-database']
