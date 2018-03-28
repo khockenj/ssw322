@@ -6,13 +6,6 @@ class TrueFalse(Question):
         self.uniqueID = uniqueID
         self.question = question
 
-    def getQuesstion:
+    def getQuestion():
         return Question
 
-    def serialize(self):
-    	response = {
-    	     'uniqueID': self.uniqueID,
-    	     'Question': self.question
-    	}
-
-    	return response

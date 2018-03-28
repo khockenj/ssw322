@@ -212,6 +212,9 @@ $('.ts').click(function() {
   
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
+  $.post("/createSurveyObject", "t=" + type, function(data) {
+    alert(data);
+  });
 });
 
 $('#list').change(function() {

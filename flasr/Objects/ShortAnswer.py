@@ -6,13 +6,3 @@ class ShortAnswer(Question):
         self.uniqueID = uniqueID
         self.question = question
         self.charLimit = charLimit
-
-    """def serialize(self):
-    	response = {
-    	    'uniqueID': self.uniqueID,
-    	    'Question': self.question
-            'charLimit': self.charLimit
-    	}
-
-    	return response
-"""

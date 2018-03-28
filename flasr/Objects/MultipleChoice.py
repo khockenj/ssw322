@@ -12,14 +12,5 @@ class MultipleChoice(Question):
     def addChoice(self, choice):
         self.choices.append(choice)
 
-    def getChoices:
+    def getChoices():
         return choices
-
- """   def serialize():
-    	response = {
-    	    'uniquID': uniqueID,
-            'Question': question,
-            'choices': choices
-    	}
-    	return response
-"""

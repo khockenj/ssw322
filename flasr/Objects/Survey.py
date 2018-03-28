@@ -1,31 +1,19 @@
 """Main Survey Object"""
-from .
 
 class Survey:
-	isTest = False
-	answers = []
+    isTest = False
+    answers = []
     questions = []
 
     def __init__(self, isTest):
         self.isTest = isTest
 
-    def addQuestion(questionID, answer=None):
-    	questions.append(questionID)
+    def addQuestion(questionID):
+        questions.append(questionID)
 
-        if isTest and answer:
+    def addAnswer(answer):
+        if isTest:
             answers.append(answer)
 
-    def getQuestionList:
-    	return self.questions
-
-   """ def serialize(self):
-        response = {
-            'isTest': self.isTest,
-            'Answers': self.Answers,
-            'Questions': []
-        }
-        for c in self.questions:
-            response['Questions'].append(c.serialize())
-
-        return response
-"""
+    def getQuestionList():
+        return self.questions

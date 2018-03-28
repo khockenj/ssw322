@@ -11,14 +11,5 @@ class Matching(Question):
     def addChoice(self, choice):
         self.choices.append(choice)
 
-    def getChoices:
+    def getChoices():
         return choices
-
-   """ def serialize():
-    	response = {
-    	    'uniqueID': self.uniqueID,
-            'Question': self.question,
-            'Choices': self.choices
-    	}
-    	return response
-   """

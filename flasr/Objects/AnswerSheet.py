@@ -8,5 +8,5 @@ class AnswerSheet:
     def addResponse(response):
         self.user_response.append(response)
 
-    def getAnswers:
+    def getAnswers():
     	return user_response
