@@ -268,8 +268,9 @@ choices.forEach(function(x, i) {
 });
 
  $('#next').click(function() {
+  qIndex += 1;
 	alert("texst");
- 		window.location.replace("/view?qIndex=" + qIndex);
+ 		window.location.replace("/view/<int:qIndex>");
 });
 </script>
 

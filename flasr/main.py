@@ -200,8 +200,8 @@ def edit():
 def take():
     return 0
 
-@app.route('/view', methods=['POST', 'GET'])
-def view():
+@app.route('/view/<int:qIndex>', methods=['POST', 'GET'])
+def view(qIndex):
 	"""survey = Survey(True)
 	survey.addQuestion(Matching("M", "This is the Question.", ["option1", "option2", "option3"], ["option1", "option2", "option3"]))
 	survey.addAnswer("Matching got no answer.")
@@ -215,10 +215,10 @@ def view():
 	survey.addAnswer(0)"""
 
 	global cached_surveys
-	if request.form.get('qIndex') == None:
+	if qIndex == None:
 		someIndex = 0
 	else:
-		someIndex = request.form.get('qIndex')
+		someIndex = qIndex
 
 	survey = cached_surveys[0]
 	qList = survey.getQuestionList()

@@ -16,4 +16,5 @@ class Matching(Question):
     def getChoices(self):
         return self.choices
 
-    def getMatches(self)
+    def getMatches(self):
+        return self.matches
