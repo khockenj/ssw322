@@ -2,7 +2,7 @@ from .Question import Question
 
 class ShortAnswer(Question):
 
-    def __init__(self, uniqueID, question, charLimit):
-        self.uniqueID = uniqueID
+    def __init__(self, q_type, question, charLimit):
+        self.q_type = q_type
         self.question = question
         self.charLimit = charLimit

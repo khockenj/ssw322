@@ -1,10 +1,9 @@
 from .Question import Question
 
 class Ranking(Question):
-    options = []
 
-    def __init__(self, uniqueID, question, options):
-        self.uniqueID = uniqueID
+    def __init__(self, q_type, question, options=[]):
+        self.q_type = q_type
         self.question = question
         self.options = options
 
