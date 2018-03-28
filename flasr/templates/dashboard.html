@@ -182,6 +182,7 @@
 
 <!--JavaScript-->
 <script>
+var type = "";
 $( function() {
   $( "#sortable" ).sortable();
   $( "#sortable" ).disableSelection();
@@ -195,10 +196,6 @@ $( function() {
     $('select').material_select();
   }); // end of document ready
 })(jQuery);
-
-$('#lm').click(function(){
-  $('.tap-target').tapTarget('open');
-});
 
 //View
 $('#view').click(function(){
@@ -214,7 +211,6 @@ if("{{ name }}" == "index") {
 }
 
 //Take Test
-var type = "";
 $('.ts').click(function() {
   if(type != $(this).attr("id")) {
   		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
@@ -222,8 +218,7 @@ $('.ts').click(function() {
 		$('#list').val("");
 		$('select').material_select();
   }
-type = $(this).attr("id");
-
+	type = $(this).attr("id");
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
   $.post("/createSurveyObject", "t=" + type, function(data) {
