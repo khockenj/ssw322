@@ -198,7 +198,7 @@ def edit():
     return 0
 @app.route('/take')
 def take():
-    return 0
+    return render_template('take.html')
 
 @app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
 def view(qIndex):
