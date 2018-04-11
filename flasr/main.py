@@ -198,9 +198,9 @@ def edit():
     return 0
 @app.route('/take')
 def take():
-    return 0
+    return render_template('take.html')
 
-@app.route('/view/<int:qIndex>', methods=['POST', 'GET'])
+@app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
 def view(qIndex):
 	"""survey = Survey(True)
 	survey.addQuestion(Matching("M", "This is the Question.", ["option1", "option2", "option3"], ["option1", "option2", "option3"]))
@@ -241,7 +241,8 @@ def view(qIndex):
 		answer = None
 	elif i.q_type == "R":
 		answer = aList[counterForaList]
-		options = i.choices
+		choices = i.choices
+		matches = i.matches
 	elif i.q_type == "MC":
 		answer = aList[counterForaList]
 		choices = i.choices

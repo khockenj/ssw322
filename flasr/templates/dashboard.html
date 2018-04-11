@@ -29,7 +29,7 @@
 
   <style>
   nav, footer {
-    background-color: #FF9800 !important;
+ background-color: #003366 !important;
   }
   #sortable {
     cursor:pointer;
@@ -41,7 +41,7 @@
   }
   main {
     flex: 1 0 auto;
-    background-color:#FFEBC9;
+    background-color:#e5eaef;
   }
   #git:hover {
     color:white !important;
@@ -64,6 +64,15 @@
   }
   .modal, .modal-footer {
     background-color:#fff8ef !important;
+  }
+  .card-panel {
+  border-radius:20px;
+  }
+  .rounded-big{
+  border-radius: 15px;
+  }
+  .rounded-small {
+  border-radius:12px;
   }
 </style>
 </head>
@@ -92,23 +101,21 @@
 
     <!--Make, Take, View, and Edit Buttons -->
     <div class='container center-align' style='padding:5px'>
-      <a class='dropdown-button btn-large' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
+	<div class="card-panel white">
+            <span class="black-text">
+      <a class='dropdown-button btn-large green rounded-big' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
       <ul id='dropdown1' class='dropdown-content'>
         <li><a class="ts" id='t' href="#!">Test</a></li>
         <li class="divider"></li>
         <li><a class="ts" id='s' href="#!">Survey</a></li>
       </ul>
-      <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
-      <a class="waves-effect waves-light btn-large"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
-      <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
-    </div>
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">poll</i>Take</a>
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">mode_edit</i>Edit</a>
 
-    <div class='container center-align'>
-      <div class="row">
         <div id='testsurv' style='display:none;' class="input-field col s12">
-          <div class="card-panel white">
-            <span class="black-text">
-              <form id='q'>
+
+              <form id='q' style="padding-top:3%">
                 <select id='list' name="qType">
                   <option value="" disabled selected>Choose a Question</option>
                   <option value="mc">Multiple Choice</option>
@@ -119,10 +126,10 @@
                   <option value="r">Ranking</option>
                 </select>
               </form>
-          </span>
 		  </div>
 		  </div>
-		  </div>
+		  
+		  
 		  <div class='row'>
           <div id='qLoad' style='display:none' class="card-panel white">
             <span class="black-text">
@@ -130,8 +137,8 @@
 			   </span>
 			   </div>
     </div>
-
   </div>
+
 
 
 
@@ -141,13 +148,13 @@
 <!--This has to be outside a flexbox group-->
 <!--Bottom right button-->
 <div class="fixed-action-btn">
-  <a id='menubutton' class="btn-floating waves-effect waves-light btn-large blue">
+  <a id='menubutton' class="btn-floating waves-effect waves-light btn-large green">
     <i class="large material-icons">menu</i>
   </a>
   <ul>
     <li><a class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a></li>
     <li><a class="btn-floating waves-effect waves-light yellow darken-1"><i class="material-icons">mode_edit</i></a></li>
-    <li><a class="btn-floating waves-effect waves-light green"><i class="material-icons">poll</i></a></li>
+    <li><a class="btn-floating waves-effect waves-light blue"><i class="material-icons">poll</i></a></li>
     <li><a class="btn-floating waves-effect waves-light purple"><i class="material-icons">publish</i></a></li>
     <li><a class="btn-floating waves-effect waves-light grey"><i class="material-icons">settings</i></a></li>
   </ul>
@@ -182,6 +189,7 @@
 
 <!--JavaScript-->
 <script>
+var type = "";
 $( function() {
   $( "#sortable" ).sortable();
   $( "#sortable" ).disableSelection();
@@ -195,10 +203,6 @@ $( function() {
     $('select').material_select();
   }); // end of document ready
 })(jQuery);
-
-$('#lm').click(function(){
-  $('.tap-target').tapTarget('open');
-});
 
 //View
 $('#view').click(function(){
@@ -214,7 +218,6 @@ if("{{ name }}" == "index") {
 }
 
 //Take Test
-var type = "";
 $('.ts').click(function() {
   if(type != $(this).attr("id")) {
   		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
@@ -222,12 +225,11 @@ $('.ts').click(function() {
 		$('#list').val("");
 		$('select').material_select();
   }
-type = $(this).attr("id");
-
+	type = $(this).attr("id");
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
   $.post("/createSurveyObject", "t=" + type, function(data) {
-    alert(data);
+	//anything that needs to be done after creating survey/test
   });
 });
 

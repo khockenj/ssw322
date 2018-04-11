@@ -29,7 +29,7 @@
 
   <style>
   nav, footer {
-    background-color: #FF9800 !important;
+ background-color: #003366 !important;
   }
   #sortable {
     cursor:pointer;
@@ -41,7 +41,7 @@
   }
   main {
     flex: 1 0 auto;
-    background-color:#FFEBC9;
+    background-color:#e5eaef;
   }
   #git:hover {
     color:white !important;
@@ -92,16 +92,16 @@
   <!--Main-->
   <!--Put stuff below-->
   <main>
-  <div class='container center-align' style='padding:5px'>
-      <a class='dropdown-button btn-large' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
+<div class='container center-align' style='padding:5px'>
+      <a class='dropdown-button btn-large green' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
       <ul id='dropdown1' class='dropdown-content'>
         <li><a class="ts" id='t' href="#!">Test</a></li>
         <li class="divider"></li>
         <li><a class="ts" id='s' href="#!">Survey</a></li>
       </ul>
-      <a class="waves-effect waves-light btn-large"><i class="material-icons left">poll</i>Take</a>
-      <a class="waves-effect waves-light btn-large"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
-      <a class="waves-effect waves-light btn-large"><i class="material-icons left">mode_edit</i>Edit</a>
+      <a class="waves-effect waves-light btn-large green"><i class="material-icons left">poll</i>Take</a>
+      <a class="waves-effect waves-light btn-large green"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
+      <a class="waves-effect waves-light btn-large green"><i class="material-icons left">mode_edit</i>Edit</a>
     </div>
 	
     <div class='container center-align'>
@@ -115,7 +115,7 @@
 			  <table id='m' class="centered">
 			  <thead>
 			  <tr>
-			  <th colspan='2'> {{ passedQ }} </th>
+			  <th colspan='2' id='qLocation'></th>
 			  </tr>
 			  <tr>
 			  <th>Match A</th>
@@ -127,33 +127,19 @@
 
 			  <!--Multiple Choice-->
 			  <form id='mc' class='hidden'>
-			  <div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium;">Which of the below isn't a fruit?</p></div>
-			   <div class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
-			   <p>
-				<input name="opt" value="1" id='val1' type="radio" disabled />
-				<label for="val1">Apple</label>
-				</p>
-				<p>
-				<input name="opt" value="2" id='val2' type="radio" disabled />
-				<label for="val2">Banana</label>
-				</p>
-				 <p>
-				<input name="opt" value="3" id='val3' type="radio" checked='checked' />
-				<label for="val3">Vodka</label>
-				</p>
-				<p>
-				<input name="opt" value="4" id='val4' type="radio" disabled />
-				<label for="val4">Orange</label>
-				</p>
+			  <div id='qLocationMC'></div>
+			   <div id='aLocation' class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
+			   
+				
 				</div>
 				</form>
 				<!--TrueFalse-->
 
 			<form id='tf' class='hidden'>
-			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium;">Oranges are orange.</p></div>
+			<div id='qLocationTF'></div>
 			<div class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
 			   <p>
-				<input name="opt" value="1" id='true' type="radio" checked='checked' />
+				<input name="opt" value="1" id='true' type="radio" disabled />
 				<label for="true">True</label>
 				</p>
 				<p>
@@ -166,14 +152,14 @@
 				<!--ShortAnswer-->
 			<form id='sa' class='hidden'>
 			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium; padding-bottom:2%;">Write a short essay on fruit [500 characters]</p></div>
-			<div class='col s12 center-align'>Fruit are my favorite. I love fruit. I love fruit so much I want to marry fruit. Haha. I love fruit. I think that Oranges are my favorite fruit of all time. I want to marry you, Orange. Will you marry me?</div>
+			<div class='col s12 center-align'>Fruit are my favorite. I love fruit. I love fruit so much I want to marry fruit. Haha. I love fruit. I think that Oranges are my favorite fruit of all time. I want to marry you, green. Will you marry me?</div>
 			</form>
 
       <!--Ranking-->
       <form id='r' class='hidden'>
         <table id='r' class="centered">
           <thead>
-            <th colspan='2'> {{ passedQ }} </th>
+            <th id='qLocation' colspan='2'></th>
             <tr>
               <th>Rank Order</th>
               <th>Choice</th>
@@ -184,11 +170,11 @@
               <!--Next Button-->
 
 			  <span class='container left-align' style="padding-right:25%;">
-                  <button type="button" class="btn waves-effect waves-light orange" name="prev" id="prev">Prev <i class="material-icons left">navigate_before</i></button>
+                  <button type="button" class="btn waves-effect waves-light green" name="prev" id="prev">Prev <i class="material-icons left">navigate_before</i></button>
                 </span>
 
                 <span class='container right-align' style="padding-left:25%">
-                  <button type="button" class="btn waves-effect waves-light orange" name="next" id="next">Next <i class="material-icons right">navigate_next</i></button>
+                  <button type="button" class="btn waves-effect waves-light green" name="next" id="next">Next <i class="material-icons right">navigate_next</i></button>
                 </span>
 
 
@@ -202,13 +188,13 @@
 
 <!--Footer-->
   <div class="fixed-action-btn">
-    <a id='menubutton' class="btn-floating waves-effect waves-light btn-large blue">
+    <a id='menubutton' class="btn-floating waves-effect waves-light btn-large green">
       <i class="large material-icons">menu</i>
     </a>
     <ul>
       <li><a class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a></li>
       <li><a class="btn-floating waves-effect waves-light yellow darken-1"><i class="material-icons">mode_edit</i></a></li>
-      <li><a class="btn-floating waves-effect waves-light green"><i class="material-icons">poll</i></a></li>
+      <li><a class="btn-floating waves-effect waves-light blue"><i class="material-icons">poll</i></a></li>
       <li><a class="btn-floating waves-effect waves-light purple"><i class="material-icons">publish</i></a></li>
       <li><a class="btn-floating waves-effect waves-light grey"><i class="material-icons">settings</i></a></li>
     </ul>
@@ -244,33 +230,42 @@
 var choices = {{ passedChoices|tojson }};
 var matches = {{ passedMatches|tojson }};
 var qType = "{{ passedQType }}";
-var ans = "{{ passedAns }}";
-var qIndex = "{{ qIndex }}";
-
+var ans = {{ passedAns }};
+var qIndex = {{ qIndex }};
+var question = "{{ passedQ }}";
 if(qType == "MC") {
   document.getElementById("mc").style.display = 'block';
+  $("#qLocationMC").append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question +"</p>");
+  choices.forEach(function(x, i) {
+	if(i+1 != ans) {
+	$("#aLocation").append("<p><input name='opt' value='" + x + "' id='" + i + "' type='radio' disabled /><label for='" + i + "'>" + x + "</label></p>");
+	} else {
+	$("#aLocation").append("<p><input name='opt' value='" + x + "' id='" + i + "' type='radio' checked='checked' /><label for='" + i + "'>" + x + "</label></p>");
+	}
+	});
 } else if(qType == "SA") {
   document.getElementById("sa").style.display = 'block';
 } else if(qType == "M") {
    document.getElementById("m").style.display = 'block';
+   choices.forEach(function(x, i) {
+	$("table#m").append("<tr><td style='text-align:center;'>" + x + "</td><td style='text-align:center;'>" + matches[i] + "</td></tr>");
+	$("[id='qLocation']").append(question);
+});
 } else if(qType == "R") {
   document.getElementById("r").style.display = 'block';
+  choices.forEach(function(x, i) {
+	$("table#r").append("<tr><td style='text-align:center;'>"+(i+1)+"</td><td style='text-align:center;'>" + x + "</td></tr>");
+	$("#qLocation").append(question);
+});
 } else if(qType == "TF") {
   document.getElementById("tf").style.display = 'block';
-}  
+	$("#qLocationTF").append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question + "</p>");
+	$("[value='" + ans + "']").attr("checked", "checked")
 
-choices.forEach(function(x, i) {
-	$("table#m").append("<tr><td style='text-align:center;'>" + x + "</td><td style='text-align:center;'>" + matches[i] + "</td></tr>");
-});
-
-choices.forEach(function(x, i) {
-	$("table#r").append("<tr><td style='text-align:center;'>"+(i+1)+"</td><td style='text-align:center;'>" + x + "</td></tr>");
-});
+}
 
  $('#next').click(function() {
-  qIndex += 1;
-	alert("texst");
- 		window.location.replace("/view/<int:qIndex>");
+ 	window.location.replace("/view/" + (qIndex+1));
 });
 </script>
 
