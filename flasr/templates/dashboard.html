@@ -103,17 +103,30 @@
     <div class='container center-align' style='padding:5px'>
 	<div class="card-panel white">
             <span class="black-text">
+
+      <!--Make button-->
       <a class='dropdown-button btn-large green rounded-big' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
       <ul id='dropdown1' class='dropdown-content'>
         <li><a class="ts" id='t' href="#!">Test</a></li>
         <li class="divider"></li>
         <li><a class="ts" id='s' href="#!">Survey</a></li>
       </ul>
+
       <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">poll</i>Take</a>
       <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
       <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">mode_edit</i>Edit</a>
 
         <div id='testsurv' style='display:none;' class="input-field col s12">
+
+          <!--Enter title for test or survey-->
+          <form id='title'>
+            <div class="row" style="padding:5px">
+              <div class="input-field col s6">
+                <textarea id="title" name="title" class="materialize-textarea"></textarea>
+                <label for="title">Enter a name for this test or survey</label>
+              </div>
+            </div>
+          </form>
 
               <form id='q' style="padding-top:3%">
                 <select id='list' name="qType">
@@ -128,8 +141,8 @@
               </form>
 		  </div>
 		  </div>
-		  
-		  
+
+
 		  <div class='row'>
           <div id='qLoad' style='display:none' class="card-panel white">
             <span class="black-text">
@@ -217,7 +230,7 @@ if("{{ name }}" == "index") {
   document.getElementById("index").style.display = 'none';
 }
 
-//Take Test
+//Make Test
 $('.ts').click(function() {
   if(type != $(this).attr("id")) {
   		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
