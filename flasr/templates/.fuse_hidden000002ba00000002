@@ -1,0 +1,256 @@
+<!HTML>
+<html>
+<head>
+  <!--Header-->
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>SurveyOrange</title>
+  <link rel="icon" href="{{url_for('static', filename='gregg.png') }}" type="image/png">
+
+  <!--Jquery UI-->
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.min.css') }}" />
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.structure.min.css') }}" />
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/jqueryui/jquery-ui.theme.min.css') }}" />
+  <!--Other-->
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/bokeh-0.12.0.min.css') }}" />
+  <link rel='stylesheet' href="{{url_for('static', filename='passfield-1.1.13/css/passfield.css') }}" />
+  <!--Google MDL-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel='stylesheet' href="{{url_for('static', filename='themes/materialize.min.css') }}" />
+
+  <!--JS files-->
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="{{url_for('static', filename='themes/jqueryui/jquery-ui.js') }}"></script>
+  <script src="{{url_for('static', filename='bokeh-0.12.0.min.js') }}"></script>
+  <script src="{{url_for('static', filename='passfield-1.1.13/js/passfield.js') }}"></script>
+  <script src="{{url_for('static', filename='passfield-1.1.13/js/locales.js') }}"></script>
+  <script src="{{url_for('static', filename='materialize.min.js') }}"></script>
+
+
+  <style>
+  nav, footer {
+ background-color: #003366 !important;
+  }
+  #sortable {
+    cursor:pointer;
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  main {
+    flex: 1 0 auto;
+    background-color:#e5eaef;
+  }
+  #git:hover {
+    color:white !important;
+  }
+  .carousel {
+    max-height:58.87%;
+  }
+  .arrows {
+    top:50%;
+    position:absolute;
+  }
+  .arrows-text{
+    font-size: 4.2rem;
+  }
+  a.arrows-text{
+    color:white !important;
+  }
+  img.car {
+    <!--Caro img-->
+  }
+  .modal, .modal-footer {
+    background-color:#fff8ef !important;
+  }
+  .card-panel {
+  border-radius:20px;
+  }
+  .rounded-big{
+  border-radius: 15px;
+  }
+  .rounded-small {
+  border-radius:12px;
+  }
+</style>
+</head>
+<body>
+  <!--Header-->
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo"><i class="material-icons">terrain</i>SurveyOrange</a>
+        <ul class="right hide-on-med-and-down">
+          <form id='searchbar' style='display:none;'>
+            <div class="input-field">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!--Main-->
+  <!--Put stuff below-->
+  <main>
+
+    <!--Make, Take, View, and Edit Buttons -->
+    <div class='container center-align' style='padding:5px'>
+	<div class="card-panel white">
+            <span class="black-text">
+
+      <!--Make button-->
+      <a class='dropdown-button btn-large green rounded-big' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons left">add</i>Make</a>
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a class="ts" id='t' href="#!">Test</a></li>
+        <li class="divider"></li>
+        <li><a class="ts" id='s' href="#!">Survey</a></li>
+      </ul>
+
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">poll</i>Take</a>
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">mode_edit</i>Edit</a>
+
+        <div id='testsurv' style='display:none;' class="input-field col s12">
+
+          <!--Enter title for test or survey-->
+          <form id='title'>
+            <div class="row" style="padding:5px">
+              <div class="input-field col s6">
+                <textarea id="title" name="title" class="materialize-textarea"></textarea>
+                <label for="title">Enter a name for this test or survey</label>
+              </div>
+            </div>
+          </form>
+
+              <form id='q' style="padding-top:3%">
+                <select id='list' name="qType">
+                  <option value="" disabled selected>Choose a Question</option>
+                  <option value="mc">Multiple Choice</option>
+                  <option value="sa">Short Answer</option>
+                  <option value="tf">True/False</option>
+                  <!--<option value="4">Multiple</option>-->
+                  <option value="m">Matching</option>
+                  <option value="r">Ranking</option>
+                </select>
+              </form>
+		  </div>
+		  </div>
+
+
+		  <div class='row'>
+          <div id='qLoad' style='display:none' class="card-panel white">
+            <span class="black-text">
+		       <div id='testLoader'></div>
+			   </span>
+			   </div>
+    </div>
+  </div>
+
+
+
+
+
+
+</main>
+<!--This has to be outside a flexbox group-->
+<!--Bottom right button-->
+<div class="fixed-action-btn">
+  <a id='menubutton' class="btn-floating waves-effect waves-light btn-large green">
+    <i class="large material-icons">menu</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a></li>
+    <li><a class="btn-floating waves-effect waves-light yellow darken-1"><i class="material-icons">mode_edit</i></a></li>
+    <li><a class="btn-floating waves-effect waves-light blue"><i class="material-icons">poll</i></a></li>
+    <li><a class="btn-floating waves-effect waves-light purple"><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating waves-effect waves-light grey"><i class="material-icons">settings</i></a></li>
+  </ul>
+</div>
+<!--Footer-->
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">SSW322 Design VI Project</h5>
+        <p class="grey-text text-lighten-4">The task for this project was to create a survey/test making and taking site. Try it out if you'd like!</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Github</h5>
+        <ul>
+          <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/khockenj">Kevin's Github</a></li>
+          <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/robjweiss">Rob's Github</a></li>
+          <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/yborai">Yoseph's Github</a></li>
+          <li><a id='git' class="grey-text text-lighten-3" href="#!">Joe's Github</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      &copy; 2018 Gregg's Golden Boys
+      <a id='git' class="grey-text text-lighten-4 right" href="https://github.com/khockenj/ssw215">Other Projects</a>
+    </div>
+  </div>
+</footer>
+</body>
+
+<!--JavaScript-->
+<script>
+var type = "";
+$( function() {
+  $( "#sortable" ).sortable();
+  $( "#sortable" ).disableSelection();
+});
+
+
+(function ($) {
+  $(function () {
+    $('.modal').modal();
+    $('.modal-trigger').modal();
+    $('select').material_select();
+  }); // end of document ready
+})(jQuery);
+
+//View
+$('#view').click(function(){
+  $.post("/templates/view.html", "t=" + type, function(data) {
+    $("#testLoader").html(data).trigger('create');
+  });
+});
+
+if("{{ name }}" == "index") {
+
+} else if("{{ name }}" == "add") {
+  document.getElementById("index").style.display = 'none';
+}
+
+//Make Test
+$('.ts').click(function() {
+  if(type != $(this).attr("id")) {
+  		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
+		$("#testLoader").html("");
+		$('#list').val("");
+		$('select').material_select();
+  }
+	type = $(this).attr("id");
+  document.getElementById("testsurv").style.display = 'inline';
+  document.getElementById("qLoad").style.display = 'block';
+  $.post("/createSurveyObject", "t=" + type, function(data) {
+	//anything that needs to be done after creating survey/test
+  });
+});
+
+$('#list').change(function() {
+  $.post("/add", $("#q").serialize() + "&t=" + type, function(data) {
+    $("#testLoader").html(data).trigger('create');
+  });
+});
+logCheck = {{ logcheck }};
+</script>
+</html>
