@@ -1,6 +1,7 @@
 import datetime
 import sqlite3 as sql
 import json
+import pickle
 from math import pi
 from email_validator import validate_email, EmailNotValidError
 from passlib.hash import bcrypt
@@ -23,6 +24,7 @@ from Objects import current_survey, cached_surveys, survey_num
 cache = SimpleCache()
 client = MongoClient('localhost', 40000)
 db = client['objects-database']
+col = db.survey_list
 
 #Flask Setup
 app = Flask(__name__)
