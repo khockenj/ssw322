@@ -145,7 +145,7 @@ def saveSurvey():
     global cached_surveys
     global current_survey
     cached_surveys.append(current_survey)
-    return "plswork"
+    save_current_survey(current_survey, db, col)
 
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
@@ -246,7 +246,7 @@ def view(qIndex):
 	elif i.q_type == "R":
 		answer = aList[counterForaList]
 		choices = i.choices
-		matches = i.matches
+		matches = i.answer
 	elif i.q_type == "MC":
 		answer = aList[counterForaList]
 		choices = i.choices
