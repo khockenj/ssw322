@@ -50,7 +50,7 @@
       </div>
 
         <div class="input-field col s2">
-          <input name="limit" id="limit" type="number" />
+          <input name="limit" id="limit" type="number" min="0"/>
           <label for="limit">Character Limit</label>
         </div>
 		</div>
@@ -265,7 +265,7 @@
 	}
 	type = $(this).attr("id");
   });
- 
+
  $('#save').click(function() {
 	$.post("/saveSurvey", "", function(data) {
 		window.location.replace("/view/0");
