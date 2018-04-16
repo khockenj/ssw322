@@ -129,12 +129,14 @@ def add():
 @app.route('/createSurveyObject', methods=['GET', 'POST'])
 def createSurveyObject():
     t = request.form.get('t')
+    title = request.form.get('title')
+
     global current_survey
     if t == 't':
         current_survey = Survey(True)
     else:
         current_survey = Survey(False)
-    return t
+    return title
 
 @app.route('/saveSurvey', methods=['POST'])
 def saveSurvey():
