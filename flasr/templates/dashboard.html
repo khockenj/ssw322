@@ -115,6 +115,21 @@
 
         <div id='testsurv' style='display:none;' class="input-field col s12">
 
+          <!--Enter title for test or survey-->
+          <form id='title'>
+            <div class="row" style="padding:5px">
+              <div class="input-field col s6">
+                <textarea id="title" name="title" class="materialize-textarea"></textarea>
+                <label for="title">Enter a name for this test or survey</label>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='container right-align' style='padding:5px'>
+                <button type="button" class="btn waves-effect waves-light green rounded-small" name="saveQ" id="saveQ">Submit<i class="material-icons right">send</i></button>
+              </div>
+            </div>
+          </form>
+
               <form id='q' style="padding-top:3%">
                 <select id='list' name="qType">
                   <option value="" disabled selected>Choose a Question</option>
@@ -128,8 +143,8 @@
               </form>
 		  </div>
 		  </div>
-		  
-		  
+
+
 		  <div class='row'>
           <div id='qLoad' style='display:none' class="card-panel white">
             <span class="black-text">
