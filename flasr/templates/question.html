@@ -267,7 +267,8 @@
   });
  
  $('#save').click(function() {
-	$.post("/saveSurvey", "", function(data) {
+	$.post("/saveSurvey", $('form#title').serialize(), function(data) {
+		alert(data);
 		window.location.replace("/view/0");
 		});
 })
