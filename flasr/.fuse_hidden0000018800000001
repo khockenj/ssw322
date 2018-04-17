@@ -1,7 +1,6 @@
 import datetime
 import sqlite3 as sql
 import json
-import pickle
 from math import pi
 from email_validator import validate_email, EmailNotValidError
 from passlib.hash import bcrypt
@@ -24,7 +23,6 @@ from Objects import current_survey, cached_surveys, survey_num
 cache = SimpleCache()
 client = MongoClient('localhost', 40000)
 db = client['objects-database']
-col = db.survey_list
 
 #Flask Setup
 app = Flask(__name__)
@@ -131,21 +129,21 @@ def add():
 @app.route('/createSurveyObject', methods=['GET', 'POST'])
 def createSurveyObject():
     t = request.form.get('t')
+    title = request.form.get('title')
 
     global current_survey
     if t == 't':
         current_survey = Survey(True)
     else:
         current_survey = Survey(False)
-    return t
+    return title
 
 @app.route('/saveSurvey', methods=['POST'])
 def saveSurvey():
     global cached_surveys
     global current_survey
-    current_survey.title = request.form.get('title')
     cached_surveys.append(current_survey)
-    save_current_survey(current_survey, db, col)
+    return "plswork"
 
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
@@ -246,7 +244,7 @@ def view(qIndex):
 	elif i.q_type == "R":
 		answer = aList[counterForaList]
 		choices = i.choices
-		matches = i.answer
+		matches = i.matches
 	elif i.q_type == "MC":
 		answer = aList[counterForaList]
 		choices = i.choices
