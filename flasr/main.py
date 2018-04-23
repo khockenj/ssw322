@@ -145,7 +145,7 @@ def saveSurvey():
     global current_survey
     current_survey.title = request.form.get('title')
     cached_surveys.append(current_survey)
-    save_current_survey(current_survey, db, col)
+    return "saved to cache"
 
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
@@ -226,6 +226,7 @@ def view(qIndex):
 
 	survey = cached_surveys[0]
 	qList = survey.getQuestionList()
+	qLength = len(qList)
 	aList = survey.answers
 	counterForaList = 0
 
@@ -255,4 +256,4 @@ def view(qIndex):
 		choices = i.choices
 		matches = i.matches
 
-	return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex)
+	return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
