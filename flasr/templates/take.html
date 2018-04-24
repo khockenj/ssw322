@@ -60,7 +60,7 @@
 
 <style>
 
-#sortableA, #sortableB {
+#sortableA, #sortableB, #sortableC, #sortableD {
     border: 1px solid #eee;
     width: 142px;
     min-height: 20px;
@@ -82,6 +82,10 @@
   .question {
   font-size:1.2em;
   font-weight:450;
+  }
+  .hidden {
+  padding-left:5%;
+  display:none;
   }
   </style>
 </head>
@@ -126,50 +130,28 @@
 		  
 		  <div class="card-panel white">
 		  <!--Ranking-->
-		  <div class="row" id="r">
+		  <div class="row hidden" id="r">
 		  <form id='r'>
-		  <div class="question col s12">question</div>
+		  <div class="questionR col s12"></div>
 		  <ul id="sortableA">
-			<li class="ui-state-default">Rank 1</li>
-			<li class="ui-state-default">Rank 2</li>
-			<li class="ui-state-default">Rank 3</li>
-			<li class="ui-state-default">Rank 4</li>
-			<li class="ui-state-default">Rank 5</li>
-			<li class="ui-state-default">Rank 6</li>
-			<li class="ui-state-default">Rank 7</li>
 		  </ul>
 		  </form>
 		  </div>
 		  
 		  <!--Multiple Choice-->
-		  <div class="row" id="mc">
+		  <div class="row hidden" id="mc">
 		  <form id='mc'>
-		  <div class="question col s12">question</div>
-		  <div class='col s12 center-align'>
-			   <p>
-				<input name="opt" value="0" id='opt0' type="radio"/>
-				<label for="opt0">Option 1</label>
-				</p>
-				<p>
-				<input name="opt" value="1" id='opt1' type="radio"/>
-				<label for="opt1">Option 2</label>
-				</p>
-			    <p>
-				<input name="opt" value="2" id='opt2' type="radio"/>
-				<label for="opt2">Option 3</label>
-				</p>
-				<p>
-				<input name="opt" value="3" id='opt3' type="radio"/>
-				<label for="opt3">Option 4</label>
-				</p>
+		  <div class="questionMC col s12"></div>
+		  <div class='col s12 center-align aLocation'>
+
 		  </div>
 		  </form>
 		  </div>
 		  
 		  <!--TrueFalse-->
-		  <div class="row" id="tf">
+		  <div class="row hidden" id="tf">
 		  <form id='tf'>
-		  <div class="question col s12">question</div>
+		  <div class="questionTF col s12"></div>
 		  <div class='col s12 center-align'>
 			   <p>
 				<input name="opt" value="1" id='true' type="radio"/>
@@ -184,40 +166,49 @@
 		  </div>
 		  
 		  <!--Matching-->
-		  <div class="row" id="m">
+		  <div class="row hidden" id="m">
 		  <form id='m'>
-		  <div class="question col s12">question</div>
-<ul id="sortableA" class="connectedSortable">
-  <li class="ui-state-default">Match 1A</li>
-  <li class="ui-state-default">Match 2A</li>
-  <li class="ui-state-default">Match 3A</li>
-  <li class="ui-state-default">Match 4A</li>
-  <li class="ui-state-default">Match 5A</li>
+		  <div class="questionM col s12"></div>
+<ul id="sortableC" class="connectedSortable">
+
 </ul>
  
-<ul id="sortableB" class="connectedSortable">
-  <li class="ui-state-default">Match 1B</li>
-  <li class="ui-state-default">Match 2B</li>
-  <li class="ui-state-default">Match 3B</li>
-  <li class="ui-state-default">Match 4B</li>
-  <li class="ui-state-default">Match 5B</li>
+<ul id="sortableD" class="connectedSortable">
+
 </ul>
 		  </form>
 		  </div>
 		  
 		  <!--Short Answer-->
-		  <div class="row" id="sa">
+		  <div class="row hidden" id="sa">
 		  <form id='sa'>
 		  <div class="question col s12">
-		  This is a very interesting question about how cool CSS is? Are you sure? [Character Limit: <span id="climit">500</span>]
+		  <p class="questionSA"></p>
+		  [Character Limit: <span id="climit"> {{ climit }} </span>]
 		  </div>
 		<div class="input-field col s12">
-        <textarea id="a" name="a" class="materialize-textarea"></textarea>
+        <textarea id="a" name="a" class="materialize-textarea" maxlength="{{ climit }}"></textarea>
         <label for="a">Answer</label>
       </div>
 
 		  </form>
 		  </div>
+		  <div class="row">
+		  <span class='container left-align' style="padding-right:25%;">
+                  <button type="button" class="btn waves-effect waves-light green" name="prev" id="prev">Prev <i class="material-icons left">navigate_before</i></button>
+                </span>
+
+                <span class='container right-align' style="padding-left:25%">
+                  <button type="button" class="btn waves-effect waves-light green" name="next" id="next">Next <i class="material-icons right">navigate_next</i></button>
+                </span>
+				</div>
+				<div class='container right-align'>
+			<form id='save'>
+			<button type="button" class="btn waves-effect waves-light green rounded-small" id="save" name='saveButton'>Submit
+			<i class="material-icons right">save</i>
+		</button>
+			</form>
+			</div>
 	</div>
   </div>
 
@@ -269,17 +260,66 @@
   </footer>
 </body>
 <script>
+var choices = {{ passedChoices|tojson }};
+var matches = {{ passedMatches|tojson }};
+var qType = "{{ passedQType }}";
+var qIndex = {{ qIndex }};
+var question = "{{ passedQ }}";
+var length = {{ length }};
+
+document.getElementById(qType.toLowerCase()).style.display = 'block';
+$(".question" + qType.toLowerCase()).append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question +"</p>");
+
+
+if(qType == "MC") {
+  choices.forEach(function(x, i) {
+	$(".aLocation").append("<p><input name='opt' value='" + x + "' id='" + i + "' type='radio' /><label for='" + i + "'>" + x + "</label></p>");
+	});
+} else if(qType == "SA") {
+
+} else if(qType == "R") {
+choices.forEach(function(x, i) {
+	$("#sortableA").append("<li class='ui-state-default'>" + x + "</li>");
+	});
+} else if(qType == "M") {
+choices.forEach(function(x, i) {
+	$("#sortableC").append("<li class='ui-state-default'>" + x + "</li>");
+	});
+matches.forEach(function(x, i) {
+	$("#sortableD").append("<li class='ui-state-default'>" + x + "</li>");
+	});
+} else if(qType == "TF") {
+
+}
+
  $( function() {
-    $( "#sortableA, #sortableB" ).sortable({
+    $( "#sortableC, #sortableD" ).sortable({
       connectWith: ".connectedSortable"
     }).disableSelection();
   } );
   
    $( function() {
+    $( "#sortableA" ).sortable();
     $( "#sortable" ).sortable({
       placeholder: "ui-state-highlight"
     });
     $( "#sortable" ).disableSelection();
   } );
+  
+  $('#next').click(function() {
+ 	window.location.replace("/take/" + (qIndex+1));
+});
+
+ $('#prev').click(function() {
+ 	window.location.replace("/take/" + (qIndex-1));
+});
+
+if(qIndex == 0) {
+document.getElementById("prev").style.display = 'none';
+}
+
+if(qIndex+1 == length) {
+document.getElementById("next").style.display = 'none';
+}
   </script>
 </html>
