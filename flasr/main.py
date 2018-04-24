@@ -247,7 +247,7 @@ def view(qIndex):
 	elif i.q_type == "R":
 		answer = aList[counterForaList]
 		choices = i.choices
-		matches = i.matches
+		matches = i.answer
 	elif i.q_type == "MC":
 		answer = aList[counterForaList]
 		choices = i.choices
