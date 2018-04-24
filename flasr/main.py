@@ -177,6 +177,7 @@ def addToDB():
             if t == 't':
                 answer.append(request.form.get('a' + str(c)))
         if t == 't':
+            print(answer)
             current_survey.addAnswer(answer)
     elif qType == "tf":
         current_question = TrueFalse("TF", q)
@@ -245,9 +246,10 @@ def view(qIndex):
 	elif i.q_type == "SA":
 		answer = None
 	elif i.q_type == "R":
+		answer = []
 		answer = aList[counterForaList]
-		choices = i.choices
-		matches = i.answer
+		#choices = i.choices
+		#matches = i.answer
 	elif i.q_type == "MC":
 		answer = aList[counterForaList]
 		choices = i.choices
