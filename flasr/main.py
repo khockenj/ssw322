@@ -198,9 +198,49 @@ def addToDB():
 
     return "q:" + q
 
-@app.route('/edit')
-def edit():
-    return 0
+@app.route('/edit/<int:qIndex>', methods=['GET', 'POST'])
+def edit(qIndex):
+	global cached_surveys
+	if qIndex == None:
+		someIndex = 0
+	else:
+		someIndex = qIndex
+
+	survey = cached_surveys[0]
+	qList = survey.getQuestionList()
+	qLength = len(qList)
+	aList = survey.answers
+	counterForaList = 0
+
+	question = ""
+	answer = ""
+	choices = None
+	matches = None
+	options = None
+	qType = None
+
+	i = qList[someIndex]
+	question = i.question
+	qType = i.q_type
+	if i.q_type == "TF":
+		answer = aList[counterForaList]
+	elif i.q_type == "SA":
+		answer = None
+	elif i.q_type == "R":
+		answer = []
+		answer = aList[counterForaList]
+		choices = i.choices
+		#choices = i.choices
+		#matches = i.answer
+	elif i.q_type == "MC":
+		answer = aList[counterForaList]
+		choices = i.choices
+	else:
+		answer = ""
+		choices = i.choices
+		matches = i.matches
+
+	return render_template('edit.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
 @app.route('/take/<int:qIndex>', methods=['GET', 'POST'])
 def take(qIndex):
 	global cached_surveys

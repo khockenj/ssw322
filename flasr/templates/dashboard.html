@@ -107,9 +107,9 @@
         <li><a class="ts" id='s' href="#!">Survey</a></li>
       </ul>
 
-      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">poll</i>Take</a>
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='take'>poll</i>Take</a>
       <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
-      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left">mode_edit</i>Edit</a>
+      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='edit'>mode_edit</i>Edit</a>
 
         <div id='testsurv' style='display:none;' class="input-field col s12">
 
@@ -214,8 +214,17 @@ $( function() {
 
 //View
 $('#view').click(function(){
-  $.post("/templates/view.html", "t=" + type, function(data) {
-    $("#testLoader").html(data).trigger('create');
+
+});
+
+$('#edit').click(function(){
+$.ajax({
+  url: "/edit/0",
+})
+  .done(function(html) {
+    $("#testLoader").append(html);
+	document.getElementById("qLoad").style.display = 'block';
+
   });
 });
 
