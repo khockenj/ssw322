@@ -224,7 +224,7 @@
 var choices = {{ passedChoices|tojson }};
 var matches = {{ passedMatches|tojson }};
 var qType = "{{ passedQType }}";
-var ans = "{{ passedAns }}";
+var ans = {{ passedAns|tojson }};
 var qIndex = {{ qIndex }};
 var question = "{{ passedQ }}";
 var length = {{ length }};
@@ -249,7 +249,7 @@ if(qType == "MC") {
 } else if(qType == "R") {
   document.getElementById("r").style.display = 'block';
   choices.forEach(function(x, i) {
-	$("table#r").append("<tr><td style='text-align:center;'>"+(i+1)+"</td><td style='text-align:center;'>" + x + "</td></tr>");
+	$("table#r").append("<tr><td style='text-align:center;'>"+ans[i]+"</td><td style='text-align:center;'>" + x + "</td></tr>");
 	$("#qLocation").append(question);
 });
 } else if(qType == "TF") {
