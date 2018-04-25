@@ -10,6 +10,14 @@ from Objects.TrueFalse import TrueFalse
 from Objects.MultipleChoice import MultipleChoice
 from Objects.ShortAnswer import ShortAnswer
 
+def get_titles(db, col):
+	listOfNames = []
+	for document in col.find():
+		name = document.name
+		listOfNames.append(name)
+	print(listOfNames)
+	return listOfNames
+
 def load_survey(name, db, col):
 	serialized_survey = col.find_one({"name": name})
 	survey_dict = pickle.loads(serialized_survey)
