@@ -22,8 +22,6 @@ def load_survey(name, db, col):
     for c in range(len(questions)):
         survey.addQuestion(create_question(survey, survey_dict.questions[c], survey_dict.isTest))
 
-    survey.name = name
-
     return(survey)
 
 
