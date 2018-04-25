@@ -1,10 +1,11 @@
-import pickle
+import json
 from pymongo import MongoClient
 
 def save_current_survey(current_survey, db, col):
-    serialized_survey = pickle.dumps(current_survey)
+    serialized_survey = json.dumps(current_survey)
+    print(serialized_survey)
 
     if col.find_one({'title': current_survey.title}):
         col.delete_one({'title': current_survey.title})
 
-    col.insert_one(serialized_survey)
+    col.insert_one(json.loads(serialized_survey))

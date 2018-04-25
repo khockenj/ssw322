@@ -23,7 +23,7 @@ from Objects.ShortAnswer import ShortAnswer
 from Objects import current_survey, cached_surveys, survey_num
 #Database Setup
 cache = SimpleCache()
-client = MongoClient('localhost', 40000)
+client = MongoClient('localhost', 27017)
 db = client['objects-database']
 survey_col = db.survey_list
 taker_col = db.taker_list
