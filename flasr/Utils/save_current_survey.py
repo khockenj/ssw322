@@ -8,4 +8,5 @@ def save_current_survey(current_survey, db, col):
     if col.find_one({'title': current_survey.title}):
         col.delete_one({'title': current_survey.title})
 
-    col.insert_one(pickle.loads(serialized_survey))
+    col.insert_one({'title': current_survey.title,
+                    'Survey': serialized_survey})

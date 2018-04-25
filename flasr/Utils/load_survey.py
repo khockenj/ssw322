@@ -20,20 +20,20 @@ def get_titles(db, col):
 
 def load_survey(title, db, col):
 	serialized_survey = col.find_one({"title": title})
-	survey_dict = pickle.loads(serialized_survey)
-	questions = survey_dict.questions
+	survey = pickle.loads(serialized_survey['Survey'])
+	"""questions = survey_dict.questions
 	survey = Survey(survey_dict.isTest)
 	survey.title = title
 	if survey.isTest == True:
 		survey.answers = survey_dict.answers
 
 	for c in range(len(questions)):
-		survey.addQuestion(create_question(survey, survey_dict.questions[c], survey_dict.isTest))
+		survey.addQuestion(create_question(survey, survey_dict.questions[c], survey_dict.isTest))"""
 
 	return(survey)
 
 
-def create_question(survey, question, isTest):
+"""def create_question(survey, question, isTest):
 	if question.q_type == "MC":
 		response = MultipleChoice("MC", question.question)
 
@@ -60,4 +60,4 @@ def create_question(survey, question, isTest):
 	else:
 		return None
 
-	return response
+	return response"""
