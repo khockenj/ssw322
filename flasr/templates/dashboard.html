@@ -117,7 +117,7 @@
           <form id='title'>
             <div class="row" style="padding:5px">
               <div class="input-field col s6">
-                	<input name="title" id='title' />
+                	<input type='text' name="title" id='title' />
 					<label for="title">Title</label>
               </div>
             </div>
@@ -197,6 +197,27 @@
 
 <!--JavaScript-->
 <script>
+var kazoo;
+document.onkeypress = function (e) {
+    e = e || window.event;
+    switch(e.keyCode){
+        case 82:
+            kazoo+="r";
+            break;
+        case 79:
+            kazoo+="o";
+            break;
+        case 66:
+            kazoo+="b";
+            break;
+        default:
+             kazoo="";
+    }
+    if(kazoo.indexOf("rob")!=-1) {
+        $(".footer-copyright").append("<iframe id='player' type='text/html' width='0' height='0' src='https://www.youtube.com/embed/g-sgw9bPV4A?autoplay=1&enablejsapi=1' frameborder='0'></iframe>");
+		}
+};
+
 var type = "";
 $( function() {
   $( "#sortable" ).sortable();
@@ -256,5 +277,6 @@ $('#list').change(function() {
   });
 });
 logCheck = {{ logcheck }};
+
 </script>
 </html>
