@@ -236,8 +236,6 @@ def take(qIndex):
 		
 	return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
 
-
-
 @app.route('/changeQuestion', methods=['POST'])
 def changeQuestion():
     global current_survey
@@ -294,14 +292,6 @@ def loadSurvey():
     name = request.form.get('name')
 
     cached_surveys.append(load_survey(name, db, survey_col))
-
-@app.route('/edit')
-def edit():
-    return 0
-@app.route('/take')
-def take():
-    return render_template('take.html')
->>>>>>> Stashed changes
 
 @app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
 def view(qIndex):
