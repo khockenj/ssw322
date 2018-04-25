@@ -11,7 +11,7 @@ edit load
 <form id='mc' class='hidden'>
 <div class="row" style="padding:5px">
 		<div class="input-field col s12">
-        <textarea id="q" name="q" class="materialize-textarea"></textarea>
+        <textarea id="q" name="q" class="materialize-textarea">{{ question }}</textarea>
         <label for="q">Question</label>
       </div>
 		</div>
@@ -179,7 +179,6 @@ edit load
 <!--JavaScript-->
 <script type="text/javascript">
   var testOrSurvey = '{{ testOrSurvey }}';
-  var qType = '{{ qType }}';
   var num = 1;
   var type = "";
   var ansNum = "a1";
@@ -187,6 +186,12 @@ edit load
   var matchNum = "m1";
   var correctNum = "c1";
   var ansArray = {};
+  var choices = {{ passedChoices|tojson }};
+  var matches = {{ passedMatches|tojson }};
+  var qType = "{{ passedQType }}";
+  var qIndex = {{ qIndex }};
+  var question = "{{ passedQ }}";
+  var length = {{ length }};
     currentQuestion = document.getElementById(qType);
     currentQuestion.style.display = 'inline';
 	if(testOrSurvey == "s") {
@@ -198,6 +203,8 @@ edit load
 		$('#list').val("");
 		$('select').material_select();
 	  }
+	  document.getElementById(qType.toLowerCase()).style.display = 'block';
+
   $('#addQ').click(function() {
 	num++;
 	ansNum = "a" + num;
