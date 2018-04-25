@@ -13,17 +13,17 @@ from Objects.ShortAnswer import ShortAnswer
 def get_titles(db, col):
 	listOfNames = []
 	for document in col.find():
-		name = document.name
-		listOfNames.append(name)
+		title = document.title
+		listOfNames.append(title)
 	print(listOfNames)
 	return listOfNames
 
-def load_survey(name, db, col):
-	serialized_survey = col.find_one({"name": name})
+def load_survey(title, db, col):
+	serialized_survey = col.find_one({"title": title})
 	survey_dict = pickle.loads(serialized_survey)
 	questions = survey_dict.questions
 	survey = Survey(survey_dict.isTest)
-	survey.name = name
+	survey.title = title
 	if survey.isTest == True:
 		survey.answers = survey_dict.answers
 
