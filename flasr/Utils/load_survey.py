@@ -13,7 +13,7 @@ from Objects.ShortAnswer import ShortAnswer
 def get_titles(db, col):
 	listOfNames = []
 	for document in col.find():
-		title = document.title
+		title = document['title']
 		listOfNames.append(title)
 	print(listOfNames)
 	return listOfNames
