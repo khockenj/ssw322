@@ -11,6 +11,8 @@ from werkzeug.contrib.cache import SimpleCache
 
 
 #Project Imports
+from Utils.load_survey import load_survey
+from Utils.save_current_survey import save_current_survey
 from Objects.Survey import Survey
 from Objects.Question import Question
 from Objects.Matching import Matching
@@ -18,13 +20,14 @@ from Objects.Ranking import Ranking
 from Objects.TrueFalse import TrueFalse
 from Objects.MultipleChoice import MultipleChoice
 from Objects.ShortAnswer import ShortAnswer
-
 from Objects import current_survey, cached_surveys, survey_num
 #Database Setup
 cache = SimpleCache()
 client = MongoClient('localhost', 40000)
 db = client['objects-database']
-col = db.survey_list
+survey_col = db.survey_list
+taker_col = db.taker_list
+name_col = db.name_list
 
 #Flask Setup
 app = Flask(__name__)
@@ -144,6 +147,7 @@ def saveSurvey():
     global cached_surveys
     global current_survey
     current_survey.title = request.form.get('title')
+    save_current_survey(current_survey, db, survey_col)
     cached_surveys.append(current_survey)
     return "saved to cache"
 
@@ -198,49 +202,6 @@ def addToDB():
 
     return "q:" + q
 
-@app.route('/edit/<int:qIndex>', methods=['GET', 'POST'])
-def edit(qIndex):
-	global cached_surveys
-	if qIndex == None:
-		someIndex = 0
-	else:
-		someIndex = qIndex
-
-	survey = cached_surveys[0]
-	qList = survey.getQuestionList()
-	qLength = len(qList)
-	aList = survey.answers
-	counterForaList = 0
-
-	question = ""
-	answer = ""
-	choices = None
-	matches = None
-	options = None
-	qType = None
-
-	i = qList[someIndex]
-	question = i.question
-	qType = i.q_type
-	if i.q_type == "TF":
-		answer = aList[counterForaList]
-	elif i.q_type == "SA":
-		answer = None
-	elif i.q_type == "R":
-		answer = []
-		answer = aList[counterForaList]
-		choices = i.choices
-		#choices = i.choices
-		#matches = i.answer
-	elif i.q_type == "MC":
-		answer = aList[counterForaList]
-		choices = i.choices
-	else:
-		answer = ""
-		choices = i.choices
-		matches = i.matches
-
-	return render_template('edit.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
 @app.route('/take/<int:qIndex>', methods=['GET', 'POST'])
 def take(qIndex):
 	global cached_surveys
@@ -274,6 +235,63 @@ def take(qIndex):
 		matches = i.matches
 		
 	return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+
+@app.route('/changeQuestion', methods=['POST'])
+def changeQuestion():
+    global current_survey
+    current_question = Question()
+    q = request.form.get('q')
+    t = request.form.get('t')
+    n = request.form.get('qNum')
+    qType = request.form.get('qType')
+
+    if qType == "mc":
+        current_question = MultipleChoice("MC", q)
+
+        for c in range(1, int(request.form.get('n')) + 1):
+            current_question.addChoice(request.form.get('a' + str(c)))
+
+        if t == 't':
+            current_survey.answers[n] = request.form.get('c')
+    elif qType == "sa":
+        climit = request.form.get('limit')
+        current_question = ShortAnswer('SA', q, climit)
+        if t == 't':
+            current_survey.answers[n] = " "
+    elif qType == "r":
+        current_question = Ranking("R", q)
+        answer = []
+
+        for c in range(1, int(request.form.get('n')) + 1):
+            current_question.addChoice(request.form.get('r' + str(c)))
+            if t == 't':
+                answer.append(request.form.get('a' + str(c)))
+        if t == 't':
+            current_survey.answers[n] = answer
+    elif qType == "tf":
+        current_question = TrueFalse("TF", q)
+
+        if t == 't':
+            current_survey.answers[n] = request.form.get('opt')
+    elif qType == "m":
+        current_question = Matching("M", q)
+        for c in range(1, int(request.form.get('n')) + 1):
+            current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
+
+        if t == 't':
+            current_survey.answers[n] = " "
+    else:
+        q = "ERROR"
+
+    current_survey.questions[n] = current_question
+
+    return "q:" + q
+
+@app.route('/loadSurvey', methods=['POST'])
+def loadSurvey():
+    name = request.form.get('name')
+
+    cached_surveys.append(load_survey(name, db, survey_col))
 
 @app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
 def view(qIndex):
