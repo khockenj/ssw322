@@ -242,6 +242,7 @@ def take(qIndex):
 		matches = i.matches
 	return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
 
+<<<<<<< Updated upstream
 @app.route('/saveAnswer', methods=['POST'])
 def saveAnswer():
 	global current_answer_sheet
@@ -266,6 +267,10 @@ def storeToAnswerSheet():
 
 @app.route('/changeQuestion', methods=['POST'])
 def changeQuestion():
+=======
+@app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
+def changeQuestion(qIndex):
+>>>>>>> Stashed changes
     global current_survey
     current_question = Question()
     q = request.form.get('q')
