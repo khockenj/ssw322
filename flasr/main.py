@@ -20,7 +20,8 @@ from Objects.Ranking import Ranking
 from Objects.TrueFalse import TrueFalse
 from Objects.MultipleChoice import MultipleChoice
 from Objects.ShortAnswer import ShortAnswer
-from Objects import current_survey, cached_surveys, survey_num
+from Objects import current_survey, current_answer_sheet, cached_surveys, survey_num
+
 #Database Setup
 cache = SimpleCache()
 client = MongoClient('localhost', 27017)
@@ -205,6 +206,12 @@ def addToDB():
 @app.route('/take/<int:qIndex>', methods=['GET', 'POST'])
 def take(qIndex):
 	global cached_surveys
+	global current_answer_sheet
+
+	title = request.form.get('title')
+	if qIndex == 0:
+		current_answer_sheet = AnswerSheet(title)
+
 	if qIndex == None:
 		someIndex = 0
 	else:
@@ -233,8 +240,29 @@ def take(qIndex):
 	elif i.q_type == "M":
 		choices = i.choices
 		matches = i.matches
-		
 	return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+
+@app.route('/saveAnswer', methods=['POST'])
+def saveAnswer():
+	global current_answer_sheet
+
+	qType = request.form.get('qType')
+	if qType == 'R' or qType == 'M':
+		answer = []
+		for c in range(1, int(request.form.get('n')) + 1):
+			answer.append(request.form.get('a' + str(c)))
+
+		current_answer_sheet.addResponse(answer)
+	elif qType == 'SA':
+		current_answer_sheet.append(None)
+	else:
+		current_answer_sheet.addResponse(request.form.get('a'))
+    return "That answer be siiiicccccckkkkkkk"
+
+@app.route('/storeToAnswerSheet', methods=['POST'])
+def storeToAnswerSheet():
+	AnswerSheet
+	taker_col.insert_one({'': })
 
 @app.route('/changeQuestion', methods=['POST'])
 def changeQuestion():
