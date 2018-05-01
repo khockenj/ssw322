@@ -107,10 +107,9 @@
         <li><a class="ts" id='s' href="#!">Survey</a></li>
       </ul>
 
-      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='take'>poll</i>Take</a>
-      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
-      <a class="waves-effect waves-light btn-large green rounded-big"><i class="material-icons left" id='edit'>mode_edit</i>Edit</a>
-
+      <a class="waves-effect waves-light btn-large green rounded-big" id='take'><i class="material-icons left" id='take'>poll</i>Take</a>
+      <a class="waves-effect waves-light btn-large green rounded-big" id='view'><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
+      <a class="waves-effect waves-light btn-large green rounded-big" id='edit'><i class="material-icons left" id='edit'>mode_edit</i>Edit</a>
         <div id='testsurv' style='display:none;' class="input-field col s12">
 
           <!--Enter title for test or survey-->
@@ -132,6 +131,12 @@
                   <!--<option value="4">Multiple</option>-->
                   <option value="m">Matching</option>
                   <option value="r">Ranking</option>
+                </select>
+              </form>
+			  
+			   <form id='choose' style="padding-top:3%">
+                <select id='list2' name="sChoice">
+                  <option value="" disabled selected>Choose a Tsurvey</option>
                 </select>
               </form>
 		  </div>
@@ -228,7 +233,15 @@ document.onkeypress = function (e) {
 	    $(".footer-copyright").append("<iframe id='player' type='text/html' width='0' height='0' src='https://www.youtube.com/embed/gYOEyzBFYa4?autoplay=1&enablejsapi=1' frameborder='0'></iframe>");
 	}
 };
+var titles = {{ title|tojson }};
 
+titles.forEach(function(x, i) {
+$("#list2").append("<option value='" + i + "'>" + x + "</option>");
+	});
+$('#take').click(function() {
+	document.getElementById("qLoad").style.display = 'block';
+	document.getElementById("choose").style.display = 'block';
+});
 var type = "";
 $( function() {
   $( "#sortable" ).sortable();

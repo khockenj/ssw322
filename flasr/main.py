@@ -11,7 +11,7 @@ from werkzeug.contrib.cache import SimpleCache
 
 
 #Project Imports
-from Utils.load_survey import load_survey
+from Utils.load_survey import load_survey, get_titles
 from Utils.save_current_survey import save_current_survey
 from Objects.Survey import Survey
 from Objects.Question import Question
@@ -124,7 +124,8 @@ def dashboard():
         logCheck = sid
     else:
         logCheck = 0
-    return render_template('dashboard.html', name='dash', logcheck=logCheck)
+    titles = get_titles(db, survey_col)
+    return render_template('dashboard.html', name='dash', logcheck=logCheck, title=titles)
 
 @app.route('/add', methods=['POST'])
 def add():
