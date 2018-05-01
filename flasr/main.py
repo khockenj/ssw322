@@ -265,12 +265,8 @@ def storeToAnswerSheet():
 	AnswerSheet
 	taker_col.insert_one({'': })
 
-@app.route('/changeQuestion', methods=['POST'])
-def changeQuestion():
-=======
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
 def changeQuestion(qIndex):
->>>>>>> Stashed changes
     global current_survey
     current_question = Question()
     q = request.form.get('q')
