@@ -37,7 +37,7 @@ sqlitedb = 'ssw322.db'
 @app.route('/')
 def index():
     logCheck = 0
-    sid = session.get('uid');   #session if logged in
+    sid = session.get('uid')   #session if logged in
     if sid:
         logCheck = sid
         return redirect(url_for('dashboard'))

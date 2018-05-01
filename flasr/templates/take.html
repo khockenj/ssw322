@@ -242,6 +242,7 @@
   <footer class="page-footer">
     <div class="container">
       <div class="row">
+	  
         <div class="col l6 s12">
           <h5 class="white-text">SSW322 Design VI Project</h5>
           <p class="grey-text text-lighten-4">The task for this project was to create a survey/test making and taking site. Try it out if you'd like!</p>
@@ -316,10 +317,16 @@ matches.forEach(function(x, i) {
  	window.location.replace("/take/" + (qIndex+1));
 });
 
- $('#prev').click(function() {
+ /* $('#prev').click(function() {
  	window.location.replace("/take/" + (qIndex-1));
 });
-
+*/
+title = "My Title"
+$('#next').click(function() {
+ $.post("/saveAnswer", $("#" + qType.toLowerCase()).serialize() + "&qType=" + qType + "&title=" + title, function(data) {
+	alert(data);
+ });
+});
 if(qIndex == 0) {
 document.getElementById("prev").style.display = 'none';
 }
