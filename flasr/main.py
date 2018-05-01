@@ -210,7 +210,7 @@ def take(qIndex):
 
     title = request.form.get('title')
     if qIndex == 0:
-        current_answer_sheet = AnswerSheet(title)
+        current_answer_sheet = AnswerSheet('temp title')
 
     if qIndex == None:
         someIndex = 0
@@ -259,10 +259,17 @@ def saveAnswer():
         current_answer_sheet.addResponse(request.form.get('a'))
     return "That answer be siiiicccccckkkkkkk"
 
-"""@app.route('/storeToAnswerSheet', methods=['POST'])
+@app.route('/storeToAnswerSheet', methods=['POST'])
 def storeToAnswerSheet():
-    AnswerSheet
-    taker_col.insert_one({'': })"""
+    global current_answer_sheet
+
+    current_answer_sheet.title = request.form.get('title')
+
+    userID = ''
+    if session.get('uid'):
+        userID = session.get('uid')
+
+    #taker_col.insert_one({'': })
 
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
 def changeQuestion(qIndex):
