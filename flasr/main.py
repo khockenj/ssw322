@@ -263,13 +263,16 @@ def saveAnswer():
 def storeToAnswerSheet():
     global current_answer_sheet
 
-    current_answer_sheet.title = request.form.get('title')
+    title = request.form.get('title')
+    current_answer_sheet.title = title
 
     userID = ''
     if session.get('uid'):
         userID = session.get('uid')
 
-    #taker_col.insert_one({'': })
+    serialized_answer_sheet = pickle.dumps(current_answer_sheet)
+
+    taker_col.insert_one({'Title':title, 'userID':userID, 'AnswerSheet':serialized_answer_sheet})
 
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
 def changeQuestion(qIndex):
