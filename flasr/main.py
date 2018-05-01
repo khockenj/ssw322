@@ -205,65 +205,64 @@ def addToDB():
 
 @app.route('/take/<int:qIndex>', methods=['GET', 'POST'])
 def take(qIndex):
-	global cached_surveys
-	global current_answer_sheet
+    global cached_surveys
+    global current_answer_sheet
 
-	title = request.form.get('title')
-	if qIndex == 0:
-		current_answer_sheet = AnswerSheet(title)
+    title = request.form.get('title')
+    if qIndex == 0:
+        current_answer_sheet = AnswerSheet(title)
 
-	if qIndex == None:
-		someIndex = 0
-	else:
-		someIndex = qIndex
+    if qIndex == None:
+        someIndex = 0
+    else:
+        someIndex = qIndex
 
-	survey = cached_surveys[0]
-	qList = survey.getQuestionList()
-	qLength = len(qList)
-	aList = survey.answers
-	counterForaList = 0
+    survey = cached_surveys[0]
+    qList = survey.getQuestionList()
+    qLength = len(qList)
+    aList = survey.answers
+    counterForaList = 0
 
-	question = ""
-	choices = None
-	matches = None
-	options = None
-	qType = None
-	limit = 0
+    question = ""
+    choices = None
+    matches = None
+    options = None
+    qType = None
+    limit = 0
 
-	i = qList[someIndex]
-	question = i.question
-	qType = i.q_type
-	if i.q_type == "R" or i.q_type == "MC":
-		choices = i.choices
-	elif i.q_type == "SA":
-		limit = i.charLimit
-	elif i.q_type == "M":
-		choices = i.choices
-		matches = i.matches
-	return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+    i = qList[someIndex]
+    question = i.question
+    qType = i.q_type
+    if i.q_type == "R" or i.q_type == "MC":
+        choices = i.choices
+    elif i.q_type == "SA":
+        limit = i.charLimit
+    elif i.q_type == "M":
+        choices = i.choices
+        matches = i.matches
+    return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
 
-<<<<<<< Updated upstream
 @app.route('/saveAnswer', methods=['POST'])
 def saveAnswer():
-	global current_answer_sheet
+    global current_answer_sheet
 
-	qType = request.form.get('qType')
-	if qType == 'R' or qType == 'M':
-		answer = []
-		for c in range(1, int(request.form.get('n')) + 1):
-			answer.append(request.form.get('a' + str(c)))
+    qType = request.form.get('qType')
+    if qType == 'R' or qType == 'M':
+        answer = []
+        for c in range(1, int(request.form.get('n')) + 1):
+            answer.append(request.form.get('a' + str(c)))
 
-		current_answer_sheet.addResponse(answer)
-	elif qType == 'SA':
-		current_answer_sheet.append(None)
-	else:
-		current_answer_sheet.addResponse(request.form.get('a'))
+        current_answer_sheet.addResponse(answer)
+    elif qType == 'SA':
+        current_answer_sheet.append(None)
+    else:
+        current_answer_sheet.addResponse(request.form.get('a'))
     return "That answer be siiiicccccckkkkkkk"
 
-@app.route('/storeToAnswerSheet', methods=['POST'])
+"""@app.route('/storeToAnswerSheet', methods=['POST'])
 def storeToAnswerSheet():
-	AnswerSheet
-	taker_col.insert_one({'': })
+    AnswerSheet
+    taker_col.insert_one({'': })"""
 
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
 def changeQuestion(qIndex):
@@ -324,56 +323,56 @@ def loadSurvey():
 
 @app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
 def view(qIndex):
-	"""survey = Survey(True)
-	survey.addQuestion(Matching("M", "This is the Question.", ["option1", "option2", "option3"], ["option1", "option2", "option3"]))
-	survey.addAnswer("Matching got no answer.")
-	survey.addQuestion(MultipleChoice("MC", "This is the question", ["option1", "option2", "option3"]))
-	survey.addAnswer(1)
-	survey.addQuestion(Ranking("R", "This is the question", ["option1", "option2", "option3"]))
-	survey.addAnswer([1,2,3])
-	survey.addQuestion(ShortAnswer("SA", "This is the question", 52))
-	survey.addAnswer(" ")
-	survey.addQuestion(TrueFalse("TF", "This is the question",))
-	survey.addAnswer(0)"""
+    """survey = Survey(True)
+    survey.addQuestion(Matching("M", "This is the Question.", ["option1", "option2", "option3"], ["option1", "option2", "option3"]))
+    survey.addAnswer("Matching got no answer.")
+    survey.addQuestion(MultipleChoice("MC", "This is the question", ["option1", "option2", "option3"]))
+    survey.addAnswer(1)
+    survey.addQuestion(Ranking("R", "This is the question", ["option1", "option2", "option3"]))
+    survey.addAnswer([1,2,3])
+    survey.addQuestion(ShortAnswer("SA", "This is the question", 52))
+    survey.addAnswer(" ")
+    survey.addQuestion(TrueFalse("TF", "This is the question",))
+    survey.addAnswer(0)"""
 
-	global cached_surveys
-	if qIndex == None:
-		someIndex = 0
-	else:
-		someIndex = qIndex
+    global cached_surveys
+    if qIndex == None:
+        someIndex = 0
+    else:
+        someIndex = qIndex
 
-	survey = cached_surveys[0]
-	qList = survey.getQuestionList()
-	qLength = len(qList)
-	aList = survey.answers
-	counterForaList = 0
+    survey = cached_surveys[0]
+    qList = survey.getQuestionList()
+    qLength = len(qList)
+    aList = survey.answers
+    counterForaList = 0
 
-	question = ""
-	answer = ""
-	choices = None
-	matches = None
-	options = None
-	qType = None
+    question = ""
+    answer = ""
+    choices = None
+    matches = None
+    options = None
+    qType = None
 
-	i = qList[someIndex]
-	question = i.question
-	qType = i.q_type
-	if i.q_type == "TF":
-		answer = aList[counterForaList]
-	elif i.q_type == "SA":
-		answer = None
-	elif i.q_type == "R":
-		answer = []
-		answer = aList[counterForaList]
-		choices = i.choices
-		#choices = i.choices
-		#matches = i.answer
-	elif i.q_type == "MC":
-		answer = aList[counterForaList]
-		choices = i.choices
-	else:
-		answer = ""
-		choices = i.choices
-		matches = i.matches
+    i = qList[someIndex]
+    question = i.question
+    qType = i.q_type
+    if i.q_type == "TF":
+        answer = aList[counterForaList]
+    elif i.q_type == "SA":
+        answer = None
+    elif i.q_type == "R":
+        answer = []
+        answer = aList[counterForaList]
+        choices = i.choices
+        #choices = i.choices
+        #matches = i.answer
+    elif i.q_type == "MC":
+        answer = aList[counterForaList]
+        choices = i.choices
+    else:
+        answer = ""
+        choices = i.choices
+        matches = i.matches
 
-	return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+    return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
