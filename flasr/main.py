@@ -20,6 +20,7 @@ from Objects.Ranking import Ranking
 from Objects.TrueFalse import TrueFalse
 from Objects.MultipleChoice import MultipleChoice
 from Objects.ShortAnswer import ShortAnswer
+from Objects.AnswerSheet import AnswerSheet
 from Objects import current_survey, current_answer_sheet, cached_surveys, survey_num
 
 #Database Setup
@@ -281,10 +282,10 @@ def changeQuestion(qIndex):
     current_question = Question()
     q = request.form.get('q')
     t = request.form.get('t')
-    n = request.form.get('qNum')
+    n = qIndex
     qType = request.form.get('qType')
 
-    if qType == "mc":
+    if qType == "MC":
         current_question = MultipleChoice("MC", q)
 
         for c in range(1, int(request.form.get('n')) + 1):
@@ -292,12 +293,12 @@ def changeQuestion(qIndex):
 
         if t == 't':
             current_survey.answers[n] = request.form.get('c')
-    elif qType == "sa":
+    elif qType == "SA":
         climit = request.form.get('limit')
         current_question = ShortAnswer('SA', q, climit)
         if t == 't':
             current_survey.answers[n] = " "
-    elif qType == "r":
+    elif qType == "R":
         current_question = Ranking("R", q)
         answer = []
 
@@ -307,12 +308,12 @@ def changeQuestion(qIndex):
                 answer.append(request.form.get('a' + str(c)))
         if t == 't':
             current_survey.answers[n] = answer
-    elif qType == "tf":
+    elif qType == "TF":
         current_question = TrueFalse("TF", q)
 
         if t == 't':
             current_survey.answers[n] = request.form.get('opt')
-    elif qType == "m":
+    elif qType == "M":
         current_question = Matching("M", q)
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
@@ -324,7 +325,7 @@ def changeQuestion(qIndex):
 
     current_survey.questions[n] = current_question
 
-    return "q:" + q
+    return "q:" + qType
 
 @app.route('/loadSurvey', methods=['POST'])
 def loadSurvey():
@@ -368,22 +369,23 @@ def view(qIndex):
     i = qList[someIndex]
     question = i.question
     qType = i.q_type
-    if i.q_type == "TF":
-        answer = aList[counterForaList]
-    elif i.q_type == "SA":
-        answer = None
-    elif i.q_type == "R":
-        answer = []
-        answer = aList[counterForaList]
+    if i.q_type == "R":
         choices = i.choices
-        #choices = i.choices
-        #matches = i.answer
     elif i.q_type == "MC":
-        answer = aList[counterForaList]
         choices = i.choices
-    else:
-        answer = ""
+        print(choices)
+    elif i.q_type == "M":
         choices = i.choices
         matches = i.matches
+    else:
+        answer = ""
+
+    if survey.isTest == True:
+        if i.q_type == "TF" or i.q_type == "R" or i.q_type == "MC":
+            answer = aList[counterForaList]
+        elif i.q_type == "SA":
+            answer = None
+        else:
+            answer = ""
 
     return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
