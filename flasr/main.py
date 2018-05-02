@@ -208,7 +208,7 @@ def take(qIndex):
     global current_survey
     global current_answer_sheet
 
-    title = request.form.get('title')
+    title = current_survey.title
     if qIndex == 0:
         current_answer_sheet = AnswerSheet(title)
 
@@ -217,10 +217,10 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    print(survey.questions)
-    qList = survey.getQuestionList()
+    print(current_survey.questions)
+    qList = current_survey.getQuestionList()
     qLength = len(qList)
-    aList = survey.answers
+    aList = current_survey.answers
     counterForaList = 0
 
     question = ""
@@ -294,7 +294,7 @@ def edit(qIndex):
 
     qList = current_survey.getQuestionList()
     qLength = len(qList)
-    aList = survey.answers
+    aList = current_survey.answers
 
     question = ""
     choices = None
@@ -317,7 +317,7 @@ def edit(qIndex):
     elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
-    return render_template('edit.html', passedTitle = title, climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
+    return render_template('edit.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
 
 
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])

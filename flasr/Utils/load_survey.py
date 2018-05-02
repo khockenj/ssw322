@@ -15,54 +15,14 @@ def get_titles(db, col):
     for document in col.find():
         title = document['title']
         listOfNames.append(title)
-    print(listOfNames)
     return listOfNames
 
 def load_survey(title, db, col):
     serialized_survey = col.find_one({"title": title})
     serialized_questions = serialized_survey['questions']
-    print(serialized_survey)
     survey = pickle.loads(serialized_survey['Survey'])
 
     for question in serialized_questions:
         survey.addQuestion(pickle.loads(question))
-    """questions = survey_dict.questions
-    survey = Survey(survey_dict.isTest)
-    survey.title = title
-    if survey.isTest == True:
-        survey.answers = survey_dict.answers
-
-    for c in range(len(questions)):
-        survey.addQuestion(create_question(survey, survey_dict.questions[c], survey_dict.isTest))"""
 
     return(survey)
-
-
-"""def create_question(survey, question, isTest):
-    if question.q_type == "MC":
-        response = MultipleChoice("MC", question.question)
-
-        for c in range(len(question.choices)):
-            response.addChoice(question.choices[c])
-
-    elif question.q_type == "SA":
-        response = ShortAnswer('SA', question.question, question.charLimit)
-
-    elif question.q_type == "R":
-        response = Ranking("R", question.question)
-
-        for c in range(len(question.choices)):
-            response.addChoice(question.choices[c])
-
-    elif question.q_type == "TF":
-        response = TrueFalse("TF", question.question)
-
-    elif question.q_type == "M":
-        response = Matching("M", question.question)
-        for c in range(len(question.choices)):
-            response.addChoiceAndMatch(question.choices[c], question.matches[c])
-
-    else:
-        return None
-
-    return response"""
