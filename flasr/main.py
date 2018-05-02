@@ -265,7 +265,7 @@ def storeToAnswerSheet():
     correct = False
     current_answer_sheet.title = current_survey.title
     current_answer_sheet.userName = session.get('uid')
-    answer_sheet_to_db(current_answer_sheet)
+    answer_sheet_to_db(current_answer_sheet, db, taker_col)
 
     for answer, index in current_survey.answers:
         if current_survey.answers[index] == current_answer_sheet.user_response[index]:
@@ -304,7 +304,7 @@ def edit(qIndex):
     limit = 0
     ans = None
 
-    if survey.isTest:
+    if current_survey.isTest:
         ans = aList[qIndex]
 
     i = qList[someIndex]

@@ -14,4 +14,5 @@ def save_current_survey(current_survey, db, col):
 
     col.insert_one({'title': current_survey.title,
                     'Survey': serialized_survey,
-                    'questions': questions})
+                    'questions': questions,
+                    'answers': current_survey.answers})
