@@ -127,9 +127,7 @@
 		</div>
 
 		<div id='questions'>
-		<div class='row'>
-		
-		</div>
+
 		</div>
 
 		<div class='row'><a id='addQ' class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></div>
@@ -349,9 +347,9 @@ if(qType == "mc") {
 	ansNum = "a" + num;
 	correctNum = "c" + num;
 	if(i+1 != ans) {
-    $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' value=" + x + " /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
+    $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' value='" + x + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
 	} else {
-	 $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' checked /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' value=" + x + " /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
+	 $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' checked='checked' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' value='" + x + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
 	}
 		/* if(testOrSurvey == "s") {
 	$("[id='testOnly']").html("");
