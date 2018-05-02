@@ -136,7 +136,7 @@
 		  </div>
 		  
 		  <div id="chooseTs" style="display:none;">
-			   <form id='choose' style="padding-top:3%">
+			   <form id='choose' style="padding-top:3%" method='post' action="/take/0">
                 <select id='list2' name="selected">
                   <option value="" disabled selected>Choose a Tsurvey</option>
                 </select>
@@ -244,7 +244,7 @@ $('#take, #edit, #view').click(function() {
 });
 
 $('#list2').change(function() {
-	window.location.replace("/take/0?" + $("#choose").serialize());
+$('#choose').submit();
 });
 var type = "";
 $( function() {
