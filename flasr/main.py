@@ -151,7 +151,6 @@ def saveSurvey():
     global current_survey
     current_survey.title = request.form.get('title')
     save_current_survey(current_survey, db, survey_col)
-    cached_surveys.append(current_survey)
     return "saved to cache"
 
 @app.route('/addToDB', methods=['POST'])
@@ -163,7 +162,7 @@ def addToDB():
     qType = request.form.get('qType')
 
     if qType == "mc":
-        current_question = MultipleChoice("MC", q)
+        current_question = MultipleChoice("mc", q)
 
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
@@ -172,11 +171,11 @@ def addToDB():
             current_survey.addAnswer(request.form.get('c'))
     elif qType == "sa":
         climit = request.form.get('limit')
-        current_question = ShortAnswer('SA', q, climit)
+        current_question = ShortAnswer('sa', q, climit)
         if t == 't':
             current_survey.addAnswer(" ")
     elif qType == "r":
-        current_question = Ranking("R", q)
+        current_question = Ranking("r", q)
         answer = []
 
         for c in range(1, int(request.form.get('n')) + 1):
@@ -184,15 +183,14 @@ def addToDB():
             if t == 't':
                 answer.append(request.form.get('r' + str(c)))
         if t == 't':
-            print(answer)
             current_survey.addAnswer(answer)
     elif qType == "tf":
-        current_question = TrueFalse("TF", q)
+        current_question = TrueFalse("tf", q)
 
         if t == 't':
             current_survey.addAnswer(request.form.get('opt'))
     elif qType == "m":
-        current_question = Matching("M", q)
+        current_question = Matching("m", q)
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
 
@@ -207,6 +205,7 @@ def addToDB():
 
 @app.route('/take/<int:qIndex>', methods=['GET', 'POST'])
 def take(qIndex):
+    global current_survey
     global current_answer_sheet
 
     title = request.form.get('title')
@@ -236,11 +235,11 @@ def take(qIndex):
     i = qList[someIndex]
     question = i.question
     qType = i.q_type
-    if i.q_type == "R" or i.q_type == "MC":
+    if i.q_type == "r" or i.q_type == "mc":
         choices = i.choices
-    elif i.q_type == "SA":
+    elif i.q_type == "sa":
         limit = i.charLimit
-    elif i.q_type == "M":
+    elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
     return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
@@ -250,13 +249,13 @@ def saveAnswer():
     global current_answer_sheet
 
     qType = request.form.get('qType')
-    if qType == 'R' or qType == 'M':
+    if qType == 'r' or qType == 'm':
         answer = []
         for c in range(1, int(request.form.get('n')) + 1):
             answer.append(request.form.get('a' + str(c)))
 
         current_answer_sheet.addResponse(answer)
-    elif qType == 'SA':
+    elif qType == 'sa':
         current_answer_sheet.append(None)
     else:
         current_answer_sheet.addResponse(request.form.get('a'))
@@ -278,7 +277,11 @@ def edit(qIndex):
     else:
         someIndex = qIndex
 
-    survey = cached_surveys[0]
+    if len(current_survey.getQuestionList()) == qIndex:
+        current_surveys.addQuestion(Question())
+        current_surveys.addAnswer(None)
+
+    survey = current_surveys
     qList = survey.getQuestionList()
     qLength = len(qList)
     aList = survey.answers
@@ -290,18 +293,22 @@ def edit(qIndex):
     options = None
     qType = None
     limit = 0
+    ans = None
+
+    if survey.isTest:
+        ans = aList[qIndex]
 
     i = qList[someIndex]
     question = i.question
     qType = i.q_type
-    if i.q_type == "R" or i.q_type == "MC":
+    if i.q_type == "r" or i.q_type == "mc":
         choices = i.choices
-    elif i.q_type == "SA":
+    elif i.q_type == "sa":
         limit = i.charLimit
-    elif i.q_type == "M":
+    elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
-    return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+    return render_template('edit.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
 
 
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
@@ -313,21 +320,21 @@ def changeQuestion(qIndex):
     n = qIndex
     qType = request.form.get('qType')
 
-    if qType == "MC":
-        current_question = MultipleChoice("MC", q)
+    if qType == "mc":
+        current_question = MultipleChoice("mc", q)
 
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
 
         if t == 't':
             current_survey.answers[n] = request.form.get('c')
-    elif qType == "SA":
+    elif qType == "sa":
         climit = request.form.get('limit')
-        current_question = ShortAnswer('SA', q, climit)
+        current_question = ShortAnswer('sa', q, climit)
         if t == 't':
             current_survey.answers[n] = " "
-    elif qType == "R":
-        current_question = Ranking("R", q)
+    elif qType == "r":
+        current_question = Ranking("r", q)
         answer = []
 
         for c in range(1, int(request.form.get('n')) + 1):
@@ -336,13 +343,13 @@ def changeQuestion(qIndex):
                 answer.append(request.form.get('a' + str(c)))
         if t == 't':
             current_survey.answers[n] = answer
-    elif qType == "TF":
-        current_question = TrueFalse("TF", q)
+    elif qType == "tf":
+        current_question = TrueFalse("tf", q)
 
         if t == 't':
             current_survey.answers[n] = request.form.get('opt')
-    elif qType == "M":
-        current_question = Matching("M", q)
+    elif qType == "m":
+        current_question = Matching("m", q)
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
 
@@ -359,7 +366,7 @@ def changeQuestion(qIndex):
 def loadSurvey():
     name = request.form.get('name')
 
-    cached_surveys.append(load_survey(name, db, survey_col))
+    current_survey = load_survey(name, db, survey_col)
 
 @app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
 def view(qIndex):
@@ -375,13 +382,14 @@ def view(qIndex):
     survey.addQuestion(TrueFalse("TF", "This is the question",))
     survey.addAnswer(0)"""
 
-    global cached_surveys
+    global current_survey
     if qIndex == None:
         someIndex = 0
     else:
         someIndex = qIndex
 
-    survey = cached_surveys[0]
+    survey = current_survey
+    print(survey.questions[0].question)
     qList = survey.getQuestionList()
     qLength = len(qList)
     aList = survey.answers
@@ -397,21 +405,20 @@ def view(qIndex):
     i = qList[someIndex]
     question = i.question
     qType = i.q_type
-    if i.q_type == "R":
+    if i.q_type == "r":
         choices = i.choices
-    elif i.q_type == "MC":
+    elif i.q_type == "mc":
         choices = i.choices
-        print(choices)
-    elif i.q_type == "M":
+    elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
     else:
         answer = ""
 
     if survey.isTest == True:
-        if i.q_type == "TF" or i.q_type == "R" or i.q_type == "MC":
+        if i.q_type == "tf" or i.q_type == "r" or i.q_type == "mc":
             answer = aList[counterForaList]
-        elif i.q_type == "SA":
+        elif i.q_type == "sa":
             answer = None
         else:
             answer = ""

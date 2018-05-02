@@ -267,7 +267,7 @@ $('#view').click(function(){
 
 $('#edit').click(function(){
 $.ajax({
-  url: "/changeQuestion/0",
+  url: "/edit/0",
 })
   .done(function(html) {
     $("#testLoader").append(html);
