@@ -249,7 +249,8 @@ $('#take, #edit, #view').click(function() {
 });
 
 $('#list2').change(function() {
-$('#choose').submit();
+ $.post("/loadSurvey", $("#choose").serialize());
+ $('#choose').submit();
 });
 var type = "";
 $( function() {

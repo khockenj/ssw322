@@ -208,7 +208,7 @@ def take(qIndex):
     global current_survey
     global current_answer_sheet
 
-    title = request.form.get('title')
+    title = current_survey.title
     if qIndex == 0:
         current_answer_sheet = AnswerSheet(title)
 
@@ -217,10 +217,10 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    print("FFFFFUUUUUUUCCCCCKKKKKKK" + str(current_survey.questions))
-    qList = survey.getQuestionList()
+    print(current_survey.questions)
+    qList = current_survey.getQuestionList()
     qLength = len(qList)
-    aList = survey.answers
+    aList = current_survey.answers
     counterForaList = 0
 
     question = ""
@@ -240,7 +240,7 @@ def take(qIndex):
     elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
-    return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+    return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, title=title)
 
 @app.route('/saveAnswer', methods=['POST'])
 def saveAnswer():
@@ -360,11 +360,14 @@ def changeQuestion(qIndex):
 
     return "q:" + qType
 
-@app.route('/loadSurvey', methods=['POST'])
+@app.route('/loadSurvey', methods=['POST', 'GET'])
 def loadSurvey():
-    name = request.form.get('selected')
+    global current_survey
+    selected = request.form.get('selected')
 
-    current_survey = load_survey(name, db, survey_col)
+    current_survey = load_survey(selected, db, survey_col)
+    print(current_survey)
+    return " "
 
 @app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
 def view(qIndex):
