@@ -133,7 +133,9 @@
                   <option value="r">Ranking</option>
                 </select>
               </form>
-			  
+		  </div>
+		  
+		  <div id="chooseTs" style="display:none;">
 			   <form id='choose' style="padding-top:3%">
                 <select id='list2' name="sChoice">
                   <option value="" disabled selected>Choose a Tsurvey</option>
@@ -186,7 +188,6 @@
           <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/khockenj">Kevin's Github</a></li>
           <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/robjweiss">Rob's Github</a></li>
           <li><a id='git' class="grey-text text-lighten-3" href="https://github.com/yborai">Yoseph's Github</a></li>
-          <li><a id='git' class="grey-text text-lighten-3" href="#!">Joe's Github</a></li>
         </ul>
       </div>
     </div>
@@ -238,10 +239,10 @@ var titles = {{ title|tojson }};
 titles.forEach(function(x, i) {
 $("#list2").append("<option value='" + i + "'>" + x + "</option>");
 	});
-$('#take').click(function() {
-	document.getElementById("qLoad").style.display = 'block';
-	document.getElementById("choose").style.display = 'block';
+$('#take, #edit, #view').click(function() {
+  document.getElementById("chooseTs").style.display = 'inline';
 });
+
 var type = "";
 $( function() {
   $( "#sortable" ).sortable();
@@ -263,7 +264,7 @@ $('#view').click(function(){
 
 $('#edit').click(function(){
 $.ajax({
-  url: "/edit/0",
+  url: "/changeQuestion/0",
 })
   .done(function(html) {
     $("#testLoader").append(html);
