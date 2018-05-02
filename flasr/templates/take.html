@@ -277,24 +277,24 @@ document.getElementById(qType.toLowerCase()).style.display = 'block';
 $(".question" + qType.toLowerCase()).append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question +"</p>");
 
 
-if(qType == "MC") {
+if(qType == "mc") {
   choices.forEach(function(x, i) {
 	$(".aLocation").append("<p><input name='opt' value='" + x + "' id='" + i + "' type='radio' /><label for='" + i + "'>" + x + "</label></p>");
 	});
-} else if(qType == "SA") {
+} else if(qType == "sa") {
 
-} else if(qType == "R") {
+} else if(qType == "r") {
 choices.forEach(function(x, i) {
 	$("#sortableA").append("<li class='ui-state-default'>" + x + "</li>");
 	});
-} else if(qType == "M") {
+} else if(qType == "m") {
 choices.forEach(function(x, i) {
 	$("#sortableC").append("<li class='ui-state-default'>" + x + "</li>");
 	});
 matches.forEach(function(x, i) {
 	$("#sortableD").append("<li class='ui-state-default'>" + x + "</li>");
 	});
-} else if(qType == "TF") {
+} else if(qType == "tf") {
 
 }
 

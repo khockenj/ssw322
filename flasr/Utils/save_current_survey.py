@@ -3,7 +3,7 @@ import copy
 from pymongo import MongoClient
 
 def save_current_survey(current_survey, db, col):
-    serialized_survey = pickle.dumps(survey)
+    serialized_survey = pickle.dumps(current_survey)
 
     if col.find_one({'title': current_survey.title}):
         col.delete_one({'title': current_survey.title})
