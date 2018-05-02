@@ -268,7 +268,7 @@ var qType = "{{ passedQType }}";
 var qIndex = {{ qIndex }};
 var question = "{{ passedQ }}";
 var length = {{ length }};
-
+var title = "{{ title }}"
 document.getElementById(qType.toLowerCase()).style.display = 'block';
 $(".question" + qType.toLowerCase()).append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question +"</p>");
 
@@ -316,18 +316,23 @@ matches.forEach(function(x, i) {
  	window.location.replace("/take/" + (qIndex-1));
 });
 */
-title = "My Title"
+
+if(qIndex+1 != length) {
 $('#next').click(function() {
  $.post("/saveAnswer", $("#" + qType.toLowerCase()).serialize() + "&qType=" + qType + "&title=" + title, function(data) {
 	alert(data);
  });
 });
+} else {
+ 	window.location.replace("/dash"); //move to grade
+}
 if(qIndex == 0) {
 document.getElementById("prev").style.display = 'none';
 }
 
 if(qIndex+1 == length) {
 document.getElementById("next").innerHTML = "Save <i class='material-icons right'>save</i>";
+
 }
   </script>
 </html>

@@ -217,8 +217,6 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    selected = request.form.get('selected')
-    survey = load_survey(selected, db, survey_col)
     print(survey.questions)
     qList = survey.getQuestionList()
     qLength = len(qList)
@@ -375,12 +373,8 @@ def changeQuestion(qIndex):
 
 @app.route('/loadSurvey', methods=['POST'])
 def loadSurvey():
-<<<<<<< Updated upstream
-    name = request.form.get('name')
-=======
     global current_survey
     selected = request.form.get('selected')
->>>>>>> Stashed changes
 
     current_survey = load_survey(selected, db, survey_col)
     return " "
