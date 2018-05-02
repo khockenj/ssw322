@@ -429,9 +429,9 @@ def view(qIndex):
     else:
         answer = ""
 
-    if survey.isTest == True:
+    if survey.isTest:
         if i.q_type == "tf" or i.q_type == "r" or i.q_type == "mc":
-            answer = aList[counterForaList]
+            answer = aList[someIndex]
         elif i.q_type == "sa":
             answer = None
         else:
