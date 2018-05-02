@@ -131,7 +131,10 @@ def dashboard():
 
 @app.route('/add', methods=['POST'])
 def add():
-    t = request.form.get('t')
+    if current_survey.isTest == True:
+        t = 't'
+    else:
+        t = 's'
     q = request.form.get('qType')
     return render_template('question.html', testOrSurvey=t, qType=q)
 
@@ -202,7 +205,10 @@ def addToDB():
 
     current_survey.addQuestion(current_question)
 
-    return "q:" + q
+    if t == True:
+        return 't'
+    else:
+        return 's'
 
 @app.route('/take/<int:qIndex>', methods=['GET', 'POST'])
 def take(qIndex):
@@ -424,6 +430,8 @@ def view(qIndex):
     elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
+    elif i.q_type == "sa":
+        characters = i.charLimit
     else:
         answer = ""
 
@@ -433,4 +441,4 @@ def view(qIndex):
         else:
             answer = " "
 
-    return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+    return render_template('view.html', climit = characters, passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
