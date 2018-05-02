@@ -208,7 +208,7 @@ def take(qIndex):
     global current_survey
     global current_answer_sheet
 
-    title = current_survey.title
+    title = request.form.get('title')
     if qIndex == 0:
         current_answer_sheet = AnswerSheet(title)
 
@@ -217,10 +217,10 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    print(current_survey.questions)
-    qList = current_survey.getQuestionList()
+    print(survey.questions)
+    qList = survey.getQuestionList()
     qLength = len(qList)
-    aList = current_survey.answers
+    aList = survey.answers
     counterForaList = 0
 
     question = ""
@@ -240,7 +240,7 @@ def take(qIndex):
     elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
-    return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, title=title)
+    return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
 
 @app.route('/saveAnswer', methods=['POST'])
 def saveAnswer():
@@ -257,7 +257,7 @@ def saveAnswer():
         current_answer_sheet.append(None)
     else:
         current_answer_sheet.addResponse(request.form.get('a'))
-    return "That answer be siiiicccccckkkkkkk"
+    return ""
 
 @app.route('/storeToAnswerSheet', methods=['POST'])
 def storeToAnswerSheet():
@@ -279,9 +279,9 @@ def storeToAnswerSheet():
 
 @app.route('/edit/<int:qIndex>', methods=['GET', 'POST'])
 def edit(qIndex):
-    global cached_surveys
+    global current_survey
 
-    title = request.form.get('title')
+    title = current_survey.title
 
     if qIndex == None:
         someIndex = 0
@@ -292,11 +292,9 @@ def edit(qIndex):
         current_surveys.addQuestion(Question())
         current_surveys.addAnswer(None)
 
-    survey = current_surveys
-    qList = survey.getQuestionList()
+    qList = current_survey.getQuestionList()
     qLength = len(qList)
     aList = survey.answers
-    counterForaList = 0
 
     question = ""
     choices = None
@@ -319,7 +317,7 @@ def edit(qIndex):
     elif i.q_type == "m":
         choices = i.choices
         matches = i.matches
-    return render_template('edit.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
+    return render_template('edit.html', passedTitle = title, climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
 
 
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
@@ -373,13 +371,12 @@ def changeQuestion(qIndex):
 
     return "q:" + qType
 
-@app.route('/loadSurvey', methods=['POST', 'GET'])
+@app.route('/loadSurvey', methods=['POST'])
 def loadSurvey():
     global current_survey
     selected = request.form.get('selected')
 
     current_survey = load_survey(selected, db, survey_col)
-    print(current_survey)
     return " "
 
 @app.route('/view/<int:qIndex>', methods=['GET', 'POST'])
