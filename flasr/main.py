@@ -217,9 +217,7 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    selected = request.form.get('selected')
-    survey = load_survey(selected, db, survey_col)
-    print(survey.questions)
+    print("FFFFFUUUUUUUCCCCCKKKKKKK" + str(current_survey.questions))
     qList = survey.getQuestionList()
     qLength = len(qList)
     aList = survey.answers
@@ -364,7 +362,7 @@ def changeQuestion(qIndex):
 
 @app.route('/loadSurvey', methods=['POST'])
 def loadSurvey():
-    name = request.form.get('name')
+    name = request.form.get('selected')
 
     current_survey = load_survey(name, db, survey_col)
 

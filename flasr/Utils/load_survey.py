@@ -20,8 +20,12 @@ def get_titles(db, col):
 
 def load_survey(title, db, col):
     serialized_survey = col.find_one({"title": title})
+    serialized_questions = serialized_survey['questions']
     print(serialized_survey)
     survey = pickle.loads(serialized_survey['Survey'])
+
+    for question in serialized_questions:
+        survey.addQuestion(pickle.loads(question))
     """questions = survey_dict.questions
     survey = Survey(survey_dict.isTest)
     survey.title = title
