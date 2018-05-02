@@ -11,7 +11,7 @@ from werkzeug.contrib.cache import SimpleCache
 
 
 #Project Imports
-from Utils.load_survey import load_survey, get_titles
+from Utils.load_survey import load_survey
 from Utils.save_current_survey import save_current_survey
 from Objects.Survey import Survey
 from Objects.Question import Question
@@ -125,8 +125,7 @@ def dashboard():
         logCheck = sid
     else:
         logCheck = 0
-    titles = get_titles(db, survey_col)
-    return render_template('dashboard.html', name='dash', logcheck=logCheck, title=titles)
+    return render_template('dashboard.html', name='dash', logcheck=logCheck)
 
 @app.route('/add', methods=['POST'])
 def add():
@@ -212,7 +211,7 @@ def take(qIndex):
 
     title = request.form.get('title')
     if qIndex == 0:
-        current_answer_sheet = AnswerSheet('temp title')
+        current_answer_sheet = AnswerSheet(title)
 
     if qIndex == None:
         someIndex = 0
@@ -261,20 +260,47 @@ def saveAnswer():
         current_answer_sheet.addResponse(request.form.get('a'))
     return "That answer be siiiicccccckkkkkkk"
 
-@app.route('/storeToAnswerSheet', methods=['POST'])
+"""@app.route('/storeToAnswerSheet', methods=['POST'])
 def storeToAnswerSheet():
-    global current_answer_sheet
+    AnswerSheet
+    taker_col.insert_one({'': })"""
+
+@app.route('/edit/<int:qIndex>', methods=['GET', 'POST'])
+def edit(qIndex):
+    global cached_surveys
 
     title = request.form.get('title')
-    current_answer_sheet.title = title
 
-    userID = ''
-    if session.get('uid'):
-        userID = session.get('uid')
+    if qIndex == None:
+        someIndex = 0
+    else:
+        someIndex = qIndex
 
-    serialized_answer_sheet = pickle.dumps(current_answer_sheet)
+    survey = cached_surveys[0]
+    qList = survey.getQuestionList()
+    qLength = len(qList)
+    aList = survey.answers
+    counterForaList = 0
 
-    taker_col.insert_one({'Title':title, 'userID':userID, 'AnswerSheet':serialized_answer_sheet})
+    question = ""
+    choices = None
+    matches = None
+    options = None
+    qType = None
+    limit = 0
+
+    i = qList[someIndex]
+    question = i.question
+    qType = i.q_type
+    if i.q_type == "R" or i.q_type == "MC":
+        choices = i.choices
+    elif i.q_type == "SA":
+        limit = i.charLimit
+    elif i.q_type == "M":
+        choices = i.choices
+        matches = i.matches
+    return render_template('take.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
+
 
 @app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
 def changeQuestion(qIndex):
