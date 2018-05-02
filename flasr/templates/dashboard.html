@@ -225,6 +225,9 @@ document.onkeypress = function (e) {
         case 66:
             kazoo+="b";
             break;
+		case 77:
+			kazoo+="m";
+			break;
         default:
              kazoo="";
     }
@@ -232,6 +235,8 @@ document.onkeypress = function (e) {
         $(".footer-copyright").append("<iframe id='player' type='text/html' width='0' height='0' src='https://www.youtube.com/embed/g-sgw9bPV4A?autoplay=1&enablejsapi=1' frameborder='0'></iframe>");
 	} else if(kazoo.indexOf("bones")!=-1) {
 	    $(".footer-copyright").append("<iframe id='player' type='text/html' width='0' height='0' src='https://www.youtube.com/embed/gYOEyzBFYa4?autoplay=1&enablejsapi=1' frameborder='0'></iframe>");
+	} else if(kazoo.indexOf("meme") !=-1) {
+		$(".footer-copyright").append("<iframe id='player' type='text/html' width='0' height='0' src='https://www.youtube.com/embed/8fbyfDbi-MI?autoplay=1&enablejsapi=1' frameborder='0'></iframe>");
 	}
 };
 var titles = {{ title|tojson }};
