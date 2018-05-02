@@ -207,7 +207,6 @@ def addToDB():
 
 @app.route('/take/<int:qIndex>', methods=['GET', 'POST'])
 def take(qIndex):
-    global cached_surveys
     global current_answer_sheet
 
     title = request.form.get('title')
@@ -219,7 +218,9 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    survey = cached_surveys[0]
+    selected = request.form.get('selected')
+    survey = load_survey(selected, db, survey_col)
+    print(survey.questions)
     qList = survey.getQuestionList()
     qLength = len(qList)
     aList = survey.answers
