@@ -209,11 +209,7 @@
                 </span>
 				</div>
 				<div class='container right-align'>
-			<form id='save'>
-			<button type="button" class="btn waves-effect waves-light green rounded-small" id="save" name='saveButton'>Submit
-			<i class="material-icons right">save</i>
-		</button>
-			</form>
+			
 			</div>
 	</div>
   </div>
@@ -331,7 +327,7 @@ document.getElementById("prev").style.display = 'none';
 }
 
 if(qIndex+1 == length) {
-document.getElementById("next").style.display = 'none';
+document.getElementById("next").innerHTML = "Save <i class='material-icons right'>save</i>";
 }
   </script>
 </html>
