@@ -137,7 +137,7 @@
 		  
 		  <div id="chooseTs" style="display:none;">
 			   <form id='choose' style="padding-top:3%">
-                <select id='list2' name="sChoice">
+                <select id='list2' name="selected">
                   <option value="" disabled selected>Choose a Tsurvey</option>
                 </select>
               </form>
@@ -237,12 +237,15 @@ document.onkeypress = function (e) {
 var titles = {{ title|tojson }};
 
 titles.forEach(function(x, i) {
-$("#list2").append("<option value='" + i + "'>" + x + "</option>");
+$("#list2").append("<option value='" + x + "'>" + x + "</option>");
 	});
 $('#take, #edit, #view').click(function() {
   document.getElementById("chooseTs").style.display = 'inline';
 });
 
+$('#list2').change(function() {
+	window.location.replace("/take/0?" + $("#choose").serialize());
+});
 var type = "";
 $( function() {
   $( "#sortable" ).sortable();
