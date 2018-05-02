@@ -158,7 +158,7 @@ def addToDB():
     global current_survey
     current_question = Question()
     q = request.form.get('q')
-    t = request.form.get('t')
+    t = current_survey.isTest
     qType = request.form.get('qType')
 
     if qType == "mc":
@@ -167,12 +167,12 @@ def addToDB():
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
 
-        if t == 't':
+        if t == True:
             current_survey.addAnswer(request.form.get('c'))
     elif qType == "sa":
         climit = request.form.get('limit')
         current_question = ShortAnswer('sa', q, climit)
-        if t == 't':
+        if t == True:
             current_survey.addAnswer(" ")
     elif qType == "r":
         current_question = Ranking("r", q)
@@ -180,21 +180,21 @@ def addToDB():
 
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
-            if t == 't':
+            if t == True:
                 answer.append(request.form.get('r' + str(c)))
-        if t == 't':
+        if t == True:
             current_survey.addAnswer(answer)
     elif qType == "tf":
         current_question = TrueFalse("tf", q)
 
-        if t == 't':
+        if t == True:
             current_survey.addAnswer(request.form.get('opt'))
     elif qType == "m":
         current_question = Matching("m", q)
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
 
-        if t == 't':
+        if t == True:
             current_survey.addAnswer(" ")
     else:
         q = "ERROR"
@@ -428,6 +428,8 @@ def view(qIndex):
 
     if survey.isTest:
         if i.q_type == "tf" or i.q_type == "r" or i.q_type == "mc":
+            print(someIndex)
+            print(aList)
             answer = aList[someIndex]
         elif i.q_type == "sa":
             answer = None
