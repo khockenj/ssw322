@@ -308,9 +308,6 @@ matches.forEach(function(x, i) {
     $( "#sortable" ).disableSelection();
   } );
   
-  $('#next').click(function() {
- 	window.location.replace("/take/" + (qIndex+1));
-});
 
  /* $('#prev').click(function() {
  	window.location.replace("/take/" + (qIndex-1));
@@ -323,17 +320,21 @@ $('#next').click(function() {
 	alert(data);
  });
 });
-} else {
-$("#footer-copyright" ).load("/storeToAnswerSheet");
- 	window.location.replace("/dash"); //move to grade
-}
-if(qIndex == 0) {
+$('#next').click(function() {
+ 	window.location.replace("/take/" + (qIndex+1));
+});
+}	
+
+
 document.getElementById("prev").style.display = 'none';
-}
+
 
 if(qIndex+1 == length) {
 document.getElementById("next").innerHTML = "Save <i class='material-icons right'>save</i>";
+$('#next').click(function() {
+window.location.replace("/storeToAnswerSheet");
 
+	});
 }
   </script>
 </html>

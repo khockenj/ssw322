@@ -259,7 +259,7 @@ def saveAnswer():
         current_answer_sheet.addResponse(request.form.get('a'))
     return ""
 
-@app.route('/storeToAnswerSheet', methods=['POST'])
+@app.route('/storeToAnswerSheet', methods=['POST', 'GET'])
 def storeToAnswerSheet():
     global current_answer_sheet
     correct = False
