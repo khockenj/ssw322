@@ -217,7 +217,9 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    print("FFFFFUUUUUUUCCCCCKKKKKKK" + str(current_survey.questions))
+    selected = request.form.get('selected')
+    survey = load_survey(selected, db, survey_col)
+    print(survey.questions)
     qList = survey.getQuestionList()
     qLength = len(qList)
     aList = survey.answers
@@ -259,10 +261,23 @@ def saveAnswer():
         current_answer_sheet.addResponse(request.form.get('a'))
     return "That answer be siiiicccccckkkkkkk"
 
-"""@app.route('/storeToAnswerSheet', methods=['POST'])
+@app.route('/storeToAnswerSheet', methods=['POST'])
 def storeToAnswerSheet():
-    AnswerSheet
-    taker_col.insert_one({'': })"""
+    global current_answer_sheet
+    correct = False
+    current_answer_sheet.title = current_survey.title
+    current_answer_sheet.userName = session.get('uid')
+    answer_sheet_to_db(current_answer_sheet)
+
+    for answer, index in current_survey.answers:
+        if current_survey.answers[index] == current_answer_sheet.user_response[index]:
+            correct = True
+        else:
+            correct = False
+
+    return render_template('grade.html', correct = correct)
+
+
 
 @app.route('/edit/<int:qIndex>', methods=['GET', 'POST'])
 def edit(qIndex):
@@ -362,7 +377,7 @@ def changeQuestion(qIndex):
 
 @app.route('/loadSurvey', methods=['POST'])
 def loadSurvey():
-    name = request.form.get('selected')
+    name = request.form.get('name')
 
     current_survey = load_survey(name, db, survey_col)
 
