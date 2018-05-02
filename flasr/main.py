@@ -13,6 +13,7 @@ from werkzeug.contrib.cache import SimpleCache
 #Project Imports
 from Utils.load_survey import load_survey, get_titles
 from Utils.save_current_survey import save_current_survey
+from Utils.answer_sheet_to_db import answer_sheet_to_db
 from Objects.Survey import Survey
 from Objects.Question import Question
 from Objects.Matching import Matching
@@ -254,7 +255,7 @@ def saveAnswer():
 
         current_answer_sheet.addResponse(answer)
     elif qType == 'sa':
-        current_answer_sheet.append(None)
+        current_answer_sheet.append(" ")
     else:
         current_answer_sheet.addResponse(request.form.get('a'))
     return ""
@@ -267,8 +268,8 @@ def storeToAnswerSheet():
     current_answer_sheet.userName = session.get('uid')
     answer_sheet_to_db(current_answer_sheet, db, taker_col)
 
-    for answer, index in current_survey.answers:
-        if current_survey.answers[index] == current_answer_sheet.user_response[index]:
+    for answer in current_survey.answers:
+        if answer == current_answer_sheet.user_response[index]:
             correct = True
         else:
             correct = False
@@ -280,6 +281,13 @@ def storeToAnswerSheet():
 @app.route('/edit/<int:qIndex>', methods=['GET', 'POST'])
 def edit(qIndex):
     global current_survey
+    question = ""
+    choices = None
+    matches = None
+    options = None
+    qType = None
+    limit = 0
+    ans = None
 
     title = current_survey.title
 
@@ -291,18 +299,11 @@ def edit(qIndex):
     if len(current_survey.getQuestionList()) == qIndex:
         current_surveys.addQuestion(Question())
         current_surveys.addAnswer(None)
+        return render_template('edit.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
 
     qList = current_survey.getQuestionList()
     qLength = len(qList)
     aList = current_survey.answers
-
-    question = ""
-    choices = None
-    matches = None
-    options = None
-    qType = None
-    limit = 0
-    ans = None
 
     if current_survey.isTest:
         ans = aList[qIndex]
@@ -325,7 +326,7 @@ def changeQuestion(qIndex):
     global current_survey
     current_question = Question()
     q = request.form.get('q')
-    t = request.form.get('t')
+    t = current_survey.isTest
     n = qIndex
     qType = request.form.get('qType')
 
@@ -335,12 +336,12 @@ def changeQuestion(qIndex):
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
 
-        if t == 't':
+        if t == True:
             current_survey.answers[n] = request.form.get('c')
     elif qType == "sa":
         climit = request.form.get('limit')
         current_question = ShortAnswer('sa', q, climit)
-        if t == 't':
+        if t == True:
             current_survey.answers[n] = " "
     elif qType == "r":
         current_question = Ranking("r", q)
@@ -348,21 +349,21 @@ def changeQuestion(qIndex):
 
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('r' + str(c)))
-            if t == 't':
+            if t == True:
                 answer.append(request.form.get('a' + str(c)))
-        if t == 't':
+        if t == True:
             current_survey.answers[n] = answer
     elif qType == "tf":
         current_question = TrueFalse("tf", q)
 
-        if t == 't':
+        if t == True:
             current_survey.answers[n] = request.form.get('opt')
     elif qType == "m":
         current_question = Matching("m", q)
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
 
-        if t == 't':
+        if t == True:
             current_survey.answers[n] = " "
     else:
         q = "ERROR"
@@ -427,13 +428,9 @@ def view(qIndex):
         answer = ""
 
     if survey.isTest:
-        if i.q_type == "tf" or i.q_type == "r" or i.q_type == "mc":
-            print(someIndex)
-            print(aList)
+        if i.q_type == "tf" or i.q_type == "r" or i.q_type == "mc" or i.q_type == "sa":
             answer = aList[someIndex]
-        elif i.q_type == "sa":
-            answer = None
         else:
-            answer = ""
+            answer = " "
 
     return render_template('view.html', passedQType = qType, passedQ = question, passedAns = answer, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength)
