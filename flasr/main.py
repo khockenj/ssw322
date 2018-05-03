@@ -255,16 +255,13 @@ def saveAnswer():
 
     qType = request.form.get('qType')
     if qType == 'r' or qType == 'm':
-        answer = []
-        for c in range(1, int(request.form.get('n')) + 1):
-            answer.append(request.form.get('a' + str(c)))
-
-        current_answer_sheet.addResponse(answer)
+        a = request.values.getlist('a[]')
+        current_answer_sheet.addResponse(a)
     elif qType == 'sa':
         current_answer_sheet.append(" ")
     else:
         current_answer_sheet.addResponse(request.form.get('a'))
-    return ""
+    return "Return: " + str(request.values.getlist('a[]'))
 
 @app.route('/storeToAnswerSheet', methods=['POST', 'GET'])
 def storeToAnswerSheet():

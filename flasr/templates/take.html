@@ -275,20 +275,20 @@ $(".question" + qType.toLowerCase()).append("<p style='text-align:center; font-w
 
 if(qType == "mc") {
   choices.forEach(function(x, i) {
-	$(".aLocation").append("<p><input name='opt' value='" + x + "' id='" + i + "' type='radio' /><label for='" + i + "'>" + x + "</label></p>");
+	$(".aLocation").append("<p><input name='a' value='" + i + "' id='" + i + "' type='radio' /><label for='" + i + "'>" + x + "</label></p>");
 	});
 } else if(qType == "sa") {
 
 } else if(qType == "r") {
 choices.forEach(function(x, i) {
-	$("#sortableA").append("<li class='ui-state-default'>" + x + "</li>");
+	$("#sortableA").append("<li class='ui-state-default'  id='a_" + i + "'>" + x + "</li>");
 	});
 } else if(qType == "m") {
 choices.forEach(function(x, i) {
-	$("#sortableC").append("<li class='ui-state-default'>" + x + "</li>");
+	$("#sortableC").append("<li class='ui-state-default' id='a_" + i + "'>" + x + "</li>");
 	});
 matches.forEach(function(x, i) {
-	$("#sortableD").append("<li class='ui-state-default'>" + x + "</li>");
+	$("#sortableD").append("<li class='ui-state-default' id='m_" + i + "'>" + x + "</li>");
 	});
 } else if(qType == "tf") {
 
@@ -298,9 +298,6 @@ matches.forEach(function(x, i) {
     $( "#sortableC, #sortableD" ).sortable({
       connectWith: ".connectedSortable"
     }).disableSelection();
-  } );
-  
-   $( function() {
     $( "#sortableA" ).sortable();
     $( "#sortable" ).sortable({
       placeholder: "ui-state-highlight"
@@ -313,14 +310,27 @@ matches.forEach(function(x, i) {
  	window.location.replace("/take/" + (qIndex-1));
 });
 */
-
-if(qIndex+1 != length) {
-$('#next').click(function() {
- $.post("/saveAnswer", $("#" + qType.toLowerCase()).serialize() + "&qType=" + qType + "&title=" + title, function(data) {
+function saveAnswer() {
+if(qType != "r" && qType != "m") {
+alert(qType);
+ $.post("/saveAnswer", $("form#" + qType.toLowerCase()).serialize() + "&qType=" + qType + "&title=" + title, function(data) {
+	alert($("form#" + qType.toLowerCase()).serialize());
+ });
+ } else {
+ if(qType == "r") {
+ sort = "#sortableA";
+ } else {
+ sort = "#sortableC";
+ }
+ $.post("/saveAnswer", $(sort).sortable('serialize') + "&qType=" + qType + "&title=" + title, function(data) {
+	alert($(sort).sortable('serialize'));
 	alert(data);
  });
-});
+ }
+ }
+if(qIndex+1 != length) {
 $('#next').click(function() {
+saveAnswer();
  	window.location.replace("/take/" + (qIndex+1));
 });
 }	
@@ -332,8 +342,8 @@ document.getElementById("prev").style.display = 'none';
 if(qIndex+1 == length) {
 document.getElementById("next").innerHTML = "Save <i class='material-icons right'>save</i>";
 $('#next').click(function() {
+saveAnswer();
 window.location.replace("/storeToAnswerSheet");
-
 	});
 }
   </script>

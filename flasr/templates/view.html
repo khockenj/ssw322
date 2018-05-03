@@ -149,8 +149,8 @@
 
 				<!--ShortAnswer-->
 			<form id='sa' class='hidden'>
-			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium; padding-bottom:2%;">Write a short essay on fruit [500 characters]</p></div>
-			<div class='col s12 center-align'>Fruit are my favorite. I love fruit. I love fruit so much I want to marry fruit. Haha. I love fruit. I think that Oranges are my favorite fruit of all time. I want to marry you, green. Will you marry me?</div>
+			<div id='qLocation'><p style="text-align:center; font-weight: bold; font-size:medium; padding-bottom:2%;"><span class='questionSA'></span>
+		  [Character Limit: <span id="climit"> {{ climit }} </span>]</p></div>
 			</form>
 
       <!--Ranking-->
@@ -243,6 +243,7 @@ if(qType == "mc") {
 	});
 } else if(qType == "sa") {
   document.getElementById("sa").style.display = 'block';
+  $(".questionSA").append(question);
 } else if(qType == "m") {
    document.getElementById("m").style.display = 'block';
    choices.forEach(function(x, i) {
