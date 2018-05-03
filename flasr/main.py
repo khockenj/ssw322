@@ -285,6 +285,7 @@ def storeToAnswerSheet():
 def edit(qIndex):
     global current_survey
     question = ""
+
     choices = None
     matches = None
     options = None
@@ -324,13 +325,13 @@ def edit(qIndex):
     return render_template('edit.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
 
 
-@app.route('/changeQuestion/<int:qIndex>', methods=['GET', 'POST'])
-def changeQuestion(qIndex):
+@app.route('/changeQuestion', methods=['GET', 'POST'])
+def changeQuestion():
     global current_survey
     current_question = Question()
     q = request.form.get('q')
     t = current_survey.isTest
-    n = qIndex
+    n = int(request.form.get('qIndex'))
     qType = request.form.get('qType')
 
     if qType == "mc":

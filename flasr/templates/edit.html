@@ -115,6 +115,14 @@
   }
 </style>
 
+<span class='container left-align' style="padding-right:30%; padding-bottom:100px">
+  <button type="button" class="btn waves-effect waves-light green" name="prev" id="prev">Prev <i class="material-icons left">navigate_before</i></button>
+</span>
+
+<span class='container right-align' style="padding-left:10%; padding-bottom:100px">
+  <button type="button" class="btn waves-effect waves-light green" name="next" id="next">Next <i class="material-icons right">navigate_next</i></button>
+</span>
+
 <!--Question Input Field-->
 
 <!--Multiple Choice-->
@@ -138,7 +146,6 @@
 		</div>
 		</div>
 </form>
-
 
 <!--Short Answer-->
 <form id='sa' class='hidden'>
@@ -173,7 +180,7 @@
 	  <div id='testOnly' class="row">
 	  <div class="col s6 center-align">
     <p>
-	  <input name="opt" value="1" id='true' type="radio" />
+	  <input name="opt" value="1" id='true' type="radio"/>
       <label for="true">
         True
       </label>
@@ -265,20 +272,16 @@
   </div>
 </form>
 
+<!-- Submit Button -->
+<div class='container right-align'>
+  <form id='save'>
+   <button type="button" class="btn waves-effect waves-light green rounded-small" id="save" name='saveButton'>Finish
+      <i class="material-icons right">save</i>
+    </button>
+  </form>
+</div>
 
-              <!--Next Button-->
-
-			  <span class='container left-align' style="padding-right:25%;">
-                  <button type="button" class="btn waves-effect waves-light green" name="prev" id="prev">Prev <i class="material-icons left">navigate_before</i></button>
-                </span>
-
-                <span class='container right-align' style="padding-left:25%">
-                  <button type="button" class="btn waves-effect waves-light green" name="next" id="next">Next <i class="material-icons right">navigate_next</i></button>
-                </span>
-
-
-
-            </span>
+        </span>
 			</div>
         </div>
       </div>
@@ -325,14 +328,16 @@
   </footer>
 </body>
 <script type='text/javascript'>
-var choices = {{ passedChoices|tojson }};
-var matches = {{ passedMatches|tojson }};
-var qType = "{{ passedQType }}";
-var ans = {{ passedAns|tojson }};
-var qIndex = {{ qIndex }};
-var question = "{{ passedQ }}";
-var length = {{ length }};
-var num = 0;
+  var testOrSurvey = '{{ testOrSurvey }}';
+  var qType = '{{ qType }}';
+  var choices = {{ passedChoices|tojson }};
+  var matches = {{ passedMatches|tojson }};
+  var qType = "{{ passedQType }}";
+  var ans = {{ passedAns|tojson }};
+  var qIndex = {{ qIndex }};
+  var question = "{{ passedQ }}";
+  var length = {{ length }};
+  var num = 0;
   var type = "";
   var ansNum = "a1";
   var rankNum = "r1";
@@ -462,5 +467,53 @@ $('#list').change(function() {
     $("#testLoader").html(data).trigger('create');
   });
 });
+
+$("[id='saveQ']").click(function() {
+  if(qType == "sa") {
+   $.post("/changeQuestion", $("#sa").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&qIndex=" + qIndex, function(data) {
+    alert(data);
+    reset();
+    });
+  } else if(qType == "mc") {
+    $.post("/changeQuestion", $("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
+    alert($("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num);
+    alert(data);
+      num = 1;
+      ansNum = "a1";
+      correctNum = "c1";
+      reset();
+    });
+  } else if(qType == "r") {
+    $.post("/changeQuestion", $("#r").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
+    alert($("#r").serialize() + "&t=" + type + "&qType=" + qType + "&n=" + num);
+    ansNum = "a1";
+    num = 1;
+    rankNum = "r1";
+    reset();
+    });
+  } else if(qType == "m") {
+    $.post("/changeQuestion", $("#m").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
+    alert($("#m").serialize());
+    ansNum = "a1";
+    num = 1;
+    matchNum = "m1";
+    reset();
+    });
+  } else if(qType == "tf") {
+    $.post("/changeQuestion", $("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&qIndex=" + qIndex, function(data) {
+    alert($("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType);
+    alert(data);
+    });
+    reset();
+  }
+  type = $(this).attr("id");
+  });
+
+ $('#save').click(function() {
+  $.post("/saveSurvey", $('form#title').serialize(), function(data) {
+    alert(data);
+    window.location.replace("/view/0");
+    });
+})
 </script>
 </html>
