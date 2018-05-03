@@ -62,7 +62,7 @@
   .rounded-small {
   border-radius:12px;
   }
-  
+
   .hidden{
     display: none;
   }
@@ -101,7 +101,7 @@
       <a class="waves-effect waves-light btn-large green"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
       <a class="waves-effect waves-light btn-large green"><i class="material-icons left">mode_edit</i>Edit</a>
     </div>
-	
+
     <div class='container center-align'>
       <div class="row">
         <div id='testsurv' class="input-field col s12">
@@ -127,8 +127,8 @@
 			  <form id='mc' class='hidden'>
 			  <div id='qLocationMC'></div>
 			   <div id='aLocation' class='col s12 center-align' style="padding-left:20%; padding-bottom:3%;">
-			   
-				
+
+
 				</div>
 				</form>
 				<!--TrueFalse-->
@@ -315,7 +315,6 @@ type = $(this).attr("id");
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
   $.post("/createSurveyObject", "t=" + type, function(data) {
-    alert(data);
   });
 });
 

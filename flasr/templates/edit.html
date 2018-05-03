@@ -62,7 +62,7 @@
   .rounded-small {
   border-radius:12px;
   }
-  
+
   .hidden{
     display: none;
   }
@@ -101,7 +101,7 @@
       <a class="waves-effect waves-light btn-large green"><i class="material-icons left" id='view'>remove_red_eye</i>View</a>
       <a class="waves-effect waves-light btn-large green"><i class="material-icons left">mode_edit</i>Edit</a>
     </div>
-	
+
     <div class='container center-align'>
       <div class="row">
         <div id='testsurv' class="col s12">
@@ -214,7 +214,7 @@
       </div>
 		</div>
 		<div id='rQuestions'>
-		
+
 		</div>
 
 		<div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></div>
@@ -236,7 +236,7 @@
   </div>
 
   <div id='mQuestions'>
-  	
+
   </div>
 
   <div class='row'><a id='addMatch' class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></div>
@@ -321,14 +321,14 @@
   var correctNum = "c1";
   var title = '{{ title }}'
   var ansArray = {};
-  
+
   function custom_reset() {
 		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
 		$(".hidden").html("");
 		$('#list').val("");
 		$('select').material_select();
 	  }
-	  
+
 if(qType == "mc") {
   document.getElementById("mc").style.display = 'block';
   $("#qLocationMC").append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question +"</p>");
@@ -350,7 +350,7 @@ if(qType == "mc") {
 } else if(qType == "m") {
    document.getElementById("m").style.display = 'block';
    choices.forEach(function(x, i) {
-	$("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' value='" + x + "'/><label for='a" + i + "'>Match " + i + "A</label></div><div class='input-field col s6'><input type='text' id='m" + i + "' name='m" + i + "' value='" + matches[i] + "' /><label for='m" + i + "'>Match " + i + "B</label></div></div>");
+	$("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div class='input-field col s6'><input type='text' id='m" + i + "' name='m" + i + "' /><label for='m" + i + "'>" + matches[i] + "</label></div></div>");
 	$("[id='qLocation']").append(question);
 });
 	num = len(choices);
@@ -359,7 +359,7 @@ if(qType == "mc") {
 } else if(qType == "r") {
   document.getElementById("r").style.display = 'block';
   choices.forEach(function(x, i) {
-	$("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' value='" + x + "' /><label for='a" + i + "'>Answer " + i + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' value='" + i +"' id='rank' name='r" + i + "' /><label for='" + i + "1'>Rank " + i + "</label></div></div>");
+	$("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='r" + i + "' /><label for='" + i + "1'>" + i + "</label></div></div>");
 	$("#qLocation").append(question);
 });
 	num = len(choices);
@@ -449,7 +449,6 @@ type = $(this).attr("id");
   document.getElementById("testsurv").style.display = 'inline';
   document.getElementById("qLoad").style.display = 'block';
   $.post("/createSurveyObject", "t=" + type, function(data) {
-    alert(data);
   });
 });
 
@@ -461,14 +460,9 @@ $('#list').change(function() {
 
 $("[id='saveQ']").click(function() {
   if(qType == "sa") {
-   $.post("/changeQuestion", $("#sa").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&qIndex=" + qIndex, function(data) {
-    alert(data);
     custom_reset();
     });
   } else if(qType == "mc") {
-    $.post("/changeQuestion", $("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
-    alert($("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num);
-    alert(data);
       num = 1;
       ansNum = "a1";
       correctNum = "c1";
@@ -476,15 +470,12 @@ $("[id='saveQ']").click(function() {
     });
   } else if(qType == "r") {
     $.post("/changeQuestion", $("#r").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
-    alert($("#r").serialize() + "&t=" + type + "&qType=" + qType + "&n=" + num);
     ansNum = "a1";
     num = 1;
     rankNum = "r1";
     custom_reset();
     });
   } else if(qType == "m") {
-    $.post("/changeQuestion", $("#m").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
-    alert($("#m").serialize());
     ansNum = "a1";
     num = 1;
     matchNum = "m1";
@@ -492,8 +483,6 @@ $("[id='saveQ']").click(function() {
     });
   } else if(qType == "tf") {
     $.post("/changeQuestion", $("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&qIndex=" + qIndex, function(data) {
-    alert($("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType);
-    alert(data);
     });
     custom_reset();
   }
@@ -502,7 +491,6 @@ $("[id='saveQ']").click(function() {
 
  $('#save').click(function() {
   $.post("/saveSurvey", $('form#title').serialize() + "&title=" + title, function(data) {
-    alert(data);
     window.location.replace("/view/0");
     });
 })

@@ -25,11 +25,21 @@ def tabulate_survey(db, survey_col, taker_col, survey_to_tabulate):
 
             for q_index, question in list_of_survey_questions:
                 #tf = [T, F]
-                tf = []
+                tf = [0, 0]
+                mc = [0]
                 for response_list in list_of_answer_sheet_responses:
                     response_to_current_question = response_list[q_index]
                     if question.q_type == 'tf':
                         tf = tabulate_tf(response_to_current_question, tf)
+                    if question.q_type == 'mc':
+                        number_of_choices = len(question.choices)
+                        mc_choices = question.choices
+                        if len(mc) < number_of_choices:
+                            chosen = []
+                            for times in range(number_of_choices):
+                                chosen.append(0)
+
+
 
 
 def tabulate_tf(response_to_current_question, tf):
@@ -39,3 +49,8 @@ def tabulate_tf(response_to_current_question, tf):
         tf[1] += 1
 
     return tf
+
+def tabulate_mc(response_to_current_question, mc_choices, chosen):
+    for index, choice in enumerate(mc_choices):
+        if response_to_current_question == choice:
+            chosen[index] += 1
