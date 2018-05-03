@@ -18,3 +18,10 @@ class Survey:
 
     def getQuestionList(self):
         return self.questions
+		
+    def closeSurvey(self):
+        answers = []
+        questions = []
+        isTest = False
+        title = 'Error: No name was assigned to the survey object'
+        return "Reset"

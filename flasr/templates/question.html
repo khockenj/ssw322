@@ -192,7 +192,7 @@
 	if(testOrSurvey == "s") {
 		$("[id='testOnly']").html("");
 	}
-	function reset() {
+	function custom_reset() {
 		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
 		$(".hidden").html("");
 		$('#list').val("");
@@ -229,7 +229,7 @@
 	if(qType == "sa") {
 	 $.post("/addToDB", $("#sa").serialize() + "&t=" + testOrSurvey + "&qType=" + qType, function(data) {
 		alert(data);
-		reset();
+		custom_reset();
 		});
 	} else if(qType == "mc") {
 		$.post("/addToDB", $("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num, function(data) {
@@ -238,7 +238,7 @@
 			num = 1;
 			ansNum = "a1";
 			correctNum = "c1";
-			reset();
+			custom_reset();
 		});
 	} else if(qType == "r") {
 		$.post("/addToDB", $("#r").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num, function(data) {
@@ -246,7 +246,7 @@
 		ansNum = "a1";
 		num = 1;
 		rankNum = "r1";
-		reset();
+		custom_reset();
 		});
 	} else if(qType == "m") {
 		$.post("/addToDB", $("#m").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num, function(data) {
@@ -254,16 +254,17 @@
 		ansNum = "a1";
 		num = 1;
 		matchNum = "m1";
-		reset();
+		custom_reset();
 		});
 	} else if(qType == "tf") {
 		$.post("/addToDB", $("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType, function(data) {
 		alert($("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType);
 		alert(data);
 		});
-		reset();
+		custom_reset();
 	}
 	type = $(this).attr("id");
+	document.getElementById(qType).reset();
   });
 
  $('#save').click(function() {
