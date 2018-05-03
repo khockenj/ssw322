@@ -420,7 +420,7 @@ def view(qIndex):
     matches = None
     options = None
     qType = None
-    characters = None
+    characters = 0
 
     i = qList[someIndex]
     question = i.question
