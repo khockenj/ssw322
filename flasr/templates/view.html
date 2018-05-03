@@ -246,15 +246,15 @@ if(qType == "mc") {
   $(".questionSA").append(question);
 } else if(qType == "m") {
    document.getElementById("m").style.display = 'block';
+   	$("table#m #qLocation").append(question);
    choices.forEach(function(x, i) {
 	$("table#m").append("<tr><td style='text-align:center;'>" + x + "</td><td style='text-align:center;'>" + matches[i] + "</td></tr>");
-	$("[id='qLocation']").append(question);
 });
 } else if(qType == "r") {
   document.getElementById("r").style.display = 'block';
+  	$("table#r #qLocation").append(question);
   choices.forEach(function(x, i) {
 	$("table#r").append("<tr><td style='text-align:center;'>"+ans[i]+"</td><td style='text-align:center;'>" + x + "</td></tr>");
-	$("#qLocation").append(question);
 });
 } else if(qType == "tf") {
   document.getElementById("tf").style.display = 'block';
