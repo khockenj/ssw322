@@ -104,7 +104,7 @@
 	
     <div class='container center-align'>
       <div class="row">
-        <div id='testsurv' class="input-field col s12">
+        <div id='testsurv' class="col s12">
           <div class="card-panel white">
             <span class="black-text">
 
@@ -156,7 +156,7 @@
       </div>
 
         <div class="input-field col s2">
-          <input name="limit" id="limit" type="number" min="0"/>
+          <input name="limit" id="limit" type="number" min="0" value="{{ climit }}"/>
           <label for="limit">Character Limit</label>
         </div>
 		</div>
@@ -174,13 +174,13 @@
 <form id='tf' class='hidden'>
 <div class="row" style="padding:5px">
 		<div class="input-field col s12">
-        <textarea id="q" name="q" class="materialize-textarea">{{ passedQ }}</textarea>
+        <textarea id="q" name="q" class="materialize-textarea"></textarea>
         <label for="q">Question</label>
       </div></div>
 	  <div id='testOnly' class="row">
 	  <div class="col s6 center-align">
     <p>
-	  <input name="opt" value="1" id='true' type="radio"/>
+	  <input name="opt" value="1" id='true' type="radio" />
       <label for="true">
         True
       </label>
@@ -214,19 +214,7 @@
       </div>
 		</div>
 		<div id='rQuestions'>
-		<div class='row'>
-
-		<div class="input-field col s6">
-        <input type='text' id='a1' name='a1' />
-        <label for="a1">Answer 1</label>
-		</div>
-
-		<div id='testOnly' class="input-field col s6">
-        <input type='text' id='rank' name='r1' />
-        <label for="r1">Rank</label>
-		</div>
-
-		</div>
+		
 		</div>
 
 		<div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></div>
@@ -248,19 +236,7 @@
   </div>
 
   <div id='mQuestions'>
-  	<div class='row'>
-
-  		<div class="input-field col s6">
-  			<input type='text' id='a1' name='a1' />
-  			<label for="a1">Match 1: A</label>
-  		</div>
-
-  		<div class="input-field col s6">
-  			<input type='text' id='m1' name='m1' />
-  			<label for="m1">Match 1: B</label>
-  		</div>
-
-  	</div>
+  	
   </div>
 
   <div class='row'><a id='addMatch' class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></div>
@@ -345,6 +321,14 @@
   var correctNum = "c1";
   var title = '{{ title }}'
   var ansArray = {};
+  
+  function custom_reset() {
+		$('html,body').animate({scrollTop: $("#testsurv").offset().top});
+		$(".hidden").html("");
+		$('#list').val("");
+		$('select').material_select();
+	  }
+	  
 if(qType == "mc") {
   document.getElementById("mc").style.display = 'block';
   $("#qLocationMC").append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question +"</p>");
@@ -352,7 +336,7 @@ if(qType == "mc") {
   	num++;
 	ansNum = "a" + num;
 	correctNum = "c" + num;
-	if(i+1 != ans) {
+	if(i != ans) {
     $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' value='" + x + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
 	} else {
 	 $("#questions").append("<div class='row'><div id='testOnly' class='col s1 center-align'><p><input name='c' value='" + num + "' id='" + correctNum + "' type='radio' checked='checked' /><label for='" + correctNum + "'></label></p></div><div class='input-field col s11'><input type='text' id='" + ansNum + "' name='" + ansNum + "' value='" + x + "' /><label for='" + ansNum + "'>Answer " + num + "</label></div></div>");
@@ -366,15 +350,21 @@ if(qType == "mc") {
 } else if(qType == "m") {
    document.getElementById("m").style.display = 'block';
    choices.forEach(function(x, i) {
-	$("table#m").append("<tr><td style='text-align:center;'>" + x + "</td><td style='text-align:center;'>" + matches[i] + "</td></tr>");
+	$("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div class='input-field col s6'><input type='text' id='m" + i + "' name='m" + i + "' /><label for='m" + i + "'>" + matches[i] + "</label></div></div>");
 	$("[id='qLocation']").append(question);
 });
+	num = len(choices);
+	matchNum = "m" + len(choices);
+	ansNum = "a" + len(choices);
 } else if(qType == "r") {
   document.getElementById("r").style.display = 'block';
   choices.forEach(function(x, i) {
-	$("table#r").append("<tr><td style='text-align:center;'>"+ans[i]+"</td><td style='text-align:center;'>" + x + "</td></tr>");
+	$("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='r" + i + "' /><label for='" + i + "1'>" + i + "</label></div></div>");
 	$("#qLocation").append(question);
 });
+	num = len(choices);
+	rankNum = "r" + len(choices);
+	ansNum = "a" + len(choices);
 } else if(qType == "tf") {
   document.getElementById("tf").style.display = 'block';
 	$("#qLocationTF").append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question + "</p>");
@@ -473,7 +463,7 @@ $("[id='saveQ']").click(function() {
   if(qType == "sa") {
    $.post("/changeQuestion", $("#sa").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&qIndex=" + qIndex, function(data) {
     alert(data);
-    reset();
+    custom_reset();
     });
   } else if(qType == "mc") {
     $.post("/changeQuestion", $("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
@@ -482,7 +472,7 @@ $("[id='saveQ']").click(function() {
       num = 1;
       ansNum = "a1";
       correctNum = "c1";
-      reset();
+      custom_reset();
     });
   } else if(qType == "r") {
     $.post("/changeQuestion", $("#r").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
@@ -490,7 +480,7 @@ $("[id='saveQ']").click(function() {
     ansNum = "a1";
     num = 1;
     rankNum = "r1";
-    reset();
+    custom_reset();
     });
   } else if(qType == "m") {
     $.post("/changeQuestion", $("#m").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
@@ -498,14 +488,14 @@ $("[id='saveQ']").click(function() {
     ansNum = "a1";
     num = 1;
     matchNum = "m1";
-    reset();
+    custom_reset();
     });
   } else if(qType == "tf") {
     $.post("/changeQuestion", $("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&qIndex=" + qIndex, function(data) {
     alert($("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType);
     alert(data);
     });
-    reset();
+    custom_reset();
   }
   type = $(this).attr("id");
   });
