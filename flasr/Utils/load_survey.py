@@ -21,6 +21,7 @@ def load_survey(title, db, col):
     serialized_survey = col.find_one({"title": title})
     serialized_questions = serialized_survey['questions']
     survey = pickle.loads(serialized_survey['Survey'])
+    survey.questions = []
     survey_answers = serialized_survey['answers']
 
     for c in range(len(serialized_questions)):

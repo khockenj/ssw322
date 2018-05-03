@@ -162,15 +162,16 @@ def saveSurvey():
 @app.route('/addToDB', methods=['POST'])
 def addToDB():
     global current_survey
-    current_question = Question()
+    current_question = None
     q = request.form.get('q')
     t = current_survey.isTest
     qType = request.form.get('qType')
 
     if qType == "mc":
-        current_question = MultipleChoice("mc", q)
+        current_question = MultipleChoice("mc", q, choices = [])
 
         for c in range(1, int(request.form.get('n')) + 1):
+            print(request.form.get('a' + str(c)))
             current_question.addChoice(request.form.get('a' + str(c)))
 
         if t == True:
@@ -181,7 +182,7 @@ def addToDB():
         if t == True:
             current_survey.addAnswer(" ")
     elif qType == "r":
-        current_question = Ranking("r", q)
+        current_question = Ranking("r", q, choices = [])
         answer = []
 
         for c in range(1, int(request.form.get('n')) + 1):
@@ -196,7 +197,7 @@ def addToDB():
         if t == True:
             current_survey.addAnswer(request.form.get('opt'))
     elif qType == "m":
-        current_question = Matching("m", q)
+        current_question = Matching("m", q, choices = [], matches = [])
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoiceAndMatch(request.form.get('a' + str(c)), request.form.get('m' + str(c)))
 
@@ -334,14 +335,14 @@ def edit(qIndex):
 @app.route('/changeQuestion', methods=['GET', 'POST'])
 def changeQuestion():
     global current_survey
-    current_question = Question()
+    current_question = None
     q = request.form.get('q')
     t = current_survey.isTest
     n = int(request.form.get('qIndex'))
     qType = request.form.get('qType')
 
     if qType == "mc":
-        current_question = MultipleChoice("mc", q)
+        current_question = MultipleChoice("mc", q, choices = [])
 
         for c in range(1, int(request.form.get('n')) + 1):
             current_question.addChoice(request.form.get('a' + str(c)))
@@ -385,6 +386,7 @@ def changeQuestion():
 @app.route('/loadSurvey', methods=['POST'])
 def loadSurvey():
     global current_survey
+    current_survey = None
     selected = request.form.get('selected')
 
     current_survey = load_survey(selected, db, survey_col)

@@ -343,6 +343,7 @@
   var rankNum = "r1";
   var matchNum = "m1";
   var correctNum = "c1";
+  var title = '{{ title }}'
   var ansArray = {};
 if(qType == "mc") {
   document.getElementById("mc").style.display = 'block';
@@ -510,7 +511,7 @@ $("[id='saveQ']").click(function() {
   });
 
  $('#save').click(function() {
-  $.post("/saveSurvey", $('form#title').serialize(), function(data) {
+  $.post("/saveSurvey", $('form#title').serialize() + "&title=" + title, function(data) {
     alert(data);
     window.location.replace("/view/0");
     });

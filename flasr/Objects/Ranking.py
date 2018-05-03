@@ -2,8 +2,6 @@ from .Question import Question
 
 class Ranking(Question):
 
-    choices = None
-
     def __init__(self, q_type, question, choices=[]):
         self.q_type = q_type
         self.question = question
