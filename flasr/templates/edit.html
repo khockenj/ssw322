@@ -350,7 +350,7 @@ if(qType == "mc") {
 } else if(qType == "m") {
    document.getElementById("m").style.display = 'block';
    choices.forEach(function(x, i) {
-	$("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div class='input-field col s6'><input type='text' id='m" + i + "' name='m" + i + "' /><label for='m" + i + "'>" + matches[i] + "</label></div></div>");
+	$("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' value='" + x + "'/><label for='a" + i + "'>Match " + i + "A</label></div><div class='input-field col s6'><input type='text' id='m" + i + "' name='m" + i + "' value='" + matches[i] + "' /><label for='m" + i + "'>Match " + i + "B</label></div></div>");
 	$("[id='qLocation']").append(question);
 });
 	num = len(choices);
@@ -359,7 +359,7 @@ if(qType == "mc") {
 } else if(qType == "r") {
   document.getElementById("r").style.display = 'block';
   choices.forEach(function(x, i) {
-	$("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='r" + i + "' /><label for='" + i + "1'>" + i + "</label></div></div>");
+	$("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' value='" + x + "' /><label for='a" + i + "'>Answer " + i + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' value='" + i +"' id='rank' name='r" + i + "' /><label for='" + i + "1'>Rank " + i + "</label></div></div>");
 	$("#qLocation").append(question);
 });
 	num = len(choices);
