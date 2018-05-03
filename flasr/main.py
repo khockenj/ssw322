@@ -144,8 +144,10 @@ def createSurveyObject():
 
     global current_survey
     if t == 't':
+        current_survey = None
         current_survey = Survey(True)
     else:
+        current_survey = None
         current_survey = Survey(False)
     return t
 
@@ -224,7 +226,6 @@ def take(qIndex):
     else:
         someIndex = qIndex
 
-    print(current_survey.questions)
     qList = current_survey.getQuestionList()
     qLength = len(qList)
     aList = current_survey.answers
@@ -405,7 +406,6 @@ def view(qIndex):
         someIndex = qIndex
 
     survey = current_survey
-    print(survey.questions[0].question)
     qList = survey.getQuestionList()
     qLength = len(qList)
     aList = survey.answers
