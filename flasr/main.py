@@ -272,9 +272,10 @@ def storeToAnswerSheet():
     current_answer_sheet.title = current_survey.title
     current_answer_sheet.userName = session.get('uid')
     answer_sheet_to_db(current_answer_sheet, db, taker_col)
+    print(len(current_survey.answers))
 
     for index, answer in enumerate(current_survey.answers):
-        #print('\n\n\n' + str(answer) + '\n\n\n')
+        print('\n\n\n' + str(answer) + '\n\n\n')
         if answer == current_answer_sheet.user_response[index]:
             correct.append('Correct')
         elif current_answer_sheet.user_response[index] == 'SA':

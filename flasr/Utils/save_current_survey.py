@@ -7,6 +7,7 @@ def save_current_survey(current_survey, db, col):
     questions = []
 
     if col.find_one({'title': current_survey.title}):
+        print("\n\n\n\n\n\n\n\n\n" + current_survey.title)
         col.delete_one({'title': current_survey.title})
 
     for question in current_survey.questions:
