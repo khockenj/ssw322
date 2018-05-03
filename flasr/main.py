@@ -259,7 +259,7 @@ def saveAnswer():
         a = request.values.getlist('a[]')
         current_answer_sheet.addResponse(a)
     elif qType == 'sa':
-        current_answer_sheet.append(" ")
+        current_answer_sheet.addResponse('SA')
     else:
         current_answer_sheet.addResponse(request.form.get('a'))
     return "Return: " + str(request.values.getlist('a[]'))
@@ -267,16 +267,21 @@ def saveAnswer():
 @app.route('/storeToAnswerSheet', methods=['POST', 'GET'])
 def storeToAnswerSheet():
     global current_answer_sheet
-    correct = False
+    correct = []
     current_answer_sheet.title = current_survey.title
     current_answer_sheet.userName = session.get('uid')
     answer_sheet_to_db(current_answer_sheet, db, taker_col)
 
     for index, answer in enumerate(current_survey.answers):
+        #print('\n\n\n' + str(answer) + '\n\n\n')
         if answer == current_answer_sheet.user_response[index]:
-            correct = True
+            correct.append('Correct')
+        elif current_answer_sheet.user_response[index] == 'SA':
+            correct.append('SA')
         else:
-            correct = False
+            correct.append('Incorrect')
+
+    print('\n\n\n' + str(correct) + '\n\n\n')
 
     return render_template('grade.html', correct = correct)
 
