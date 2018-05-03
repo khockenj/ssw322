@@ -458,7 +458,7 @@ $('#list').change(function() {
   });
 });
 
-$("[id='saveQ']").click(function() {
+$("#next").click(function() {
   if(qType == "sa") {
     custom_reset();
     });
@@ -489,7 +489,7 @@ $("[id='saveQ']").click(function() {
   type = $(this).attr("id");
   });
 
- $('#save').click(function() {
+ $('#next').click(function() {
   $.post("/saveSurvey", $('form#title').serialize() + "&title=" + title, function(data) {
     window.location.replace("/view/0");
     });
