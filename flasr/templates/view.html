@@ -254,7 +254,7 @@ if(qType == "mc") {
   document.getElementById("r").style.display = 'block';
   	$("table#r #qLocation").append(question);
   choices.forEach(function(x, i) {
-	$("table#r").append("<tr><td style='text-align:center;'>"+ans[i]+"</td><td style='text-align:center;'>" + x + "</td></tr>");
+	$("table#r").append("<tr><td style='text-align:center;'>"+(i+1)+"</td><td style='text-align:center;'>" + x + "</td></tr>");
 });
 } else if(qType == "tf") {
   document.getElementById("tf").style.display = 'block';

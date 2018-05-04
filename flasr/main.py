@@ -300,7 +300,8 @@ def edit(qIndex):
     qType = None
     limit = 0
     ans = None
-
+    qLength = None
+	
     title = current_survey.title
 
     if qIndex == None:
@@ -309,8 +310,8 @@ def edit(qIndex):
         someIndex = qIndex
 
     if len(current_survey.getQuestionList()) == qIndex:
-        current_surveys.addQuestion(Question())
-        current_surveys.addAnswer(None)
+        current_survey.addQuestion(Question())
+        current_survey.addAnswer(None)
         return render_template('edit.html', climit = limit, passedQType = qType, passedQ = question, passedChoices = choices, passedMatches = matches, qIndex = someIndex, length = qLength, passedAns = ans)
 
     qList = current_survey.getQuestionList()
@@ -357,12 +358,11 @@ def changeQuestion():
             current_survey.answers[n] = " "
     elif qType == "r":
         current_question = Ranking("r", q)
+        current_question.reset()
         answer = []
 
         for c in range(1, int(request.form.get('n')) + 1):
-            current_question.addChoice(request.form.get('r' + str(c)))
-            if t == True:
-                answer.append(request.form.get('a' + str(c)))
+            current_question.addChoice(request.form.get('a' + str(c)))
         if t == True:
             current_survey.answers[n] = answer
     elif qType == "tf":

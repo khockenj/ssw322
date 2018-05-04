@@ -16,3 +16,7 @@ class Matching(Question):
 
     def getMatches(self):
         return self.matches
+    def reset(self):
+        self.question = ""
+        self.choices = []
+        self.matches = []

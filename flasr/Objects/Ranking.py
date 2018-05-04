@@ -12,3 +12,7 @@ class Ranking(Question):
 
     def getChoices(self):
         return self.choices
+		
+    def reset(self):
+        self.question = ""
+        self.choices = []

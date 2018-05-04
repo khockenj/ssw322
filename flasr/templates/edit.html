@@ -174,7 +174,7 @@
 <form id='tf' class='hidden'>
 <div class="row" style="padding:5px">
 		<div class="input-field col s12">
-        <textarea id="q" name="q" class="materialize-textarea"></textarea>
+        <textarea id="q" name="q" class="materialize-textarea">{{ passedQ }}</textarea>
         <label for="q">Question</label>
       </div></div>
 	  <div id='testOnly' class="row">
@@ -219,11 +219,7 @@
 
 		<div class='row'><a id='addRank' class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></div>
 
-		<div class='row'>
-		<div class='container right-align' style='padding:5px'>
-		<button type="button" class="btn waves-effect waves-light green rounded-small" name="saveQ" id="saveQ">Save Question<i class="material-icons right">add</i></button>
-		</div>
-		</div>
+		
 </form>
 
 <!--Matching-->
@@ -240,22 +236,6 @@
   </div>
 
   <div class='row'><a id='addMatch' class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></div>
-
-  <div class='row'>
-  	<div class='container right-align' style='padding:5px'>
-  		<button type="button" class="btn waves-effect waves-light green rounded-small" name="saveQ" id="saveQ">Save Question<i class="material-icons right">add</i></button>
-  	</div>
-  </div>
-</form>
-
-<!-- Submit Button -->
-<div class='container right-align'>
-  <form id='save'>
-   <button type="button" class="btn waves-effect waves-light green rounded-small" id="save" name='saveButton'>Finish
-      <i class="material-icons right">save</i>
-    </button>
-  </form>
-</div>
 
         </span>
 			</div>
@@ -331,6 +311,7 @@
 
 if(qType == "mc") {
   document.getElementById("mc").style.display = 'block';
+  ans = ans - 1;
   $("#qLocationMC").append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question +"</p>");
   choices.forEach(function(x, i) {
   	num++;
@@ -350,21 +331,21 @@ if(qType == "mc") {
 } else if(qType == "m") {
    document.getElementById("m").style.display = 'block';
    choices.forEach(function(x, i) {
-	$("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div class='input-field col s6'><input type='text' id='m" + i + "' name='m" + i + "' /><label for='m" + i + "'>" + matches[i] + "</label></div></div>");
+	$("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + (i+1) + "' name='a" + (i+1) + "' value='" + x + "' /><label for='a" + (i+1) + "'>Match " + (i+1) + "A</label></div><div class='input-field col s6'><input type='text' id='m" + (i+1) + "' name='m" + (i+1) + "' value='" +  matches[i] + "'/><label for='m" + (i+1) + "'>Match " + (i+1) + "B</label></div></div>");
 	$("[id='qLocation']").append(question);
 });
-	num = len(choices);
-	matchNum = "m" + len(choices);
-	ansNum = "a" + len(choices);
+	num = choices.length;
+	matchNum = "m" + choices.length;
+	ansNum = "a" + choices.length;
 } else if(qType == "r") {
   document.getElementById("r").style.display = 'block';
   choices.forEach(function(x, i) {
-	$("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + i + "' name='a" + i + "' /><label for='a" + i + "'>" + x + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='r" + i + "' /><label for='" + i + "1'>" + i + "</label></div></div>");
+	$("#rQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='a" + (i+1) + "' name='a" + (i+1) + "' value='" + x + "' /><label for='a" + (i+1) + "'>Answer " + (i+1) + "</label></div><div id='testOnly' class='input-field col s6'><input type='text' id='rank' name='r" + (i+1) + "' value='" + (i+1) + "'/><label for='" + (i+1) + "1'>Rank</label></div></div>");
 	$("#qLocation").append(question);
 });
-	num = len(choices);
-	rankNum = "r" + len(choices);
-	ansNum = "a" + len(choices);
+	num = choices.length;
+	rankNum = "r" + choices.length;
+	ansNum = "a" + choices.length;
 } else if(qType == "tf") {
   document.getElementById("tf").style.display = 'block';
 	$("#qLocationTF").append("<p style='text-align:center; font-weight: bold; font-size:medium;'>" + question + "</p>");
@@ -397,21 +378,6 @@ $('#addQ').click(function() {
 	matchNum = "m" + num;
     $("#mQuestions").append("<div class='row'><div class='input-field col s6'><input type='text' id='" + ansNum + "' name='" + ansNum + "' /><label for='" + ansNum + "'>Match " + num + ": A</label></div><div class='input-field col s6'><input type='text' id='" + matchNum + "' name='" + matchNum + "' /><label for='" + matchNum + "'>Match " + num + ": B</label></div></div>");
   });
- $('#next').click(function() {
- 	window.location.replace("/edit/" + (qIndex+1));
-});
-
- $('#prev').click(function() {
- 	window.location.replace("/edit/" + (qIndex-1));
-});
-
-if(qIndex == 0) {
-document.getElementById("prev").style.display = 'none';
-}
-
-if(qIndex+1 == length) {
-document.getElementById("next").style.display = 'none';
-}
 </script>
 
 <script>
@@ -460,39 +426,56 @@ $('#list').change(function() {
 
 $("#next").click(function() {
   if(qType == "sa") {
+  $.post("/changeQuestion", $("#sa").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
     custom_reset();
-    });
+	  });
   } else if(qType == "mc") {
+   $.post("/changeQuestion", $("#mc").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
       num = 1;
       ansNum = "a1";
       correctNum = "c1";
       custom_reset();
-    });
+	  });
+	
   } else if(qType == "r") {
     $.post("/changeQuestion", $("#r").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
-    ansNum = "a1";
+    alert($("#r").serialize());
+	ansNum = "a1";
     num = 1;
     rankNum = "r1";
     custom_reset();
     });
   } else if(qType == "m") {
-    ansNum = "a1";
+   $.post("/changeQuestion", $("#m").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex, function(data) {
+	alert($("#m").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&n=" + num + "&qIndex=" + qIndex);
+	ansNum = "a1";
     num = 1;
     matchNum = "m1";
     custom_reset();
-    });
+	  });
+
   } else if(qType == "tf") {
     $.post("/changeQuestion", $("#tf").serialize() + "&t=" + testOrSurvey + "&qType=" + qType + "&qIndex=" + qIndex, function(data) {
     });
     custom_reset();
   }
   type = $(this).attr("id");
-  });
 
- $('#next').click(function() {
   $.post("/saveSurvey", $('form#title').serialize() + "&title=" + title, function(data) {
-    window.location.replace("/view/0");
-    });
-})
+  if(qIndex+1 == length) {
+  	window.location.replace("/view/0");
+	} else {
+    window.location.replace("/edit/" + parseInt(qIndex+1));
+	}
+	
+ //window.location.replace("/edit/" + (qIndex+1));
+});
+});
+
+document.getElementById("prev").style.display = 'none';
+
+if(qIndex+1 == length) {
+document.getElementById("next").innerHTML = "Save <i class='material-icons right'>save</i>";
+};
 </script>
 </html>
