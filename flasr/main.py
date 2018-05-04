@@ -272,19 +272,22 @@ def storeToAnswerSheet():
     current_answer_sheet.title = current_survey.title
     current_answer_sheet.userName = session.get('uid')
     answer_sheet_to_db(current_answer_sheet, db, taker_col)
-    print(len(current_survey.answers))
 
     for index, answer in enumerate(current_survey.answers):
-        print("Answer: " + str(answer))
-        print("Other: " + str(current_answer_sheet.user_response[index]))
-        if int(answer) == int(current_answer_sheet.user_response[index]) + 1:
-            correct.append('Correct')
-        elif current_answer_sheet.user_response[index] == 'SA':
+        if current_answer_sheet.user_response[index] == 'SA':
             correct.append('SA')
-        else:
-            correct.append('Incorrect')
 
-    print(str(correct))
+        else:
+            try:
+                if int(answer) == int(current_answer_sheet.user_response[index]) + 1:
+                    correct.append('Correct')
+                else:
+                    correct.append('Incorrect')
+            except:
+                if answer == current_answer_sheet.user_response[index]:
+                    correct.append('Correct')
+                else:
+                    correct.append('Incorrect')
 
     return render_template('grade.html', correct = correct)
 
