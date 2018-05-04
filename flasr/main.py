@@ -275,15 +275,16 @@ def storeToAnswerSheet():
     print(len(current_survey.answers))
 
     for index, answer in enumerate(current_survey.answers):
-        print('\n\n\n' + str(answer) + '\n\n\n')
-        if answer == current_answer_sheet.user_response[index]:
+        print("Answer: " + str(answer))
+        print("Other: " + str(current_answer_sheet.user_response[index]))
+        if int(answer) == int(current_answer_sheet.user_response[index]) + 1:
             correct.append('Correct')
         elif current_answer_sheet.user_response[index] == 'SA':
             correct.append('SA')
         else:
             correct.append('Incorrect')
 
-    print('\n\n\n' + str(correct) + '\n\n\n')
+    print(str(correct))
 
     return render_template('grade.html', correct = correct)
 
